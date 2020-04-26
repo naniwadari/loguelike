@@ -26,6 +26,7 @@ export interface IRoom {
   size: ISize;
   point: IPoint;
   hasPath: number[];
+  toPath: number[];
 }
 
 export interface IRoomEdge {
@@ -93,6 +94,7 @@ function roomCreator(lim: number) {
         size: roomElement.size,
         point: roomElement.point,
         hasPath: [],
+        toPath: [],
       };
       count++;
       rooms.push(newRoom);
@@ -106,7 +108,7 @@ function connectRoomsToPass(rooms: IRoom[]) {
     console.log(room);
     const tmpRooms = rooms.slice();
     //パスでつながったものは条件から消す
-    if (room.hasPath.length > 0) {
+    if (room.hasPath) {
       for (let j = 0; j < room.hasPath.length; j++) {
         tmpRooms.some((v: IRoom, i) => {
           if (v.index === room.hasPath[i]) tmpRooms.splice(i, 1);
@@ -116,8 +118,12 @@ function connectRoomsToPass(rooms: IRoom[]) {
     const nearRoom = findNearRoom(room, tmpRooms);
     if (nearRoom) {
       DigPass(room, nearRoom);
+      room.toPath.push(nearRoom.index);
       rooms[nearRoom.index].hasPath.push(room.index);
-      paths.push({ from: i, to: nearRoom.index });
+    } else {
+      DigPass(room, rooms[0]);
+      room.toPath.push(rooms[0].index);
+      rooms[0].hasPath.push(room.index);
     }
   }
   console.log("-----------------");
