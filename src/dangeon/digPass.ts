@@ -1,4 +1,4 @@
-import { IPoint, blocks, Type } from "./createFloor";
+import { IPoint, blocks, MapType } from "./createFloor";
 
 //通路を掘るためのメソッド群
 export module Dig {
@@ -25,7 +25,7 @@ export module Dig {
   }
 
   //床を縦に指定分掘る
-  function digVerticalWay(start: IPoint, end: IPoint) {
+  export function digVerticalWay(start: IPoint, end: IPoint) {
     //縦軸がずれてたら処理終了
     if (start.x !== end.x) {
       console.log("基準となる軸がずれています");
@@ -34,17 +34,17 @@ export module Dig {
     const axisX = start.x;
     if (start.y <= end.y) {
       for (let i = start.y; i <= end.y; i++) {
-        blocks[axisX][i] = Type.floor;
+        blocks[axisX][i].base = MapType.floor;
       }
     } else {
       for (let i = end.y; i <= start.y; i++) {
-        blocks[axisX][i] = Type.floor;
+        blocks[axisX][i].base = MapType.floor;
       }
     }
   }
 
   //床を横に指定分掘る
-  function digSideWay(start: IPoint, end: IPoint) {
+  export function digSideWay(start: IPoint, end: IPoint) {
     if (start.y !== end.y) {
       console.log("基準となる軸がずれています");
       return;
@@ -52,11 +52,11 @@ export module Dig {
     const fixedY = start.y;
     if (start.x <= end.x) {
       for (let i = start.x; i <= end.x; i++) {
-        blocks[i][fixedY] = Type.floor;
+        blocks[i][fixedY].base = MapType.floor;
       }
     } else {
       for (let i = end.x; i <= start.x; i++) {
-        blocks[i][fixedY] = Type.floor;
+        blocks[i][fixedY].base = MapType.floor;
       }
     }
   }

@@ -10,6 +10,7 @@ import { MessageType, CanStand } from "./config";
 import { Point } from "./Types";
 import { battleEvent } from "./battle/battleEvents";
 import doEnemyTurn from "./doEnemyTurn";
+import { createFloor } from "./dangeon/createFloor";
 export default () => {
   window.addEventListener("keydown", (e) => {
     e.preventDefault();
@@ -103,6 +104,8 @@ export default () => {
             [{ x: S.player.x, y: S.player.y }],
             S.seed
           );
+          //テスト用に書き換え
+          S.fields[S.player.depth].blocks = createFloor();
           //フィールドサイズを更新
           S.fieldSize = S.fields[S.player.depth].size;
         }

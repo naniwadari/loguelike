@@ -1,7 +1,8 @@
 import { S } from "../State";
 import { Point } from "../Types";
 import { MapType } from "../config";
-
+import { createFloor } from "../dangeon/createFloor";
+import { draw, con } from "../Draw";
 export default () => {
   window.addEventListener("keydown", (e) => {
     // デバッグキー P
@@ -11,11 +12,14 @@ export default () => {
     }
     // 強制ゲームオーバーキー 0
     else if (e.keyCode === 48) {
-      forceGameOver();
+      mapRecreate();
     }
   });
 };
-
+function mapRecreate() {
+  S.fields[S.player.depth].blocks = createFloor();
+  draw(con, S.env);
+}
 function forceGameOver() {
   S.player.HP = 0;
   S.Frag.gameover = true;

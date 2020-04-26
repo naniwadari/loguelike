@@ -17,13 +17,13 @@ export enum MapBluePrint {
   LY = 25,
   PX = 32,
   PY = 32,
-  wideX = 40,
-  wideY = 40,
+  wideX = 25,
+  wideY = 25,
 }
 
 export enum MapType {
-  floor = 0,
-  wall = 1,
+  wall = 0,
+  floor = 1,
   downstair = 2,
 }
 

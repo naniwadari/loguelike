@@ -1,6 +1,6 @@
 import { Dig } from "./digPass";
 
-export enum Type {
+export enum MapType {
   wall = 0,
   floor = 1,
 }
@@ -9,11 +9,7 @@ export enum Direction {
   up = 0,
   right = 1,
   bottom = 2,
-  left = 4,
-  upperLeft = 5,
-  bottomLeft = 6,
-  upperRight = 7,
-  bottomRight = 8,
+  left = 3,
 }
 
 export interface ISize {
@@ -26,8 +22,9 @@ export interface IPoint {
   y: number;
 }
 export interface IRoom {
-  point: IPoint;
+  index: number;
   size: ISize;
+  point: IPoint;
 }
 
 export interface IRoomEdge {
@@ -43,36 +40,41 @@ export interface IRoomDistance {
   distance: number;
 }
 
+export interface block {
+  base: MapType;
+}
+
+export interface Ipath {
+  from: number;
+  to: number;
+}
+
 //フロア内のブロック情報[x][y]で保存
-export let blocks: number[][] = [];
+export let blocks: block[][] = [];
 //フロアのサイズ
-const floorSize = { width: 5, height: 5 };
+const floorSize = { width: 25, height: 25 };
 //一部屋あたりの最大サイズ
-const maxRoomSize = { width: 2, height: 2 };
+const maxRoomSize = { width: 10, height: 10 };
 //一部屋あたりの最小サイズ
-const minRoomSize = { width: 2, height: 2 };
+const minRoomSize = { width: 6, height: 6 };
 //部屋の生成を試みる回数
-const roomCreateCount = 12;
+const roomCreateCount = 30;
 //生成された部屋を格納する配列
-const rooms: IRoom[] = [];
+let rooms: IRoom[] = [];
+let paths: Ipath[] = [];
 
-initFroor();
-// const room1 = createRoom({ x: 5, y: 5 }, { width: 1, height: 1 });
-// // //失敗するべき
-// // createRoom({ x: 0, y: 0 }, { width: 2, height: 2 });
-// //成功するべき
-// const room2 = createRoom({ x: 3, y: 0 }, { width: 1, height: 1 });
-// if (room1 && room2) {
-//   Dig.topTobottom(room1.point, room2.point);
-//   const room1Edge = roomEdgeCulculator(room1);
-//   const room2Edge = roomEdgeCulculator(room2);
-// }
+export function createFloor() {
+  paths = [];
+  blocks = [];
+  rooms = [];
+  initFloor();
+  roomCreator(roomCreateCount);
+  connectRoomsToPass(rooms);
+  console.log(paths);
+  return blocks;
+}
 
-roomCreator(roomCreateCount);
-console.log(visualMapping(blocks));
-connectRoomsToPass(rooms);
-console.log(visualMapping(blocks));
-function visualMapping(blocks: number[][]) {
+function visualMapping(blocks: block[][]) {
   for (let i = 0; i < blocks.length; i++) {
     console.log(blocks[i]);
   }
@@ -84,6 +86,7 @@ function connectRoomsToPass(rooms: IRoom[]) {
     const nearRoom = findNearRoom(room, rooms);
     if (nearRoom) {
       DigPass(room, nearRoom);
+      paths.push({ from: i, to: nearRoom.index });
     }
   }
 }
@@ -97,23 +100,23 @@ function randomMakePointToDig(room: IRoom, direction: Direction) {
   let digPoint: IPoint = { x: 0, y: 0 };
   //方角毎に通路の始点をランダムに決める
   if (direction === Direction.left) {
-    min = edge.bottomLeft.y - edge.upperLeft.y;
-    max = edge.upperLeft.y;
+    min = edge.upperLeft.y + 1;
+    max = edge.bottomLeft.y - 1;
     result = rangeRandomInteger(min, max);
     digPoint = { x: edge.upperLeft.x, y: result };
   } else if (direction === Direction.right) {
-    min = edge.bottomRight.y - edge.upperRight.y;
-    max = edge.upperRight.y;
+    min = edge.upperRight.y + 1;
+    max = edge.bottomRight.y - 1;
     result = rangeRandomInteger(min, max);
     digPoint = { x: edge.upperRight.x, y: result };
   } else if (direction === Direction.up) {
-    min = edge.bottomRight.x - edge.upperLeft.x;
-    max = edge.upperLeft.x;
+    min = edge.upperLeft.x + 1;
+    max = edge.bottomRight.x - 1;
     result = rangeRandomInteger(min, max);
     digPoint = { x: result, y: edge.upperLeft.y };
   } else if (direction === Direction.bottom) {
-    min = edge.bottomRight.x - edge.bottomRight.x;
-    max = edge.bottomRight.x;
+    min = edge.bottomLeft.x + 1;
+    max = edge.bottomRight.x - 1;
     result = rangeRandomInteger(min, max);
     digPoint = { x: result, y: edge.bottomLeft.y };
   }
@@ -134,26 +137,24 @@ function DigPass(room: IRoom, target: IRoom) {
   let A: IPoint;
   let B: IPoint;
   //掘る方向が左右
-  if (digDirection === Direction.left || Direction.right) {
-    if (digDirection === Direction.left) {
-      A = randomMakePointToDig(room, digDirection);
-      B = randomMakePointToDig(target, Direction.right);
-    } else {
-      A = randomMakePointToDig(room, digDirection);
-      B = randomMakePointToDig(target, Direction.left);
-    }
-    Dig.topTobottom(A, B);
+  if (digDirection === Direction.left) {
+    A = randomMakePointToDig(room, Direction.left);
+    B = randomMakePointToDig(target, Direction.right);
+    Dig.sideToside(A, B);
+  } else if (digDirection === Direction.right) {
+    A = randomMakePointToDig(room, Direction.right);
+    B = randomMakePointToDig(target, Direction.left);
+    Dig.sideToside(A, B);
   }
   //掘る方向が上下
-  else if (digDirection === Direction.up || Direction.bottom) {
-    if (digDirection === Direction.up) {
-      A = randomMakePointToDig(room, digDirection);
-      B = randomMakePointToDig(target, Direction.bottom);
-    } else {
-      A = randomMakePointToDig(room, digDirection);
-      B = randomMakePointToDig(target, Direction.up);
-    }
-    Dig.sideToside(A, B);
+  else if (digDirection === Direction.up) {
+    A = randomMakePointToDig(room, Direction.up);
+    B = randomMakePointToDig(target, Direction.bottom);
+    Dig.topTobottom(A, B);
+  } else if (digDirection === Direction.bottom) {
+    A = randomMakePointToDig(room, Direction.bottom);
+    B = randomMakePointToDig(target, Direction.up);
+    Dig.topTobottom(A, B);
   } else {
     console.log("undefiend direction error");
     return;
@@ -169,19 +170,19 @@ function findDirection(room: IRoomEdge, target: IRoomEdge) {
   let distances: findDirection[] = [];
   distances.push({
     direction: Direction.left,
-    distance: Math.abs(room.upperLeft.y - target.upperRight.y),
+    distance: Math.abs(room.upperLeft.x - target.upperRight.x),
   });
   distances.push({
     direction: Direction.right,
-    distance: Math.abs(room.upperRight.y - target.upperLeft.y),
+    distance: Math.abs(room.upperRight.x - target.upperLeft.x),
   });
   distances.push({
     direction: Direction.up,
-    distance: Math.abs(room.upperLeft.x - target.bottomLeft.x),
+    distance: Math.abs(room.upperLeft.y - target.bottomLeft.y),
   });
   distances.push({
     direction: Direction.bottom,
-    distance: Math.abs(room.bottomLeft.x - target.upperLeft.x),
+    distance: Math.abs(room.bottomLeft.y - target.upperLeft.y),
   });
   distances.sort((a: findDirection, b: findDirection) => {
     return a.distance > b.distance ? 1 : -1;
@@ -194,28 +195,25 @@ function findDirection(room: IRoomEdge, target: IRoomEdge) {
 function findNearRoom(room: IRoom, rooms: IRoom[]) {
   const center = roomEdgeCulculator(room).center;
   let roomDistances: IRoomDistance[] = [];
+  //一部屋なら早期リターン
+  if (rooms.length === 1) {
+    return undefined;
+  }
   for (let i = 0; i < rooms.length; i++) {
     const anotherCenter = roomEdgeCulculator(rooms[i]).center;
     const distance =
       Math.abs(center.x - anotherCenter.x) +
       Math.abs(center.y - anotherCenter.y);
     const result = { index: i, distance: distance };
-    //距離がゼロの場合自分自身なので配列に加えない
-    if (result.distance !== 0) {
-      roomDistances.push(result);
-    }
+    roomDistances.push(result);
   }
   //部屋の距離を比較して配列を並び替える
   roomDistances = roomDistances.sort((a: IRoomDistance, b: IRoomDistance) => {
     return a.distance > b.distance ? 1 : -1;
   });
   //一番近い部屋をして返す
-  if (roomDistances) {
-    const nearRoom = rooms[roomDistances[0].index];
-    return nearRoom;
-  } else {
-    return undefined;
-  }
+  const nearRoom = rooms[roomDistances[1].index];
+  return nearRoom;
 }
 
 //部屋の上下左右の角と中心の座標を計算して返す
@@ -252,8 +250,13 @@ function roomCreator(lim: number) {
   for (let i = 0; i < lim; i++) {
     const roomSize = randomRoomSize();
     const startPoint = randomRoomStartPoint();
-    const newRoom = createRoom(startPoint, roomSize);
-    if (newRoom) {
+    const roomElement = createRoom(startPoint, roomSize);
+    if (roomElement) {
+      const newRoom: IRoom = {
+        index: i,
+        size: roomElement.size,
+        point: roomElement.point,
+      };
       rooms.push(newRoom);
     }
   }
@@ -280,11 +283,11 @@ function randomRoomStartPoint() {
   return startPoint;
 }
 
-function initFroor() {
+function initFloor() {
   for (let i = 0; i <= floorSize.width; i++) {
     blocks[i] = [];
     for (let j = 0; j <= floorSize.height; j++) {
-      blocks[i][j] = Type.wall;
+      blocks[i][j] = { base: MapType.wall };
     }
   }
 }
@@ -293,7 +296,7 @@ function initFroor() {
 function createRoom(startPoint: IPoint, roomSize: ISize) {
   const isAreaNoRoom = checkAreaNoRoom(startPoint, roomSize);
   const isInsideFloor = checkInsideFloor(startPoint, roomSize);
-  let result: IRoom | null = null;
+  let result: { point: IPoint; size: ISize } | null = null;
   //フロアをはみ出してしまう場合処理を中断する
   if (!isInsideFloor) {
     return null;
@@ -311,7 +314,7 @@ function createRoom(startPoint: IPoint, roomSize: ISize) {
         j >= startPoint.y &&
         j < startPoint.y + roomSize.height
       ) {
-        blocks[i][j] = Type.floor;
+        blocks[i][j].base = MapType.floor;
       }
     }
   }
@@ -323,11 +326,16 @@ function createRoom(startPoint: IPoint, roomSize: ISize) {
 function checkInsideFloor(startPoint: IPoint, roomSize: ISize) {
   let result = true;
   const endPoint: IPoint = {
-    x: startPoint.x + roomSize.width - 1,
-    y: startPoint.y + roomSize.height - 1,
+    x: startPoint.x + roomSize.width,
+    y: startPoint.y + roomSize.height,
   };
   //部屋がフロアからはみ出していないか確認
-  if (endPoint.x > floorSize.width || endPoint.y > floorSize.width) {
+  if (
+    startPoint.x < 1 ||
+    startPoint.y < 1 ||
+    endPoint.x > floorSize.width - 1 ||
+    endPoint.y > floorSize.height - 1
+  ) {
     //はみ出していたらfalseを返す
     result = false;
   }
@@ -341,12 +349,12 @@ function checkAreaNoRoom(startPoint: IPoint, roomSize: ISize) {
     for (let j = 0; j <= floorSize.height; j++) {
       if (
         //部屋の予定座標と、その周囲１マスにすでに部屋がないか確認
-        i >= startPoint.x - 1 &&
-        i < startPoint.x + roomSize.width + 1 &&
-        j >= startPoint.y - 1 &&
-        j < startPoint.y + roomSize.height + 1
+        i >= startPoint.x - 3 &&
+        i < startPoint.x + roomSize.width + 3 &&
+        j >= startPoint.y - 3 &&
+        j < startPoint.y + roomSize.height + 3
       ) {
-        if (blocks[i][j] === Type.floor) {
+        if (blocks[i][j].base === MapType.floor) {
           result = false;
           break;
         }
