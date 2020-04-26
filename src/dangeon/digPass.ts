@@ -6,7 +6,6 @@ export module Dig {
   export function sideToside(A: IPoint, B: IPoint) {
     //通路を曲げるポイント
     const axisX = Math.floor(Math.abs(A.x + B.x) / 2);
-    console.log(axisX);
     //掘り進めるポイント
     const AsidePassEnd: IPoint = { x: axisX, y: A.y };
     const BsidePassEnd: IPoint = { x: axisX, y: B.y };

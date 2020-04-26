@@ -48,36 +48,43 @@ export let blocks: number[][] = [];
 //フロアのサイズ
 const floorSize = { width: 5, height: 5 };
 //一部屋あたりの最大サイズ
-const maxRoomSize = { width: 3, height: 3 };
+const maxRoomSize = { width: 2, height: 2 };
 //一部屋あたりの最小サイズ
-const minRoomSize = { width: 1, height: 1 };
+const minRoomSize = { width: 2, height: 2 };
 //部屋の生成を試みる回数
 const roomCreateCount = 12;
 //生成された部屋を格納する配列
 const rooms: IRoom[] = [];
 
 initFroor();
-const room1 = createRoom({ x: 5, y: 5 }, { width: 1, height: 1 });
-// //失敗するべき
-// createRoom({ x: 0, y: 0 }, { width: 2, height: 2 });
-//成功するべき
-const room2 = createRoom({ x: 3, y: 0 }, { width: 1, height: 1 });
-if (room1 && room2) {
-  Dig.topTobottom(room1.point, room2.point);
-  const room1Edge = roomEdgeCulculator(room1);
-  const room2Edge = roomEdgeCulculator(room2);
-}
+// const room1 = createRoom({ x: 5, y: 5 }, { width: 1, height: 1 });
+// // //失敗するべき
+// // createRoom({ x: 0, y: 0 }, { width: 2, height: 2 });
+// //成功するべき
+// const room2 = createRoom({ x: 3, y: 0 }, { width: 1, height: 1 });
+// if (room1 && room2) {
+//   Dig.topTobottom(room1.point, room2.point);
+//   const room1Edge = roomEdgeCulculator(room1);
+//   const room2Edge = roomEdgeCulculator(room2);
+// }
 
-// roomCreator(roomCreateCount);
-// console.log(rooms);
-// console.log(searchNearRoom(rooms[0], rooms));
-// digVerticalWay({ x: 1, y: 1 }, { x: 1, y: 3 });
-// digSideWay({ x: 1, y: 3 }, { x: 4, y: 3 });
+roomCreator(roomCreateCount);
 console.log(visualMapping(blocks));
-
+connectRoomsToPass(rooms);
+console.log(visualMapping(blocks));
 function visualMapping(blocks: number[][]) {
   for (let i = 0; i < blocks.length; i++) {
     console.log(blocks[i]);
+  }
+}
+
+function connectRoomsToPass(rooms: IRoom[]) {
+  for (let i = 0; i < rooms.length; i++) {
+    const room = rooms[i];
+    const nearRoom = findNearRoom(room, rooms);
+    if (nearRoom) {
+      DigPass(room, nearRoom);
+    }
   }
 }
 
@@ -135,7 +142,7 @@ function DigPass(room: IRoom, target: IRoom) {
       A = randomMakePointToDig(room, digDirection);
       B = randomMakePointToDig(target, Direction.left);
     }
-    Dig.sideToside(A, B);
+    Dig.topTobottom(A, B);
   }
   //掘る方向が上下
   else if (digDirection === Direction.up || Direction.bottom) {
@@ -146,12 +153,13 @@ function DigPass(room: IRoom, target: IRoom) {
       A = randomMakePointToDig(room, digDirection);
       B = randomMakePointToDig(target, Direction.up);
     }
-    Dig.topTobottom(A, B);
+    Dig.sideToside(A, B);
   } else {
     console.log("undefiend direction error");
     return;
   }
 }
+
 //指定した部屋との上下左右の距離の差を比較して最も小さいものを返す
 function findDirection(room: IRoomEdge, target: IRoomEdge) {
   interface findDirection {
@@ -288,12 +296,10 @@ function createRoom(startPoint: IPoint, roomSize: ISize) {
   let result: IRoom | null = null;
   //フロアをはみ出してしまう場合処理を中断する
   if (!isInsideFloor) {
-    // console.log("部屋がはみ出しています。処理終了");
     return null;
   }
   //予定地にすでに部屋があった場合処理を中断する。
   else if (!isAreaNoRoom) {
-    // console.log("すでに部屋があります。処理終了。");
     return null;
   }
   //ブロック情報の書き換え処理
@@ -309,7 +315,6 @@ function createRoom(startPoint: IPoint, roomSize: ISize) {
       }
     }
   }
-  // console.log("ルームを生成できました");
   result = { point: startPoint, size: roomSize };
   return result;
 }
