@@ -10,11 +10,15 @@ exports.default = (function (con) {
     con.font = "16px consolas";
     con.translate(config_1.DrawRange.x * config_1.TyleSize.x, config_1.SCREEN.Y - ((16 + 6) * config_1.MessageLength.limit + 8 * 2));
     for (var i = 0; i < messages.list.length; i++) {
-        if (messages.list[i].type === config_1.MessageType.normal) {
+        var type = messages.list[i].type;
+        if (type === config_1.MessageType.normal) {
             con.fillStyle = "white";
         }
-        else if (messages.list[i].type === config_1.MessageType.special) {
+        else if (type === config_1.MessageType.special) {
             con.fillStyle = "yellow";
+        }
+        else if (type === config_1.MessageType.danger) {
+            con.fillStyle = "red";
         }
         else {
             throw new Error("not supported");

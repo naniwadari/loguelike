@@ -12,8 +12,10 @@ var player_1 = __importDefault(require("./player"));
 var messages_1 = require("./messages");
 var text_1 = require("./text");
 var config_1 = require("./config");
+var Debug_1 = __importDefault(require("./debug/Debug"));
 // 決定キーを押すとinitイベントが走る
 function init() {
+    State_1.S.Frag.gameover = false;
     State_1.S.fields[0] = createField_1.createField(0, [], State_1.S.seed);
     var newPlayer = new player_1.default(12, 12);
     State_1.S.player = newPlayer;
@@ -26,3 +28,5 @@ Draw_1.draw(Draw_1.con, State_1.S.env);
 ArrowKeyEvents_1.default();
 /* プレイヤー移動イベント */
 MoveEvent_1.default();
+//デバッグ
+Debug_1.default();

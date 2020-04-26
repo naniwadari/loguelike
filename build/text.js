@@ -13,6 +13,7 @@ var TEXT;
     TEXT["ATK"] = "\u653B\u6483\u529B";
     TEXT["DEF"] = "\u9632\u5FA1\u529B";
     TEXT["EXP"] = "\u7D4C\u9A13\u5024";
+    TEXT["die"] = "\u3042\u306A\u305F\u306F\u529B\u5C3D\u304D\u305F";
 })(TEXT = exports.TEXT || (exports.TEXT = {}));
 var actionMsg;
 (function (actionMsg) {
@@ -24,5 +25,8 @@ var actionMsg;
     };
     actionMsg.levelUp = function (level) {
         return "\u30EC\u30D9\u30EB\u304C" + level + "\u306B\u3042\u304C\u3063\u305F";
+    };
+    actionMsg.beAttacked = function (name, damage) {
+        return name + "\u304B\u3089" + damage + "\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u305F";
     };
 })(actionMsg = exports.actionMsg || (exports.actionMsg = {}));

@@ -7,7 +7,7 @@ import Player from "./player";
 import { Message } from "./messages";
 import { TEXT } from "./text";
 import { MessageType } from "./config";
-import Debug from "./debug/debug";
+import Debug from "./debug/Debug";
 
 // 決定キーを押すとinitイベントが走る
 export function init() {

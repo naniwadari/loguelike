@@ -8,23 +8,6 @@ var calcDamage_1 = __importDefault(require("./calcDamage"));
 var messages_1 = require("../messages");
 var text_1 = require("../text");
 var config_1 = require("../config");
-// export default (movePoint: Point) => {
-//   const enemys = S.fields[S.player.depth].enemys;
-//   const result = searchEnemy(movePoint, enemys);
-//   if (result.enemy && result.index) {
-//     const targetEnemy = result.enemy;
-//     const enemyIndex = result.index;
-//     //ダメージ計算
-//     attackResult(targetEnemy);
-//     //敵のHPが0以下になった場合
-//     if (targetEnemy.HP <= 0) {
-//       defeatEnemy(enemys, targetEnemy, enemyIndex);
-//     }
-//     while (S.player.EXP >= S.player.requireEXP) {
-//       levelUp();
-//     }
-//   }
-// };
 var battleEvent;
 (function (battleEvent) {
     function searchEnemy(point, enemys) {

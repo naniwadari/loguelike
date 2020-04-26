@@ -106,11 +106,8 @@ var Player = /** @class */ (function () {
         var block = State_1.S.fields[this.depth].blocks[this.x][this.y];
         if (block.base === config_1.MapType.downstair) {
             ++this.depth;
-            console.log("階段を降りました");
-            console.log("現在の階層 : " + this.depth + "F");
         }
         else {
-            console.log("そこは階段ではありません");
         }
     };
     return Player;

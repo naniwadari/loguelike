@@ -13,6 +13,7 @@ var messages_1 = require("./messages");
 var text_1 = require("./text");
 var config_1 = require("./config");
 var battleEvents_1 = require("./battle/battleEvents");
+var doEnemyTurn_1 = __importDefault(require("./doEnemyTurn"));
 exports.default = (function () {
     window.addEventListener("keydown", function (e) {
         e.preventDefault();
@@ -60,7 +61,9 @@ exports.default = (function () {
                 //移動先に敵がいた場合
                 var enemys = State_1.S.fields[State_1.S.player.depth].enemys;
                 var result = battleEvents_1.battleEvent.searchEnemy(movePoint, enemys);
-                if (result.enemy && result.index) {
+                if ((result.enemy && result.index) ||
+                    (result.enemy && result.index === 0) //0はfalseを返すため場合分け
+                ) {
                     var targetEnemy = result.enemy;
                     var enemyIndex = result.index;
                     //ダメージ計算
@@ -94,6 +97,7 @@ exports.default = (function () {
         else {
             return;
         }
+        doEnemyTurn_1.default();
         Draw_1.draw(Draw_1.con, State_1.S.env);
     });
     window.addEventListener("keydown", function (e) {

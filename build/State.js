@@ -11,7 +11,10 @@ exports.S = {
     fieldSize: { x: config_1.MapBluePrint.LX, y: config_1.MapBluePrint.LY },
     player: new player_1.default(0, 0),
     messages: new messages_1.MessageList(),
-    Frag: { start: false },
+    Frag: {
+        start: false,
+        gameover: false,
+    },
     env: { diagonal: false },
     KeyPress: {
         left: false,

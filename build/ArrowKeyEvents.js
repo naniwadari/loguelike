@@ -62,10 +62,19 @@ exports.default = (function () {
     });
     /* Zキー */
     window.addEventListener("keydown", function (e) {
+        //タイトル画面での操作
         if (!State_1.S.Frag.start) {
             if (e.keyCode === KeyCode_1.KeyCode.action) {
                 State_1.S.Frag.start = true;
                 index_1.init();
+                Draw_1.draw(Draw_1.con, State_1.S.env);
+            }
+            return;
+        }
+        //ゲームオーバー時の操作
+        if (State_1.S.Frag.gameover) {
+            if (e.keyCode === KeyCode_1.KeyCode.action) {
+                State_1.S.Frag.start = false;
                 Draw_1.draw(Draw_1.con, State_1.S.env);
             }
             return;

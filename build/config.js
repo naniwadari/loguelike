@@ -13,6 +13,7 @@ var MessageType;
 (function (MessageType) {
     MessageType[MessageType["normal"] = 0] = "normal";
     MessageType[MessageType["special"] = 1] = "special";
+    MessageType[MessageType["danger"] = 2] = "danger";
 })(MessageType = exports.MessageType || (exports.MessageType = {}));
 var MapBluePrint;
 (function (MapBluePrint) {

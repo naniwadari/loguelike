@@ -14,10 +14,10 @@ exports.default = (function (rooms, random, upstairs) {
                 y: random.num(rooms[i].end.y - rooms[i].start.y) + rooms[i].start.y,
             };
             var isUpstairsPoint = false;
-            //プレイヤーが降りた位置のポップを避ける処理
+            //プレイヤーが降りた位置のポップを避ける
             for (var k = 0; k < upstairs.length; k++) {
                 if (popPoint.x === upstairs[k].x && popPoint.y === upstairs[k].y) {
-                    isUpstairsPoint = false;
+                    isUpstairsPoint = true;
                     break;
                 }
             }

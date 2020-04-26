@@ -94,7 +94,7 @@ function createField(depth, upstairs, baseSeed) {
             }
         }
         //前回と違ったらランダムな位置に階段を置いて処理終了
-        if (isUpstairsPoint) {
+        if (!isUpstairsPoint) {
             blocks[x][y].base = config_1.MapType.downstair;
             newDownStairs--;
         }
