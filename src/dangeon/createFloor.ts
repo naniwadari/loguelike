@@ -119,7 +119,7 @@ function rangeRandomInteger(min: number, max: number) {
   return result;
 }
 
-//床を掘る方角を探す
+//通路を掘る
 function DigPass(room: IRoom, target: IRoom) {
   const roomEdge = roomEdgeCulculator(room);
   const targetEdge = roomEdgeCulculator(target);
@@ -152,66 +152,6 @@ function DigPass(room: IRoom, target: IRoom) {
     return;
   }
 }
-
-function randomTwoChoice() {
-  const Prob = Math.random();
-  if (Prob > 0.5) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-//x軸が被っていないかを探る
-function checkVerticalOverlap(room: IRoomEdge, target: IRoomEdge) {
-  let isOverlap = false;
-  // ターゲットの右端左端のxのどちらかが、自身のxの範囲内にあればtrueを返す
-  if (
-    (room.upperLeft.x <= target.upperLeft.x &&
-      room.upperRight.x >= target.upperLeft.x) ||
-    (room.upperLeft.x <= target.upperRight.x &&
-      room.upperRight.x >= target.upperRight.x)
-  ) {
-    isOverlap = true;
-  }
-  return isOverlap;
-}
-
-//y軸が被っていないかを探る
-function checkSideOverlap(room: IRoomEdge, target: IRoomEdge) {
-  let isOverlap = false;
-  // ターゲットの上端下端のyのどちらかが、自身のyの範囲内にあればtrueを返す
-  if (
-    (room.upperLeft.y <= target.upperLeft.y &&
-      room.bottomLeft.y >= target.upperLeft.y) ||
-    (room.upperLeft.y <= target.bottomLeft.y &&
-      room.bottomLeft.y >= target.bottomLeft.y)
-  ) {
-    isOverlap = true;
-  }
-  return isOverlap;
-}
-
-//斜め方向
-function findDiagonalDirection(side: Direction, vertical: Direction) {
-  //斜め左上にある
-  if (side === Direction.left && vertical === Direction.up) {
-    return Direction.upperLeft;
-  }
-  //斜め左下にある
-  else if (side === Direction.left && vertical === Direction.bottom) {
-    return Direction.bottomLeft;
-  }
-  //斜め右上にある
-  else if (side === Direction.right && vertical === Direction.up) {
-    return Direction.upperRight;
-  }
-  //斜め右下にある
-  else if (side === Direction.right && vertical === Direction.bottom) {
-    return Direction.bottomRight;
-  }
-}
-
 //指定した部屋との上下左右の距離の差を比較して最も小さいものを返す
 function findDirection(room: IRoomEdge, target: IRoomEdge) {
   interface findDirection {
