@@ -138,23 +138,17 @@ function roomCreator(lim: number) {
 }
 
 function connectRoomsToPass(rooms: IRoom[]) {
+  const tmpRooms = rooms.slice();
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
-    // console.log(room);
-    const tmpRooms = rooms.slice();
-    //パスでつながったものは条件から消す
-    if (room.hasPath) {
-      for (let j = 0; j < room.hasPath.length; j++) {
-        tmpRooms.some((v: IRoom, i) => {
-          if (v.index === room.hasPath[i]) tmpRooms.splice(i, 1);
-        });
-      }
-    }
     const nearRoom = findNearRoom(room, tmpRooms);
     if (nearRoom) {
       DigPass(room, nearRoom);
       room.toPath = nearRoom.index;
       rooms[nearRoom.index].hasPath.push(room.index);
+      tmpRooms.some((v: IRoom, i) => {
+        if (v.index === nearRoom.index) tmpRooms.splice(i, 1);
+      });
     } else {
       DigPass(room, rooms[0]);
       room.toPath = rooms[0].index;
