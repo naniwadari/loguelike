@@ -1,8 +1,8 @@
 import { MapBluePrint, MapType } from "./config";
 import { Random } from "./Random";
 import { splitRoom, IRoom } from "./splitRoom";
-import PopEnemys from "./popEnemy";
-import { Enemy } from "./Enemy";
+import PopEnemys from "./enemy/popEnemy";
+import { Enemy } from "./enemy/Enemy";
 import { IField } from "./Types";
 
 export function createField(

@@ -1,4 +1,4 @@
-import { Point } from "./Types";
+import { Point } from "../Types";
 
 export enum EnemyId {
   slime = 0,

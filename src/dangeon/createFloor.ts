@@ -1,5 +1,5 @@
 import { Dig } from "./digPass";
-import { con } from "../Draw";
+import { con } from "../draw/Draw";
 
 export enum MapType {
   wall = 0,
@@ -73,7 +73,7 @@ export function createFloor() {
   initFloor();
   roomCreator(roomCreateCount);
   // testCaseFloor();
-  connectRoomsToPass(rooms);
+  connectRoomsToPath(rooms);
   console.log(rooms);
   let checked: {
     result: boolean;
@@ -137,7 +137,7 @@ function roomCreator(lim: number) {
   }
 }
 
-function connectRoomsToPass(rooms: IRoom[]) {
+function connectRoomsToPath(rooms: IRoom[]) {
   const tmpRooms = rooms.slice();
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];

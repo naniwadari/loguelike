@@ -1,15 +1,15 @@
-import { KeyCode } from "./KeyCode";
+import { KeyCode } from "./key/KeyCode";
 import { S } from "./State";
-import { con, draw } from "./Draw";
-import Player from "./player";
+import { con, draw } from "./draw/Draw";
+import Player from "./player/player";
 import { map } from "./Map";
 import { createField } from "./createField";
-import { Message } from "./messages";
-import { TEXT } from "./text";
+import { Message } from "./text/messages";
+import { TEXT } from "./text/text";
 import { MessageType, CanStand } from "./config";
 import { Point } from "./Types";
 import { battleEvent } from "./battle/battleEvents";
-import doEnemyTurn from "./doEnemyTurn";
+import doEnemyTurn from "./enemy/doEnemyTurn";
 import { createFloor } from "./dangeon/createFloor";
 export default () => {
   window.addEventListener("keydown", (e) => {

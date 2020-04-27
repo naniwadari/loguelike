@@ -1,6 +1,6 @@
-import Player from "./player";
+import Player from "./player/player";
 import { MapBluePrint } from "./config";
-import { MessageList } from "./messages";
+import { MessageList } from "./text/messages";
 import { IField } from "./Types";
 interface IState {
   fields: IField[];

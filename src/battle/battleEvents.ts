@@ -1,10 +1,10 @@
 import { S } from "../State";
 import calcDamage from "./calcDamage";
-import { Message } from "../messages";
-import { actionMsg } from "../text";
+import { Message } from "../text/messages";
+import { actionMsg } from "../text/text";
 import { MessageType } from "../config";
 import { Point } from "../Types";
-import { Enemy } from "../Enemy";
+import { Enemy } from "../enemy/Enemy";
 
 interface searchResult {
   enemy: Enemy | undefined;

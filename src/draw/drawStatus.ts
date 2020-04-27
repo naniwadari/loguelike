@@ -1,4 +1,4 @@
-import { TEXT } from "../text";
+import { TEXT } from "../text/text";
 import { TyleSize, DrawRange } from "../config";
 import { S } from "../State";
 
