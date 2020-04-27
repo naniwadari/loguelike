@@ -1,4 +1,5 @@
 import { Dig } from "./digPass";
+import { con } from "../Draw";
 
 export enum MapType {
   wall = 0,
@@ -26,7 +27,7 @@ export interface IRoom {
   size: ISize;
   point: IPoint;
   hasPath: number[];
-  toPath: number[];
+  toPath?: number;
 }
 
 export interface IRoomEdge {
@@ -71,7 +72,23 @@ export function createFloor() {
   rooms = [];
   initFloor();
   roomCreator(roomCreateCount);
+  // testCaseFloor();
   connectRoomsToPass(rooms);
+  console.log(rooms);
+  let checked: {
+    result: boolean;
+    needConnect: { to: IRoom; from: IRoom } | undefined;
+  } = {
+    result: false,
+    needConnect: undefined,
+  };
+  for (let i = 0; !checked.result && i < 4; i++) {
+    checked = checkDeadEnd(rooms);
+    console.log(checked);
+    if (checked.needConnect) {
+      DigPass(checked.needConnect.to, checked.needConnect.from);
+    }
+  }
   return blocks;
 }
 
@@ -80,7 +97,26 @@ function visualMapping(blocks: block[][]) {
     console.log(blocks[i]);
   }
 }
-
+export function testCaseFloor() {
+  let size = { width: 5, height: 5 };
+  let point = [
+    { x: 16, y: 19 },
+    { x: 17, y: 10 },
+    { x: 19, y: 2 },
+    { x: 2, y: 6 },
+    { x: 2, y: 15 },
+  ];
+  for (let i = 0; i < point.length; i++) {
+    createRoom(point[i], size);
+    let newRoom: IRoom = {
+      index: i,
+      size: size,
+      point: point[i],
+      hasPath: [],
+    };
+    rooms.push(newRoom);
+  }
+}
 //指定の回数部屋を作成する
 function roomCreator(lim: number) {
   let count: number = 0;
@@ -94,7 +130,6 @@ function roomCreator(lim: number) {
         size: roomElement.size,
         point: roomElement.point,
         hasPath: [],
-        toPath: [],
       };
       count++;
       rooms.push(newRoom);
@@ -105,7 +140,7 @@ function roomCreator(lim: number) {
 function connectRoomsToPass(rooms: IRoom[]) {
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
-    console.log(room);
+    // console.log(room);
     const tmpRooms = rooms.slice();
     //パスでつながったものは条件から消す
     if (room.hasPath) {
@@ -118,15 +153,76 @@ function connectRoomsToPass(rooms: IRoom[]) {
     const nearRoom = findNearRoom(room, tmpRooms);
     if (nearRoom) {
       DigPass(room, nearRoom);
-      room.toPath.push(nearRoom.index);
+      room.toPath = nearRoom.index;
       rooms[nearRoom.index].hasPath.push(room.index);
     } else {
       DigPass(room, rooms[0]);
-      room.toPath.push(rooms[0].index);
+      room.toPath = rooms[0].index;
       rooms[0].hasPath.push(room.index);
     }
   }
-  console.log("-----------------");
+  // console.log("-----------------");
+}
+function checkDeadEnd(rooms: IRoom[]): any {
+  const noCheckedRooms = rooms.slice();
+  let next = 0;
+  let isConnect = false;
+  let needConnect: { to: IRoom | undefined; from: IRoom | undefined } = {
+    to: undefined,
+    from: undefined,
+  };
+
+  for (let i = 0; noCheckedRooms.length > 0; i++) {
+    console.log(`----${i}回目のチェック開始-----`);
+    //初回の処理
+    if (i === 0) {
+      let now = rooms[0];
+      if (now.toPath) next = now.toPath;
+      noCheckedRooms.shift();
+      let result = noCheckedRooms.some((v: IRoom) => {
+        if (v.index === next) return true;
+        else return undefined;
+      });
+      if (!result) {
+        isConnect = true;
+        break;
+      }
+    }
+    //2回目以降の処理
+    else {
+      let now = rooms[next];
+      noCheckedRooms.some((v: IRoom, i) => {
+        if (v.index === now.index) noCheckedRooms.splice(i, 1);
+      });
+      if (now.toPath) next = now.toPath;
+      let result = noCheckedRooms.some((v: IRoom) => {
+        if (v.index === next) return true;
+        else return undefined;
+      });
+      console.log(`${i}回目のresult`);
+      console.log(result);
+      if (!result) {
+        needConnect = { to: now, from: noCheckedRooms[0] };
+        break;
+      }
+      console.log(`noCheckedRoomsの中身`);
+      console.log(noCheckedRooms);
+    }
+  }
+  if (isConnect) {
+    console.log("最終結果 true");
+    return { result: isConnect, needConnect: undefined };
+  } else {
+    if (needConnect.from && needConnect.to) {
+      console.log("チェック結果 false");
+      console.log("needConnectの中身");
+      console.log(needConnect);
+      return { result: isConnect, needConnect: needConnect };
+    } else {
+      needConnect = { to: needConnect.to, from: rooms[0] };
+      return { result: isConnect, needConnect: needConnect };
+    }
+  }
 }
 
 //通路の始点をランダムに決める
