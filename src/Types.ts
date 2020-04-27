@@ -1,4 +1,4 @@
-import { Enemy } from "./Enemy";
+import { Enemy } from "./enemy/Enemy";
 
 export interface Point {
   x: number;

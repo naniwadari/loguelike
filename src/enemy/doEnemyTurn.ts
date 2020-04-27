@@ -1,10 +1,10 @@
-import { S } from "./State";
-import { Enemy } from "./Enemy";
-import calcDamage from "./battle/calcDamage";
-import { Message } from "./messages";
-import { actionMsg, TEXT } from "./text";
-import { MessageType, CanStand } from "./config";
-import { Point } from "./Types";
+import { S } from "../State";
+import { Enemy } from "../enemy/Enemy";
+import calcDamage from "../battle/calcDamage";
+import { Message } from "../text/messages";
+import { actionMsg, TEXT } from "../text/text";
+import { MessageType, CanStand } from "../config";
+import { Point } from "../Types";
 
 export default function () {
   const enemys = S.fields[S.player.depth].enemys;

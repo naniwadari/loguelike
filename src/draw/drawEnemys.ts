@@ -1,7 +1,7 @@
 import { S } from "../State";
 import { DrawRange, TyleSize } from "../config";
 import { Point } from "../Types";
-import { EnemyId, Enemy } from "../Enemy";
+import { EnemyId, Enemy } from "../enemy/Enemy";
 
 export default (con: any, drawStartPoint: Point) => {
   con.textBaseline = "middle";

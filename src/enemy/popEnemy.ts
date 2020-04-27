@@ -1,9 +1,9 @@
-import { Random } from "./Random";
-import { IRoom } from "./splitRoom";
-import { Point } from "./Types";
+import { Random } from "../Random";
+import { IRoom } from "../splitRoom";
+import { Point } from "../Types";
 import { EnemyList } from "./EnemyList";
 import { Enemy } from "./Enemy";
-import { S } from "./State";
+import { S } from "../State";
 
 export default (rooms: IRoom[], random: Random, upstairs: any) => {
   let popEnemys: Enemy[] = [];

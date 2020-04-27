@@ -2,7 +2,7 @@ import { S } from "../State";
 import { Point } from "../Types";
 import { MapType } from "../config";
 import { createFloor } from "../dangeon/createFloor";
-import { draw, con } from "../Draw";
+import { draw, con } from "../draw/Draw";
 export default () => {
   window.addEventListener("keydown", (e) => {
     // デバッグキー P

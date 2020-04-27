@@ -1,13 +1,13 @@
-import { S } from "./State";
-import { SCREEN } from "./config";
-import culcDrawStartPoint from "./culcDrawStartPoint";
-import drawDiagonalArrow from "./draw/drawDiagonalArrow";
-import drawMessage from "./draw/drawMessage";
-import { drawTyles } from "./draw/drawTyles";
-import drawStatus from "./draw/drawStatus";
-import drawEnemys from "./draw/drawEnemys";
-import drawPlayer from "./draw/drawPlayer";
-import drawTitle from "./draw/drawTitle";
+import { S } from "../State";
+import { SCREEN } from "../config";
+import culcDrawStartPoint from "../culcDrawStartPoint";
+import drawDiagonalArrow from "./drawDiagonalArrow";
+import drawMessage from "./drawMessage";
+import { drawTyles } from "./drawTyles";
+import drawStatus from "./drawStatus";
+import drawEnemys from "./drawEnemys";
+import drawPlayer from "./drawPlayer";
+import drawTitle from "./drawTitle";
 
 export const canvas = <HTMLCanvasElement>document.getElementById("game");
 export const con: any = canvas.getContext("2d");

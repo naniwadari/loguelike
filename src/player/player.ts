@@ -1,6 +1,6 @@
-import { MapType } from "./config";
-import { S } from "./State";
-import { Point } from "./Types";
+import { MapType } from "../config";
+import { S } from "../State";
+import { Point } from "../Types";
 export default class Player {
   depth: number;
   point: Point;

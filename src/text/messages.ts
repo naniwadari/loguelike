@@ -1,4 +1,4 @@
-import { MessageLength, MessageType } from "./config";
+import { MessageLength, MessageType } from "../config";
 
 interface IMessage {
   text: string;

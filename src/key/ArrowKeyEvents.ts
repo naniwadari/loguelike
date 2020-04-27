@@ -1,7 +1,7 @@
 import { KeyCode } from "./KeyCode";
-import { S } from "./State";
-import { con, canvas, draw } from "./Draw";
-import { init } from "./index";
+import { S } from "../State";
+import { con, canvas, draw } from "../draw/Draw";
+import { init } from "../index";
 
 export default () => {
   // 移動キーが押されているか

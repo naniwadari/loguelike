@@ -1,4 +1,5 @@
 import { Dig } from "./digPass";
+import { con } from "../draw/Draw";
 
 export enum MapType {
   wall = 0,
@@ -25,6 +26,8 @@ export interface IRoom {
   index: number;
   size: ISize;
   point: IPoint;
+  hasPath: number[];
+  toPath?: number;
 }
 
 export interface IRoomEdge {
@@ -54,9 +57,9 @@ export let blocks: block[][] = [];
 //フロアのサイズ
 const floorSize = { width: 25, height: 25 };
 //一部屋あたりの最大サイズ
-const maxRoomSize = { width: 10, height: 10 };
+const maxRoomSize = { width: 10, height: 5 };
 //一部屋あたりの最小サイズ
-const minRoomSize = { width: 6, height: 6 };
+const minRoomSize = { width: 5, height: 5 };
 //部屋の生成を試みる回数
 const roomCreateCount = 30;
 //生成された部屋を格納する配列
@@ -69,8 +72,23 @@ export function createFloor() {
   rooms = [];
   initFloor();
   roomCreator(roomCreateCount);
-  connectRoomsToPass(rooms);
-  console.log(paths);
+  // testCaseFloor();
+  connectRoomsToPath(rooms);
+  console.log(rooms);
+  let checked: {
+    result: boolean;
+    needConnect: { to: IRoom; from: IRoom } | undefined;
+  } = {
+    result: false,
+    needConnect: undefined,
+  };
+  for (let i = 0; !checked.result && i < 4; i++) {
+    checked = checkDeadEnd(rooms);
+    console.log(checked);
+    if (checked.needConnect) {
+      DigPass(checked.needConnect.to, checked.needConnect.from);
+    }
+  }
   return blocks;
 }
 
@@ -79,14 +97,124 @@ function visualMapping(blocks: block[][]) {
     console.log(blocks[i]);
   }
 }
+export function testCaseFloor() {
+  let size = { width: 5, height: 5 };
+  let point = [
+    { x: 16, y: 19 },
+    { x: 17, y: 10 },
+    { x: 19, y: 2 },
+    { x: 2, y: 6 },
+    { x: 2, y: 15 },
+  ];
+  for (let i = 0; i < point.length; i++) {
+    createRoom(point[i], size);
+    let newRoom: IRoom = {
+      index: i,
+      size: size,
+      point: point[i],
+      hasPath: [],
+    };
+    rooms.push(newRoom);
+  }
+}
+//指定の回数部屋を作成する
+function roomCreator(lim: number) {
+  let count: number = 0;
+  for (let i = 0; i < lim; i++) {
+    const roomSize = randomRoomSize();
+    const startPoint = randomRoomStartPoint();
+    const roomElement = createRoom(startPoint, roomSize);
+    if (roomElement) {
+      const newRoom: IRoom = {
+        index: count,
+        size: roomElement.size,
+        point: roomElement.point,
+        hasPath: [],
+      };
+      count++;
+      rooms.push(newRoom);
+    }
+  }
+}
 
-function connectRoomsToPass(rooms: IRoom[]) {
+function connectRoomsToPath(rooms: IRoom[]) {
+  const tmpRooms = rooms.slice();
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
-    const nearRoom = findNearRoom(room, rooms);
+    const nearRoom = findNearRoom(room, tmpRooms);
     if (nearRoom) {
       DigPass(room, nearRoom);
-      paths.push({ from: i, to: nearRoom.index });
+      room.toPath = nearRoom.index;
+      rooms[nearRoom.index].hasPath.push(room.index);
+      tmpRooms.some((v: IRoom, i) => {
+        if (v.index === nearRoom.index) tmpRooms.splice(i, 1);
+      });
+    } else {
+      DigPass(room, rooms[0]);
+      room.toPath = rooms[0].index;
+      rooms[0].hasPath.push(room.index);
+    }
+  }
+  // console.log("-----------------");
+}
+function checkDeadEnd(rooms: IRoom[]): any {
+  const noCheckedRooms = rooms.slice();
+  let next = 0;
+  let isConnect = false;
+  let needConnect: { to: IRoom | undefined; from: IRoom | undefined } = {
+    to: undefined,
+    from: undefined,
+  };
+
+  for (let i = 0; noCheckedRooms.length > 0; i++) {
+    console.log(`----${i}回目のチェック開始-----`);
+    //初回の処理
+    if (i === 0) {
+      let now = rooms[0];
+      if (now.toPath) next = now.toPath;
+      noCheckedRooms.shift();
+      let result = noCheckedRooms.some((v: IRoom) => {
+        if (v.index === next) return true;
+        else return undefined;
+      });
+      if (!result) {
+        isConnect = true;
+        break;
+      }
+    }
+    //2回目以降の処理
+    else {
+      let now = rooms[next];
+      noCheckedRooms.some((v: IRoom, i) => {
+        if (v.index === now.index) noCheckedRooms.splice(i, 1);
+      });
+      if (now.toPath) next = now.toPath;
+      let result = noCheckedRooms.some((v: IRoom) => {
+        if (v.index === next) return true;
+        else return undefined;
+      });
+      console.log(`${i}回目のresult`);
+      console.log(result);
+      if (!result) {
+        needConnect = { to: now, from: noCheckedRooms[0] };
+        break;
+      }
+      console.log(`noCheckedRoomsの中身`);
+      console.log(noCheckedRooms);
+    }
+  }
+  if (isConnect) {
+    console.log("最終結果 true");
+    return { result: isConnect, needConnect: undefined };
+  } else {
+    if (needConnect.from && needConnect.to) {
+      console.log("チェック結果 false");
+      console.log("needConnectの中身");
+      console.log(needConnect);
+      return { result: isConnect, needConnect: needConnect };
+    } else {
+      needConnect = { to: needConnect.to, from: rooms[0] };
+      return { result: isConnect, needConnect: needConnect };
     }
   }
 }
@@ -100,23 +228,23 @@ function randomMakePointToDig(room: IRoom, direction: Direction) {
   let digPoint: IPoint = { x: 0, y: 0 };
   //方角毎に通路の始点をランダムに決める
   if (direction === Direction.left) {
-    min = edge.upperLeft.y + 1;
-    max = edge.bottomLeft.y - 1;
+    min = edge.upperLeft.y;
+    max = edge.bottomLeft.y;
     result = rangeRandomInteger(min, max);
     digPoint = { x: edge.upperLeft.x, y: result };
   } else if (direction === Direction.right) {
-    min = edge.upperRight.y + 1;
-    max = edge.bottomRight.y - 1;
+    min = edge.upperRight.y;
+    max = edge.bottomRight.y;
     result = rangeRandomInteger(min, max);
     digPoint = { x: edge.upperRight.x, y: result };
   } else if (direction === Direction.up) {
-    min = edge.upperLeft.x + 1;
-    max = edge.bottomRight.x - 1;
+    min = edge.upperLeft.x;
+    max = edge.bottomRight.x;
     result = rangeRandomInteger(min, max);
     digPoint = { x: result, y: edge.upperLeft.y };
   } else if (direction === Direction.bottom) {
-    min = edge.bottomLeft.x + 1;
-    max = edge.bottomRight.x - 1;
+    min = edge.bottomLeft.x;
+    max = edge.bottomRight.x;
     result = rangeRandomInteger(min, max);
     digPoint = { x: result, y: edge.bottomLeft.y };
   }
@@ -243,23 +371,6 @@ function roomEdgeCulculator(room: IRoom): IRoomEdge {
     center: center,
   };
   return result;
-}
-
-//指定の回数部屋を作成する
-function roomCreator(lim: number) {
-  for (let i = 0; i < lim; i++) {
-    const roomSize = randomRoomSize();
-    const startPoint = randomRoomStartPoint();
-    const roomElement = createRoom(startPoint, roomSize);
-    if (roomElement) {
-      const newRoom: IRoom = {
-        index: i,
-        size: roomElement.size,
-        point: roomElement.point,
-      };
-      rooms.push(newRoom);
-    }
-  }
 }
 
 //ランダムに部屋のwidthとheightを返す

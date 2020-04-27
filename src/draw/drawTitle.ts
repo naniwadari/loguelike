@@ -1,4 +1,4 @@
-import { TEXT } from "../text";
+import { TEXT } from "../text/text";
 import { SCREEN } from "../config";
 
 export default (con: any) => {
