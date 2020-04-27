@@ -115,34 +115,9 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Ke
   !*** ./src/Draw.ts ***!
   \*********************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar State_1 = __webpack_require__(/*! ./State */ \"./src/State.ts\");\nvar config_1 = __webpack_require__(/*! ./config */ \"./src/config.ts\");\nvar culcDrawStartPoint_1 = __importDefault(__webpack_require__(/*! ./culcDrawStartPoint */ \"./src/culcDrawStartPoint.ts\"));\nvar drawDiagonalArrow_1 = __importDefault(__webpack_require__(/*! ./draw/drawDiagonalArrow */ \"./src/draw/drawDiagonalArrow.ts\"));\nvar drawMessage_1 = __importDefault(__webpack_require__(/*! ./draw/drawMessage */ \"./src/draw/drawMessage.ts\"));\nvar drawTyles_1 = __webpack_require__(/*! ./draw/drawTyles */ \"./src/draw/drawTyles.ts\");\nvar drawStatus_1 = __importDefault(__webpack_require__(/*! ./draw/drawStatus */ \"./src/draw/drawStatus.ts\"));\nvar drawEnemys_1 = __importDefault(__webpack_require__(/*! ./draw/drawEnemys */ \"./src/draw/drawEnemys.ts\"));\nvar drawPlayer_1 = __importDefault(__webpack_require__(/*! ./draw/drawPlayer */ \"./src/draw/drawPlayer.ts\"));\nvar drawTitle_1 = __importDefault(__webpack_require__(/*! ./draw/drawTitle */ \"./src/draw/drawTitle.ts\"));\nexports.canvas = document.getElementById(\"game\");\nexports.con = exports.canvas.getContext(\"2d\");\nfunction draw(con, env) {\n    con.fillStyle = \"black\";\n    con.fillRect(0, 0, config_1.SCREEN.X, config_1.SCREEN.Y);\n    if (!State_1.S.Frag.start) {\n        drawTitle_1.default(con);\n        return;\n    }\n    var drawStartPoint = culcDrawStartPoint_1.default();\n    var playerDrawPoint = {\n        x: State_1.S.player.x - drawStartPoint.x,\n        y: State_1.S.player.y - drawStartPoint.y,\n    };\n    // タイルの描画\n    drawTyles_1.drawTyles(con, drawStartPoint);\n    //プレイヤーの描画\n    drawPlayer_1.default(con, playerDrawPoint);\n    //モンスターの描画\n    drawEnemys_1.default(con, drawStartPoint);\n    //メッセージの描画\n    drawMessage_1.default(con);\n    //ステータスの描画\n    drawStatus_1.default(con);\n    //斜め移動の矢印の描画\n    if (State_1.S.env.diagonal) {\n        drawDiagonalArrow_1.default(con, playerDrawPoint);\n    }\n}\nexports.draw = draw;\n\n\n//# sourceURL=webpack:///./src/Draw.ts?");
-
-/***/ }),
-
-/***/ "./src/Enemy.ts":
-/*!**********************!*\
-  !*** ./src/Enemy.ts ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar EnemyId;\n(function (EnemyId) {\n    EnemyId[EnemyId[\"slime\"] = 0] = \"slime\";\n    EnemyId[EnemyId[\"rat\"] = 1] = \"rat\";\n})(EnemyId = exports.EnemyId || (exports.EnemyId = {}));\nvar Enemy = /** @class */ (function () {\n    function Enemy(point, Material, level) {\n        this.name = Material.name;\n        this.point = point;\n        this.id = Material.id;\n        this.level = Material.level;\n        this.baseHP = Material.HP;\n        this.equipHP = 0;\n        this.baseATK = Material.ATK;\n        this.equipATK = 0;\n        this.baseDEF = Material.DEF;\n        this.equipDEF = 0;\n        this.EXP = Material.EXP;\n        //レベルが与えられていた場合はレベルアップ処理\n        if (level) {\n            while (level > this.level) {\n                this.level++;\n                this.baseHP = Math.ceil(this.baseHP * 1.2);\n                this.baseATK = Math.ceil(this.baseATK * 1.1);\n                this.baseDEF = Math.ceil(this.baseDEF * 1.1);\n                this.EXP = Math.ceil(this.EXP * 1.4);\n            }\n        }\n        this.HP = this.totalHP;\n        this.ATK = this.totalATK;\n        this.DEF = this.totalDEF;\n    }\n    Object.defineProperty(Enemy.prototype, \"totalHP\", {\n        get: function () {\n            return this.baseHP + this.equipHP;\n        },\n        enumerable: true,\n        configurable: true\n    });\n    Object.defineProperty(Enemy.prototype, \"totalATK\", {\n        get: function () {\n            return this.baseATK + this.equipATK;\n        },\n        enumerable: true,\n        configurable: true\n    });\n    Object.defineProperty(Enemy.prototype, \"totalDEF\", {\n        get: function () {\n            return this.baseDEF + this.equipDEF;\n        },\n        enumerable: true,\n        configurable: true\n    });\n    return Enemy;\n}());\nexports.Enemy = Enemy;\n\n\n//# sourceURL=webpack:///./src/Enemy.ts?");
-
-/***/ }),
-
-/***/ "./src/EnemyList.ts":
-/*!**************************!*\
-  !*** ./src/EnemyList.ts ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Enemy_1 = __webpack_require__(/*! ./Enemy */ \"./src/Enemy.ts\");\nexports.EnemyList = [\n    {\n        id: Enemy_1.EnemyId.slime,\n        name: \"スライム\",\n        level: 1,\n        HP: 5,\n        ATK: 1,\n        DEF: 1,\n        EXP: 1,\n    },\n    {\n        id: Enemy_1.EnemyId.rat,\n        name: \"大ネズミ\",\n        level: 1,\n        HP: 7,\n        ATK: 2,\n        DEF: 2,\n        EXP: 3,\n    },\n];\n\n\n//# sourceURL=webpack:///./src/EnemyList.ts?");
+eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/Draw.ts'\");\n\n//# sourceURL=webpack:///./src/Draw.ts?");
 
 /***/ }),
 
@@ -151,10 +126,9 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar En
   !*** ./src/KeyCode.ts ***!
   \************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar KeyCode;\n(function (KeyCode) {\n    KeyCode[KeyCode[\"left\"] = 37] = \"left\";\n    KeyCode[KeyCode[\"up\"] = 38] = \"up\";\n    KeyCode[KeyCode[\"right\"] = 39] = \"right\";\n    KeyCode[KeyCode[\"down\"] = 40] = \"down\";\n    KeyCode[KeyCode[\"action\"] = 90] = \"action\";\n    KeyCode[KeyCode[\"shift\"] = 16] = \"shift\";\n    KeyCode[KeyCode[\"space\"] = 32] = \"space\";\n})(KeyCode = exports.KeyCode || (exports.KeyCode = {}));\n\n\n//# sourceURL=webpack:///./src/KeyCode.ts?");
+eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/KeyCode.ts'\");\n\n//# sourceURL=webpack:///./src/KeyCode.ts?");
 
 /***/ }),
 
@@ -254,18 +228,6 @@ eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {
 
 /***/ }),
 
-/***/ "./src/culcDrawStartPoint.ts":
-/*!***********************************!*\
-  !*** ./src/culcDrawStartPoint.ts ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar State_1 = __webpack_require__(/*! ./State */ \"./src/State.ts\");\nvar config_1 = __webpack_require__(/*! ./config */ \"./src/config.ts\");\nexports.default = (function () {\n    var drawStartPoint = { x: 0, y: 0 };\n    // 描画を開始するX座標を計算\n    //プレイヤーのxが描画範囲の半分以内なら始点は0\n    if (State_1.S.player.x <= Math.floor(config_1.DrawRange.x / 2)) {\n        drawStartPoint.x = 0;\n    }\n    //画面描画が右端で止まるところを始点とする\n    else if (State_1.S.player.x >= State_1.S.fieldSize.x - Math.floor(config_1.DrawRange.x / 2)) {\n        drawStartPoint.x = State_1.S.fieldSize.x - config_1.DrawRange.x;\n    }\n    else {\n        drawStartPoint.x = State_1.S.player.x - Math.floor(config_1.DrawRange.x / 2);\n    }\n    //描画を開始するY座標を計算\n    if (State_1.S.player.y <= Math.floor(config_1.DrawRange.y / 2)) {\n        drawStartPoint.y = 0;\n    }\n    else if (State_1.S.player.y >= State_1.S.fieldSize.y - Math.floor(config_1.DrawRange.y / 2)) {\n        drawStartPoint.y = State_1.S.fieldSize.y - config_1.DrawRange.y;\n    }\n    else {\n        drawStartPoint.y = State_1.S.player.y - Math.floor(config_1.DrawRange.y / 2);\n    }\n    return drawStartPoint;\n});\n\n\n//# sourceURL=webpack:///./src/culcDrawStartPoint.ts?");
-
-/***/ }),
-
 /***/ "./src/dangeon/createFloor.ts":
 /*!************************************!*\
   !*** ./src/dangeon/createFloor.ts ***!
@@ -307,94 +269,9 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar St
   !*** ./src/doEnemyTurn.ts ***!
   \****************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar State_1 = __webpack_require__(/*! ./State */ \"./src/State.ts\");\nvar calcDamage_1 = __importDefault(__webpack_require__(/*! ./battle/calcDamage */ \"./src/battle/calcDamage.ts\"));\nvar messages_1 = __webpack_require__(/*! ./messages */ \"./src/messages.ts\");\nvar text_1 = __webpack_require__(/*! ./text */ \"./src/text.ts\");\nvar config_1 = __webpack_require__(/*! ./config */ \"./src/config.ts\");\nfunction default_1() {\n    var enemys = State_1.S.fields[State_1.S.player.depth].enemys;\n    for (var i = 0; i < enemys.length; i++) {\n        var enemy = enemys[i];\n        //プレイヤーを探す\n        var searchResult = searchPlayer(enemy);\n        //プレイヤーがいた場合攻撃を行う\n        if (searchResult) {\n            attackPlayer(enemy);\n        }\n        //攻撃の結果プレイヤーのHPがゼロになったらゲームオーバー\n        if (State_1.S.player.HP <= 0) {\n            defeatPlayer();\n        }\n        //プレイヤーがいなかった場合移動を試みる\n        var movePoint = randomMoveEnemy(enemy);\n        //移動予定のブロック情報\n        var block = State_1.S.fields[State_1.S.player.depth].blocks[movePoint.x][movePoint.y];\n        var isPointUsing = movePointSearch(movePoint, enemys);\n        //移動先に誰もいなければEnemyの位置情報を更新\n        if (config_1.CanStand[block.base] &&\n            !isPointUsing &&\n            (State_1.S.player.x !== movePoint.x || State_1.S.player.y !== movePoint.y)) {\n            enemy.point = { x: movePoint.x, y: movePoint.y };\n        }\n    }\n}\nexports.default = default_1;\n//指定された座標にモンスターが存在するか判断、いたらtrueを返す\nfunction movePointSearch(point, enemys) {\n    var searchResult = false;\n    for (var i = 0; i < enemys.length; i++) {\n        if (enemys[i].point.x === point.x && enemys[i].point.y === point.y) {\n            searchResult = true;\n            break;\n        }\n    }\n    return searchResult;\n}\n//モンスターが移動する予定の座標を返す\nfunction randomMoveEnemy(enemy) {\n    var direction = Math.floor(Math.random() * 8); //番号で移動方向を決める\n    var x = enemy.point.x;\n    var y = enemy.point.y;\n    if (direction === 0) {\n        x--;\n    }\n    else if (direction === 1) {\n        y--;\n    }\n    else if (direction === 2) {\n        x++;\n    }\n    else if (direction === 3) {\n        y++;\n    }\n    else if (direction === 4) {\n        x--;\n        y--;\n    }\n    else if (direction === 5) {\n        x++;\n        y--;\n    }\n    else if (direction === 6) {\n        x--;\n        y++;\n    }\n    else if (direction === 7) {\n        x++;\n        y++;\n    }\n    //座標が許可される範囲なら更新する\n    if (x > 0 && x < State_1.S.fieldSize.x && y > 0 && y < State_1.S.fieldSize.y) {\n        var movePoint = { x: x, y: y };\n        return movePoint;\n    }\n    else {\n        return enemy.point;\n    }\n}\n//プレイヤーが倒された場合\nfunction defeatPlayer() {\n    State_1.S.player.HP = 0;\n    State_1.S.Frag.gameover = true;\n    var addMsg = new messages_1.Message(text_1.TEXT.die, config_1.MessageType.danger);\n    State_1.S.messages.add(addMsg);\n}\n//モンスターがプレイヤーに攻撃する処理\nfunction attackPlayer(enemy) {\n    var damage = calcDamage_1.default(enemy.ATK, State_1.S.player.DEF);\n    State_1.S.player.HP -= damage;\n    State_1.S.messages.add(new messages_1.Message(text_1.actionMsg.beAttacked(enemy.name, damage), config_1.MessageType.normal));\n}\n//モンスターの周辺にプレイヤーがいればtrueを返す\nfunction searchPlayer(enemy) {\n    //エネミーの座標取り出し\n    var player = State_1.S.player;\n    var self = enemy.point;\n    //上下左右でプレイヤーを探す\n    var left = player.x === self.x - 1 && player.y === self.y;\n    var up = player.x === self.x && player.y === self.y - 1;\n    var right = player.x === self.x + 1 && player.y === self.y;\n    var down = player.x === self.x && player.y === self.y + 1;\n    var upperLeft = player.x === self.x - 1 && player.y === self.y - 1;\n    var upperRight = player.x === self.x + 1 && player.y === self.y - 1;\n    var downLeft = player.x === self.x - 1 && player.y === self.y + 1;\n    var downRight = player.x === self.x + 1 && player.y === self.y + 1;\n    if (left ||\n        up ||\n        right ||\n        down ||\n        upperLeft ||\n        upperRight ||\n        downLeft ||\n        downRight) {\n        return true;\n    }\n    else {\n        return false;\n    }\n}\n\n\n//# sourceURL=webpack:///./src/doEnemyTurn.ts?");
-
-/***/ }),
-
-/***/ "./src/draw/drawDiagonalArrow.ts":
-/*!***************************************!*\
-  !*** ./src/draw/drawDiagonalArrow.ts ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nexports.default = (function (con, playerDrawPoint) {\n    con.save();\n    con.strokeStyle = \"black\";\n    con.translate(playerDrawPoint.x * config_1.TyleSize.x + config_1.TyleSize.x / 2, playerDrawPoint.y * config_1.TyleSize.y + config_1.TyleSize.y / 2);\n    con.rotate(Math.PI / 4);\n    con.beginPath();\n    con.moveTo(config_1.TyleSize.x / 2 + 4, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4 - 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8 + 8, 0);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4 + 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4, 4);\n    con.closePath();\n    con.stroke();\n    con.rotate((Math.PI / 4) * 2);\n    con.beginPath();\n    con.moveTo(config_1.TyleSize.x / 2 + 4, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4 - 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8 + 8, 0);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4 + 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4, 4);\n    con.closePath();\n    con.stroke();\n    con.rotate((Math.PI / 4) * 2);\n    con.beginPath();\n    con.moveTo(config_1.TyleSize.x / 2 + 4, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4 - 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8 + 8, 0);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4 + 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4, 4);\n    con.closePath();\n    con.stroke();\n    con.rotate((Math.PI / 4) * 2);\n    con.beginPath();\n    con.moveTo(config_1.TyleSize.x / 2 + 4, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4 - 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8 + 8, 0);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4 + 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4, 4);\n    con.closePath();\n    con.stroke();\n    con.rotate((Math.PI / 4) * 2);\n    con.beginPath();\n    con.moveTo(config_1.TyleSize.x / 2 + 4, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, -4 - 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8 + 8, 0);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4 + 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4 + 8, 4);\n    con.lineTo(config_1.TyleSize.x / 2 + 4, 4);\n    con.closePath();\n    con.stroke();\n    con.restore();\n});\n\n\n//# sourceURL=webpack:///./src/draw/drawDiagonalArrow.ts?");
-
-/***/ }),
-
-/***/ "./src/draw/drawEnemys.ts":
-/*!********************************!*\
-  !*** ./src/draw/drawEnemys.ts ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nvar Enemy_1 = __webpack_require__(/*! ../Enemy */ \"./src/Enemy.ts\");\nexports.default = (function (con, drawStartPoint) {\n    con.textBaseline = \"middle\";\n    con.textAlign = \"center\";\n    var enemys = State_1.S.fields[State_1.S.player.depth].enemys;\n    for (var i = 0; i < enemys.length; i++) {\n        if (enemys[i].point.x >= drawStartPoint.x &&\n            enemys[i].point.x < drawStartPoint.x + config_1.DrawRange.x &&\n            enemys[i].point.y >= drawStartPoint.y &&\n            drawStartPoint.y + config_1.DrawRange.y) {\n            drawEnemy(con, enemys[i], drawStartPoint);\n        }\n    }\n});\nfunction drawEnemy(con, enemy, drawStartPoint) {\n    var id = enemy.id;\n    if (id === Enemy_1.EnemyId.slime) {\n        drawEnemyImg.slime(con, enemy.point, drawStartPoint);\n    }\n    else if (id === Enemy_1.EnemyId.rat) {\n        drawEnemyImg.rat(con, enemy.point, drawStartPoint);\n    }\n}\nvar drawEnemyImg;\n(function (drawEnemyImg) {\n    function slime(con, popPoint, drawStartPoint) {\n        con.fillStyle = \"blue\";\n        con.font = \"16px consolas\";\n        con.fillText(\"●\", (popPoint.x - drawStartPoint.x) * config_1.TyleSize.x + config_1.TyleSize.x / 2, (popPoint.y - drawStartPoint.y) * config_1.TyleSize.y + config_1.TyleSize.y / 2);\n    }\n    drawEnemyImg.slime = slime;\n    function rat(con, popPoint, drawStartPoint) {\n        con.fillStyle = \"blown\";\n        con.font = \"16px consolas\";\n        con.fillText(\"R\", (popPoint.x - drawStartPoint.x) * config_1.TyleSize.x + config_1.TyleSize.x / 2, (popPoint.y - drawStartPoint.y) * config_1.TyleSize.y + config_1.TyleSize.y / 2);\n    }\n    drawEnemyImg.rat = rat;\n})(drawEnemyImg = exports.drawEnemyImg || (exports.drawEnemyImg = {}));\n\n\n//# sourceURL=webpack:///./src/draw/drawEnemys.ts?");
-
-/***/ }),
-
-/***/ "./src/draw/drawMessage.ts":
-/*!*********************************!*\
-  !*** ./src/draw/drawMessage.ts ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\nexports.default = (function (con) {\n    var messages = State_1.S.messages;\n    con.save();\n    con.textBaseline = \"top\";\n    con.textAlign = \"left\";\n    con.font = \"16px consolas\";\n    con.translate(config_1.DrawRange.x * config_1.TyleSize.x, config_1.SCREEN.Y - ((16 + 6) * config_1.MessageLength.limit + 8 * 2));\n    for (var i = 0; i < messages.list.length; i++) {\n        var type = messages.list[i].type;\n        if (type === config_1.MessageType.normal) {\n            con.fillStyle = \"white\";\n        }\n        else if (type === config_1.MessageType.special) {\n            con.fillStyle = \"yellow\";\n        }\n        else if (type === config_1.MessageType.danger) {\n            con.fillStyle = \"red\";\n        }\n        else {\n            throw new Error(\"not supported\");\n        }\n        con.fillText(messages.list[i].text, 8, (16 + 6) * i + 8);\n    }\n    con.restore();\n});\n\n\n//# sourceURL=webpack:///./src/draw/drawMessage.ts?");
-
-/***/ }),
-
-/***/ "./src/draw/drawPlayer.ts":
-/*!********************************!*\
-  !*** ./src/draw/drawPlayer.ts ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nexports.default = (function (con, playerDrawPoint) {\n    con.textBaseline = \"middle\";\n    con.textAlign = \"center\";\n    con.fillStyle = \"black\";\n    con.font = \"24px consolas\";\n    con.fillText(\"@\", playerDrawPoint.x * config_1.TyleSize.x + config_1.TyleSize.x / 2, playerDrawPoint.y * config_1.TyleSize.y + config_1.TyleSize.y / 2);\n});\n\n\n//# sourceURL=webpack:///./src/draw/drawPlayer.ts?");
-
-/***/ }),
-
-/***/ "./src/draw/drawStatus.ts":
-/*!********************************!*\
-  !*** ./src/draw/drawStatus.ts ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar text_1 = __webpack_require__(/*! ../text */ \"./src/text.ts\");\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\nfunction fillStatusText(con, text, lineNum) {\n    con.fillText(text, 8, (24 + 6) * lineNum + 8);\n}\nexports.default = (function (con) {\n    //ステータスメッセージの定義\n    var depth = State_1.S.player.depth + text_1.TEXT.depth;\n    var level = text_1.TEXT.level + \":\" + State_1.S.player.level;\n    var HP = text_1.TEXT.hp + \":\" + State_1.S.player.HP + \"/\" + State_1.S.player.totalHP;\n    var ATK = text_1.TEXT.ATK + \":\" + State_1.S.player.ATK;\n    var DEF = text_1.TEXT.DEF + \":\" + State_1.S.player.DEF;\n    var EXP = text_1.TEXT.EXP + \":\" + State_1.S.player.EXP + \"/\" + State_1.S.player.requireEXP;\n    con.save();\n    con.textBaseline = \"top\";\n    con.textAlign = \"left\";\n    con.font = \"24px consolas\";\n    con.fillStyle = \"white\";\n    con.translate(config_1.DrawRange.x * config_1.TyleSize.x, 0);\n    fillStatusText(con, depth, 0);\n    fillStatusText(con, level, 1);\n    fillStatusText(con, HP, 2);\n    fillStatusText(con, ATK, 3);\n    fillStatusText(con, DEF, 4);\n    fillStatusText(con, EXP, 5);\n    con.restore();\n});\n\n\n//# sourceURL=webpack:///./src/draw/drawStatus.ts?");
-
-/***/ }),
-
-/***/ "./src/draw/drawTitle.ts":
-/*!*******************************!*\
-  !*** ./src/draw/drawTitle.ts ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar text_1 = __webpack_require__(/*! ../text */ \"./src/text.ts\");\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nexports.default = (function (con) {\n    con.textBaseline = \"alphabetic\";\n    con.textAlign = \"center\";\n    con.fillStyle = \"white\";\n    con.font = \"48px consolas\";\n    con.fillText(text_1.TEXT.title, config_1.SCREEN.X / 2, config_1.SCREEN.Y / 4);\n    con.font = \"32px consolas\";\n    con.fillText(\"> \" + text_1.TEXT.start, config_1.SCREEN.X / 2, (config_1.SCREEN.Y / 4) * 3);\n});\n\n\n//# sourceURL=webpack:///./src/draw/drawTitle.ts?");
-
-/***/ }),
-
-/***/ "./src/draw/drawTyles.ts":
-/*!*******************************!*\
-  !*** ./src/draw/drawTyles.ts ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\n//階段などのイメージ\nvar structureImg = new Image();\nstructureImg.src = \"./src/image/GBstructure.png\";\n//床のイメージ\nvar tyleImg = new Image();\ntyleImg.src = \"./src/image/GBtyle.png\";\n//壁のイメージ\nvar wallImg = new Image();\nwallImg.src = \"./src/image/GBwall.png\";\nfunction drawTyles(con, drawStartPoint) {\n    for (var i = 0; i < config_1.DrawRange.x; i++) {\n        for (var j = 0; j < config_1.DrawRange.y; j++) {\n            var block = State_1.S.fields[State_1.S.player.depth].blocks[drawStartPoint.x + i][drawStartPoint.y + j];\n            var tyleDrawPoint = { x: i, y: j };\n            if (block.base === config_1.MapType.floor) {\n                DrawTyle.floor(con, tyleDrawPoint);\n            }\n            else if (block.base === config_1.MapType.wall) {\n                DrawTyle.wall(con, tyleDrawPoint);\n            }\n            else if (block.base === config_1.MapType.downstair) {\n                //下地\n                DrawTyle.floor(con, tyleDrawPoint);\n                DrawTyle.downstair(con, tyleDrawPoint);\n            }\n        }\n    }\n}\nexports.drawTyles = drawTyles;\nvar DrawTyle;\n(function (DrawTyle) {\n    function floor(con, point) {\n        con.drawImage(tyleImg, 0, 5 * 16, 16, 16, point.x * config_1.TyleSize.x, point.y * config_1.TyleSize.y, config_1.TyleSize.x, config_1.TyleSize.y);\n    }\n    DrawTyle.floor = floor;\n    function wall(con, point) {\n        con.drawImage(wallImg, 0, 3 * 16, 16, 16, point.x * config_1.TyleSize.x, point.y * config_1.TyleSize.y, config_1.TyleSize.x, config_1.TyleSize.y);\n    }\n    DrawTyle.wall = wall;\n    function downstair(con, point) {\n        con.drawImage(structureImg, 1 * 16, 1 * 16, 16, 16, point.x * config_1.TyleSize.x, point.y * config_1.TyleSize.y, config_1.TyleSize.x, config_1.TyleSize.y);\n    }\n    DrawTyle.downstair = downstair;\n})(DrawTyle = exports.DrawTyle || (exports.DrawTyle = {}));\n\n\n//# sourceURL=webpack:///./src/draw/drawTyles.ts?");
+eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/doEnemyTurn.ts'\");\n\n//# sourceURL=webpack:///./src/doEnemyTurn.ts?");
 
 /***/ }),
 
@@ -415,10 +292,9 @@ eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {
   !*** ./src/messages.ts ***!
   \*************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar config_1 = __webpack_require__(/*! ./config */ \"./src/config.ts\");\nvar MessageList = /** @class */ (function () {\n    function MessageList() {\n        this.list = [];\n    }\n    MessageList.prototype.add = function (message) {\n        this.list.push(message);\n        while (this.list.length > config_1.MessageLength.limit) {\n            this.list.shift();\n        }\n    };\n    return MessageList;\n}());\nexports.MessageList = MessageList;\nvar Message = /** @class */ (function () {\n    function Message(text, type) {\n        this.text = text;\n        this.type = type;\n    }\n    return Message;\n}());\nexports.Message = Message;\n\n\n//# sourceURL=webpack:///./src/messages.ts?");
+eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/messages.ts'\");\n\n//# sourceURL=webpack:///./src/messages.ts?");
 
 /***/ }),
 
@@ -439,10 +315,9 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar co
   !*** ./src/popEnemy.ts ***!
   \*************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar EnemyList_1 = __webpack_require__(/*! ./EnemyList */ \"./src/EnemyList.ts\");\nvar Enemy_1 = __webpack_require__(/*! ./Enemy */ \"./src/Enemy.ts\");\nvar State_1 = __webpack_require__(/*! ./State */ \"./src/State.ts\");\nexports.default = (function (rooms, random, upstairs) {\n    var popEnemys = [];\n    for (var i = 0; i < rooms.length; i++) {\n        var num = random.num(3);\n        for (var j = 0; j < num; j++) {\n            // スポーンポイントをランダムで決める\n            var popPoint = {\n                x: random.num(rooms[i].end.x - rooms[i].start.x) + rooms[i].start.x,\n                y: random.num(rooms[i].end.y - rooms[i].start.y) + rooms[i].start.y,\n            };\n            var isUpstairsPoint = false;\n            //プレイヤーが降りた位置のポップを避ける\n            for (var k = 0; k < upstairs.length; k++) {\n                if (popPoint.x === upstairs[k].x && popPoint.y === upstairs[k].y) {\n                    isUpstairsPoint = true;\n                    break;\n                }\n            }\n            if (!isUpstairsPoint) {\n                //レベルをランダムにあげる[最大値：階数*2+1 , 最小値：階数]\n                var level = State_1.S.player.depth + random.num(State_1.S.player.depth) + random.num(2);\n                var popNo = random.num(2);\n                var popEnemy = new Enemy_1.Enemy(popPoint, EnemyList_1.EnemyList[popNo], level);\n                popEnemys.push(popEnemy);\n            }\n        }\n    }\n    return popEnemys;\n});\n\n\n//# sourceURL=webpack:///./src/popEnemy.ts?");
+eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/popEnemy.ts'\");\n\n//# sourceURL=webpack:///./src/popEnemy.ts?");
 
 /***/ }),
 
@@ -463,10 +338,9 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar co
   !*** ./src/text.ts ***!
   \*********************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar TEXT;\n(function (TEXT) {\n    TEXT[\"title\"] = \"Logue Like\";\n    TEXT[\"start\"] = \"Start\";\n    TEXT[\"downstair\"] = \"\\u968E\\u6BB5\\u3092\\u964D\\u308A\\u307E\\u3057\\u305F\";\n    TEXT[\"wall\"] = \"\\u58C1\\u306B\\u3076\\u3064\\u304B\\u3063\\u305F\\uFF01\";\n    TEXT[\"init\"] = \"\\u30C0\\u30F3\\u30B8\\u30E7\\u30F3\\u6700\\u9AD8\\u301C\\u301C\\u301C!!\";\n    TEXT[\"depth\"] = \"\\u968E\";\n    TEXT[\"level\"] = \"LV\";\n    TEXT[\"hp\"] = \"HP\";\n    TEXT[\"ATK\"] = \"\\u653B\\u6483\\u529B\";\n    TEXT[\"DEF\"] = \"\\u9632\\u5FA1\\u529B\";\n    TEXT[\"EXP\"] = \"\\u7D4C\\u9A13\\u5024\";\n    TEXT[\"die\"] = \"\\u3042\\u306A\\u305F\\u306F\\u529B\\u5C3D\\u304D\\u305F\";\n})(TEXT = exports.TEXT || (exports.TEXT = {}));\nvar actionMsg;\n(function (actionMsg) {\n    actionMsg.attack = function (name, damage) {\n        return name + \"\\u306B\" + damage + \"\\u306E\\u30C0\\u30E1\\u30FC\\u30B8\\u3092\\u4E0E\\u3048\\u305F\";\n    };\n    actionMsg.kill = function (name, exp) {\n        return name + \"\\u3092\\u5012\\u3057\\u305F\\u3002\" + exp + \"\\u306E\\u7D4C\\u9A13\\u5024\\u3092\\u5F97\\u305F\";\n    };\n    actionMsg.levelUp = function (level) {\n        return \"\\u30EC\\u30D9\\u30EB\\u304C\" + level + \"\\u306B\\u3042\\u304C\\u3063\\u305F\";\n    };\n    actionMsg.beAttacked = function (name, damage) {\n        return name + \"\\u304B\\u3089\" + damage + \"\\u306E\\u30C0\\u30E1\\u30FC\\u30B8\\u3092\\u53D7\\u3051\\u305F\";\n    };\n})(actionMsg = exports.actionMsg || (exports.actionMsg = {}));\n\n\n//# sourceURL=webpack:///./src/text.ts?");
+eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/text.ts'\");\n\n//# sourceURL=webpack:///./src/text.ts?");
 
 /***/ })
 
