@@ -98,43 +98,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/**\n * A JavaScript implemen
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ "./src/ArrowKeyEvents.ts":
-/*!*******************************!*\
-  !*** ./src/ArrowKeyEvents.ts ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar KeyCode_1 = __webpack_require__(/*! ./KeyCode */ \"./src/KeyCode.ts\");\nvar State_1 = __webpack_require__(/*! ./State */ \"./src/State.ts\");\nvar Draw_1 = __webpack_require__(/*! ./Draw */ \"./src/Draw.ts\");\nvar index_1 = __webpack_require__(/*! ./index */ \"./src/index.ts\");\nexports.default = (function () {\n    // 移動キーが押されているか\n    window.addEventListener(\"keydown\", function (e) {\n        if (e.keyCode === KeyCode_1.KeyCode.left) {\n            State_1.S.KeyPress.left = true;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.up) {\n            State_1.S.KeyPress.up = true;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.right) {\n            State_1.S.KeyPress.right = true;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.down) {\n            State_1.S.KeyPress.down = true;\n        }\n        else {\n            State_1.S.KeyPress.left = false;\n            State_1.S.KeyPress.up = false;\n            State_1.S.KeyPress.right = false;\n            State_1.S.KeyPress.down = false;\n        }\n    });\n    // 移動キーが離されたかどうか\n    window.addEventListener(\"keyup\", function (e) {\n        if (e.keyCode === KeyCode_1.KeyCode.left) {\n            State_1.S.KeyPress.left = false;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.up) {\n            State_1.S.KeyPress.up = false;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.right) {\n            State_1.S.KeyPress.right = false;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.down) {\n            State_1.S.KeyPress.down = false;\n        }\n    });\n    // shiftキー\n    window.addEventListener(\"keydown\", function (e) {\n        if (e.keyCode === KeyCode_1.KeyCode.shift) {\n            if (!State_1.S.env.diagonal) {\n                State_1.S.env.diagonal = true;\n                Draw_1.draw(Draw_1.con, State_1.S.env);\n            }\n            return;\n        }\n    });\n    // シフトを押しているかどうか\n    window.addEventListener(\"keyup\", function (e) {\n        if (e.keyCode === KeyCode_1.KeyCode.shift) {\n            if (State_1.S.env.diagonal) {\n                State_1.S.env.diagonal = false;\n                Draw_1.draw(Draw_1.con, State_1.S.env);\n            }\n        }\n    });\n    /* Zキー */\n    window.addEventListener(\"keydown\", function (e) {\n        //タイトル画面での操作\n        if (!State_1.S.Frag.start) {\n            if (e.keyCode === KeyCode_1.KeyCode.action) {\n                State_1.S.Frag.start = true;\n                index_1.init();\n                Draw_1.draw(Draw_1.con, State_1.S.env);\n            }\n            return;\n        }\n        //ゲームオーバー時の操作\n        if (State_1.S.Frag.gameover) {\n            if (e.keyCode === KeyCode_1.KeyCode.action) {\n                State_1.S.Frag.start = false;\n                Draw_1.draw(Draw_1.con, State_1.S.env);\n            }\n            return;\n        }\n    });\n    // ブラウザ以外を見ているとき\n    window.addEventListener(\"blur\", function (e) {\n        if (State_1.S.env.diagonal) {\n            State_1.S.env.diagonal = false;\n            Draw_1.draw(Draw_1.con, State_1.S.env);\n        }\n    });\n});\n\n\n//# sourceURL=webpack:///./src/ArrowKeyEvents.ts?");
-
-/***/ }),
-
-/***/ "./src/Draw.ts":
-/*!*********************!*\
-  !*** ./src/Draw.ts ***!
-  \*********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/Draw.ts'\");\n\n//# sourceURL=webpack:///./src/Draw.ts?");
-
-/***/ }),
-
-/***/ "./src/KeyCode.ts":
-/*!************************!*\
-  !*** ./src/KeyCode.ts ***!
-  \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/KeyCode.ts'\");\n\n//# sourceURL=webpack:///./src/KeyCode.ts?");
-
-/***/ }),
-
-=======
->>>>>>> passFix
 /***/ "./src/Map.ts":
 /*!********************!*\
   !*** ./src/Map.ts ***!
@@ -231,6 +194,18 @@ eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {
 
 /***/ }),
 
+/***/ "./src/culcDrawStartPoint.ts":
+/*!***********************************!*\
+  !*** ./src/culcDrawStartPoint.ts ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar State_1 = __webpack_require__(/*! ./State */ \"./src/State.ts\");\nvar config_1 = __webpack_require__(/*! ./config */ \"./src/config.ts\");\nexports.default = (function () {\n    var drawStartPoint = { x: 0, y: 0 };\n    // 描画を開始するX座標を計算\n    //プレイヤーのxが描画範囲の半分以内なら始点は0\n    if (State_1.S.player.x <= Math.floor(config_1.DrawRange.x / 2)) {\n        drawStartPoint.x = 0;\n    }\n    //画面描画が右端で止まるところを始点とする\n    else if (State_1.S.player.x >= State_1.S.fieldSize.x - Math.floor(config_1.DrawRange.x / 2)) {\n        drawStartPoint.x = State_1.S.fieldSize.x - config_1.DrawRange.x;\n    }\n    else {\n        drawStartPoint.x = State_1.S.player.x - Math.floor(config_1.DrawRange.x / 2);\n    }\n    //描画を開始するY座標を計算\n    if (State_1.S.player.y <= Math.floor(config_1.DrawRange.y / 2)) {\n        drawStartPoint.y = 0;\n    }\n    else if (State_1.S.player.y >= State_1.S.fieldSize.y - Math.floor(config_1.DrawRange.y / 2)) {\n        drawStartPoint.y = State_1.S.fieldSize.y - config_1.DrawRange.y;\n    }\n    else {\n        drawStartPoint.y = State_1.S.player.y - Math.floor(config_1.DrawRange.y / 2);\n    }\n    return drawStartPoint;\n});\n\n\n//# sourceURL=webpack:///./src/culcDrawStartPoint.ts?");
+
+/***/ }),
+
 /***/ "./src/dangeon/createFloor.ts":
 /*!************************************!*\
   !*** ./src/dangeon/createFloor.ts ***!
@@ -272,9 +247,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar St
   !*** ./src/draw/Draw.ts ***!
   \**************************/
 /*! no static exports found */
-<<<<<<< HEAD
-/***/ (function(module, exports) {
-=======
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -360,9 +332,9 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar te
   \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
->>>>>>> passFix
 
-eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/doEnemyTurn.ts'\");\n\n//# sourceURL=webpack:///./src/doEnemyTurn.ts?");
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\n//階段などのイメージ\nvar structureImg = new Image();\nstructureImg.src = \"./src/image/GBstructure.png\";\n//床のイメージ\nvar tyleImg = new Image();\ntyleImg.src = \"./src/image/GBtyle.png\";\n//壁のイメージ\nvar wallImg = new Image();\nwallImg.src = \"./src/image/GBwall.png\";\nfunction drawTyles(con, drawStartPoint) {\n    for (var i = 0; i < config_1.DrawRange.x; i++) {\n        for (var j = 0; j < config_1.DrawRange.y; j++) {\n            var block = State_1.S.fields[State_1.S.player.depth].blocks[drawStartPoint.x + i][drawStartPoint.y + j];\n            var tyleDrawPoint = { x: i, y: j };\n            if (block.base === config_1.MapType.floor) {\n                DrawTyle.floor(con, tyleDrawPoint);\n            }\n            else if (block.base === config_1.MapType.wall) {\n                DrawTyle.wall(con, tyleDrawPoint);\n            }\n            else if (block.base === config_1.MapType.downstair) {\n                //下地\n                DrawTyle.floor(con, tyleDrawPoint);\n                DrawTyle.downstair(con, tyleDrawPoint);\n            }\n        }\n    }\n}\nexports.drawTyles = drawTyles;\nvar DrawTyle;\n(function (DrawTyle) {\n    function floor(con, point) {\n        con.drawImage(tyleImg, 0, 5 * 16, 16, 16, point.x * config_1.TyleSize.x, point.y * config_1.TyleSize.y, config_1.TyleSize.x, config_1.TyleSize.y);\n    }\n    DrawTyle.floor = floor;\n    function wall(con, point) {\n        con.drawImage(wallImg, 0, 3 * 16, 16, 16, point.x * config_1.TyleSize.x, point.y * config_1.TyleSize.y, config_1.TyleSize.x, config_1.TyleSize.y);\n    }\n    DrawTyle.wall = wall;\n    function downstair(con, point) {\n        con.drawImage(structureImg, 1 * 16, 1 * 16, 16, 16, point.x * config_1.TyleSize.x, point.y * config_1.TyleSize.y, config_1.TyleSize.x, config_1.TyleSize.y);\n    }\n    DrawTyle.downstair = downstair;\n})(DrawTyle = exports.DrawTyle || (exports.DrawTyle = {}));\n\n\n//# sourceURL=webpack:///./src/draw/drawTyles.ts?");
 
 /***/ }),
 
@@ -431,14 +403,10 @@ eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {
   !*** ./src/key/ArrowKeyEvents.ts ***!
   \***********************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/messages.ts'\");\n\n//# sourceURL=webpack:///./src/messages.ts?");
-=======
 "use strict";
 eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar KeyCode_1 = __webpack_require__(/*! ./KeyCode */ \"./src/key/KeyCode.ts\");\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\nvar Draw_1 = __webpack_require__(/*! ../draw/Draw */ \"./src/draw/Draw.ts\");\nvar index_1 = __webpack_require__(/*! ../index */ \"./src/index.ts\");\nexports.default = (function () {\n    // 移動キーが押されているか\n    window.addEventListener(\"keydown\", function (e) {\n        if (e.keyCode === KeyCode_1.KeyCode.left) {\n            State_1.S.KeyPress.left = true;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.up) {\n            State_1.S.KeyPress.up = true;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.right) {\n            State_1.S.KeyPress.right = true;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.down) {\n            State_1.S.KeyPress.down = true;\n        }\n        else {\n            State_1.S.KeyPress.left = false;\n            State_1.S.KeyPress.up = false;\n            State_1.S.KeyPress.right = false;\n            State_1.S.KeyPress.down = false;\n        }\n    });\n    // 移動キーが離されたかどうか\n    window.addEventListener(\"keyup\", function (e) {\n        if (e.keyCode === KeyCode_1.KeyCode.left) {\n            State_1.S.KeyPress.left = false;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.up) {\n            State_1.S.KeyPress.up = false;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.right) {\n            State_1.S.KeyPress.right = false;\n        }\n        else if (e.keyCode === KeyCode_1.KeyCode.down) {\n            State_1.S.KeyPress.down = false;\n        }\n    });\n    // shiftキー\n    window.addEventListener(\"keydown\", function (e) {\n        if (e.keyCode === KeyCode_1.KeyCode.shift) {\n            if (!State_1.S.env.diagonal) {\n                State_1.S.env.diagonal = true;\n                Draw_1.draw(Draw_1.con, State_1.S.env);\n            }\n            return;\n        }\n    });\n    // シフトを押しているかどうか\n    window.addEventListener(\"keyup\", function (e) {\n        if (e.keyCode === KeyCode_1.KeyCode.shift) {\n            if (State_1.S.env.diagonal) {\n                State_1.S.env.diagonal = false;\n                Draw_1.draw(Draw_1.con, State_1.S.env);\n            }\n        }\n    });\n    /* Zキー */\n    window.addEventListener(\"keydown\", function (e) {\n        //タイトル画面での操作\n        if (!State_1.S.Frag.start) {\n            if (e.keyCode === KeyCode_1.KeyCode.action) {\n                State_1.S.Frag.start = true;\n                index_1.init();\n                Draw_1.draw(Draw_1.con, State_1.S.env);\n            }\n            return;\n        }\n        //ゲームオーバー時の操作\n        if (State_1.S.Frag.gameover) {\n            if (e.keyCode === KeyCode_1.KeyCode.action) {\n                State_1.S.Frag.start = false;\n                Draw_1.draw(Draw_1.con, State_1.S.env);\n            }\n            return;\n        }\n    });\n    // ブラウザ以外を見ているとき\n    window.addEventListener(\"blur\", function (e) {\n        if (State_1.S.env.diagonal) {\n            State_1.S.env.diagonal = false;\n            Draw_1.draw(Draw_1.con, State_1.S.env);\n        }\n    });\n});\n\n\n//# sourceURL=webpack:///./src/key/ArrowKeyEvents.ts?");
->>>>>>> passFix
 
 /***/ }),
 
@@ -459,14 +427,10 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Ke
   !*** ./src/player/player.ts ***!
   \******************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/popEnemy.ts'\");\n\n//# sourceURL=webpack:///./src/popEnemy.ts?");
-=======
 "use strict";
 eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\nvar Player = /** @class */ (function () {\n    function Player(x, y) {\n        this.depth = 0;\n        this.point = { x: x, y: y };\n        this.x = x;\n        this.y = y;\n        this.level = 1;\n        this.baseHP = 16;\n        this.equipHP = 0;\n        this.baseATK = 4;\n        this.equipATK = 0;\n        this.baseDEF = 4;\n        this.equipDEF = 0;\n        this.EXP = 0;\n        this.requireEXP = 4;\n        this.HP = this.totalHP;\n        this.ATK = this.totalATK;\n        this.DEF = this.totalDEF;\n    }\n    Object.defineProperty(Player.prototype, \"totalHP\", {\n        get: function () {\n            return this.baseHP + this.equipHP;\n        },\n        enumerable: true,\n        configurable: true\n    });\n    Object.defineProperty(Player.prototype, \"totalATK\", {\n        get: function () {\n            return this.baseATK + this.equipATK;\n        },\n        enumerable: true,\n        configurable: true\n    });\n    Object.defineProperty(Player.prototype, \"totalDEF\", {\n        get: function () {\n            return this.baseDEF + this.equipDEF;\n        },\n        enumerable: true,\n        configurable: true\n    });\n    Player.prototype.moveLeft = function () {\n        if (this.x === 0) {\n            return this;\n        }\n        this.x = --this.x;\n        return this;\n    };\n    Player.prototype.moveUp = function () {\n        if (this.y === 0) {\n            return this;\n        }\n        this.y = --this.y;\n        return this;\n    };\n    Player.prototype.moveRight = function () {\n        if (this.x === State_1.S.fieldSize.x - 1) {\n            return this;\n        }\n        this.x = ++this.x;\n        return this;\n    };\n    Player.prototype.moveDown = function () {\n        if (this.y === State_1.S.fieldSize.y - 1) {\n            return this;\n        }\n        this.y = ++this.y;\n        return this;\n    };\n    Player.prototype.moveUpperLeft = function () {\n        if (this.x === 0 || this.y === 0) {\n            return this;\n        }\n        this.x = --this.x;\n        this.y = --this.y;\n        return this;\n    };\n    Player.prototype.moveUpperRight = function () {\n        if (this.x === State_1.S.fieldSize.x - 1 || this.y === 0) {\n            return this;\n        }\n        this.x = ++this.x;\n        this.y = --this.y;\n        return this;\n    };\n    Player.prototype.moveDownnerLeft = function () {\n        if (this.x === State_1.S.fieldSize.x - 1 || this.y === State_1.S.fieldSize.y - 1) {\n            return this;\n        }\n        this.x = --this.x;\n        this.y = ++this.y;\n        return this;\n    };\n    Player.prototype.moveDownnerRight = function () {\n        if (this.x === State_1.S.fieldSize.x - 1 || this.y === State_1.S.fieldSize.y - 1) {\n            return this;\n        }\n        this.x = ++this.x;\n        this.y = ++this.y;\n        return this;\n    };\n    Player.prototype.stairDown = function () {\n        var block = State_1.S.fields[this.depth].blocks[this.x][this.y];\n        if (block.base === config_1.MapType.downstair) {\n            ++this.depth;\n        }\n        else {\n        }\n    };\n    return Player;\n}());\nexports.default = Player;\n\n\n//# sourceURL=webpack:///./src/player/player.ts?");
->>>>>>> passFix
 
 /***/ }),
 
@@ -499,14 +463,10 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar co
   !*** ./src/text/text.ts ***!
   \**************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-eval("throw new Error(\"Module build failed (from ./node_modules/ts-loader/index.js):\\nError: ENOENT: no such file or directory, open '/Users/koji/loguelike/src/text.ts'\");\n\n//# sourceURL=webpack:///./src/text.ts?");
-=======
 "use strict";
 eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar TEXT;\n(function (TEXT) {\n    TEXT[\"title\"] = \"Logue Like\";\n    TEXT[\"start\"] = \"Start\";\n    TEXT[\"downstair\"] = \"\\u968E\\u6BB5\\u3092\\u964D\\u308A\\u307E\\u3057\\u305F\";\n    TEXT[\"wall\"] = \"\\u58C1\\u306B\\u3076\\u3064\\u304B\\u3063\\u305F\\uFF01\";\n    TEXT[\"init\"] = \"\\u30C0\\u30F3\\u30B8\\u30E7\\u30F3\\u6700\\u9AD8\\u301C\\u301C\\u301C!!\";\n    TEXT[\"depth\"] = \"\\u968E\";\n    TEXT[\"level\"] = \"LV\";\n    TEXT[\"hp\"] = \"HP\";\n    TEXT[\"ATK\"] = \"\\u653B\\u6483\\u529B\";\n    TEXT[\"DEF\"] = \"\\u9632\\u5FA1\\u529B\";\n    TEXT[\"EXP\"] = \"\\u7D4C\\u9A13\\u5024\";\n    TEXT[\"die\"] = \"\\u3042\\u306A\\u305F\\u306F\\u529B\\u5C3D\\u304D\\u305F\";\n})(TEXT = exports.TEXT || (exports.TEXT = {}));\nvar actionMsg;\n(function (actionMsg) {\n    actionMsg.attack = function (name, damage) {\n        return name + \"\\u306B\" + damage + \"\\u306E\\u30C0\\u30E1\\u30FC\\u30B8\\u3092\\u4E0E\\u3048\\u305F\";\n    };\n    actionMsg.kill = function (name, exp) {\n        return name + \"\\u3092\\u5012\\u3057\\u305F\\u3002\" + exp + \"\\u306E\\u7D4C\\u9A13\\u5024\\u3092\\u5F97\\u305F\";\n    };\n    actionMsg.levelUp = function (level) {\n        return \"\\u30EC\\u30D9\\u30EB\\u304C\" + level + \"\\u306B\\u3042\\u304C\\u3063\\u305F\";\n    };\n    actionMsg.beAttacked = function (name, damage) {\n        return name + \"\\u304B\\u3089\" + damage + \"\\u306E\\u30C0\\u30E1\\u30FC\\u30B8\\u3092\\u53D7\\u3051\\u305F\";\n    };\n})(actionMsg = exports.actionMsg || (exports.actionMsg = {}));\n\n\n//# sourceURL=webpack:///./src/text/text.ts?");
->>>>>>> passFix
 
 /***/ })
 
