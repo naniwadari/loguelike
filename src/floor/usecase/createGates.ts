@@ -10,30 +10,30 @@ interface findDirection {
 
 export function createGates(rooms: Room[]) {
   const tmpRooms = rooms.slice();
-  let paths: IGate[] = [];
-  for (let i = 0; i < rooms.length; i++) {
+  let gates: IGate[] = [];
+  for (let i = 0; i < rooms.length || i < 100; i++) {
     const room = rooms[i];
     const nearRoom = room.findNear(tmpRooms);
-    if (nearRoom && room.index && nearRoom.index) {
+    if (nearRoom) {
       const path = createGate(room, nearRoom);
       if (path) {
-        paths.push(path);
-        room.toPath.push(nearRoom.index);
-        nearRoom.hasPath.push(room.index);
+        gates.push(path);
+        if (nearRoom.index) room.toPath.push(nearRoom.index);
+        if (room.index) nearRoom.hasPath.push(room.index);
         tmpRooms.some((v: Room, i) => {
           if (v.index === nearRoom.index) tmpRooms.splice(i, 1);
         });
       }
     } else if (room) {
       const path = createGate(room, rooms[0]);
-      if (path && rooms[0].index && room.index) {
-        paths.push(path);
-        room.toPath.push(rooms[0].index);
-        rooms[0].hasPath.push(room.index);
+      if (path) {
+        gates.push(path);
+        if (rooms[0].index) room.toPath.push(rooms[0].index);
+        if (room.index) rooms[0].hasPath.push(room.index);
       }
     }
   }
-  return paths;
+  return gates;
 }
 
 //パスを作る起点となるドアを決定する

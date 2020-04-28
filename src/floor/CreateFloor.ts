@@ -30,6 +30,7 @@ export default (floorSize: ISize) => {
     }
   }
   //通じたらフロアインスタンスを生成してブロック情報を変える
+  console.log(gates);
   let floor = new Floor(floorSize, rooms, gates);
   blocks = fillUpWall(floor, blocks);
   blocks = digRooms(floor, blocks);
