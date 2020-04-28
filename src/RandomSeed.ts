@@ -6,7 +6,7 @@ function hash(seed: string) {
   // ハッシュ化した文字列を16進数に変換
   return sha256.getHash("HEX");
 }
-export class Random {
+export class RandomSeed {
   seed: string;
   hash: string;
   pointer: number;

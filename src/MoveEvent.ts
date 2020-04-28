@@ -3,7 +3,7 @@ import { S } from "./State";
 import { con, draw } from "./draw/Draw";
 import Player from "./player/player";
 import { map } from "./Map";
-import { createField } from "./createField";
+import { createField, putDownStairs } from "./createField";
 import { Message } from "./text/messages";
 import { TEXT } from "./text/text";
 import { MessageType, CanStand } from "./config";
@@ -108,6 +108,7 @@ export default () => {
           //テスト用に書き換え
           S.fields[S.player.depth].blocks = createFloor();
           S.fields[S.player.depth].enemys = popEnemy(rooms);
+          putDownStairs(rooms);
           //フィールドサイズを更新
           S.fieldSize = S.fields[S.player.depth].size;
         }

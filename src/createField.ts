@@ -1,16 +1,20 @@
 import { MapBluePrint, MapType } from "./config";
-import { Random } from "./Random";
-import { splitRoom, IRoom } from "./splitRoom";
+import { RandomSeed } from "./RandomSeed";
+import { splitRoom } from "./splitRoom";
 import PopEnemys from "./enemy/popEnemy";
 import { Enemy } from "./enemy/Enemy";
 import { IField } from "./Types";
+import { IRoom } from "./dangeon/createFloor";
+import { PointMaker } from "./module/PointMaker";
+import { Random } from "./module/random";
+import { S } from "./State";
 
 export function createField(
   depth: number,
   upstairs: any,
   baseSeed: string
 ): IField {
-  let random = new Random(baseSeed + "," + depth.toString(10));
+  let random = new RandomSeed(baseSeed + "," + depth.toString(10));
   let blocks: any[] = [];
 
   let newX = MapBluePrint.LX;
@@ -45,70 +49,84 @@ export function createField(
       enemys: [],
     };
   }
-  //部屋の初期化
-  let splitMaterials: IRoom[] = [
-    {
-      start: { x: 1, y: 1 },
-      end: { x: newX - 2, y: newY - 2 },
-    },
-  ];
-  //空の配列が帰ってきた場合、emptyRoomsに入れる
-  let splitedRooms: IRoom[] = [];
-  //確率
-  let spritProbs = [1, 1, 1, 1, 1, 1, 0.5, 0.5, 0.5, 0.5];
-  // 部屋数が0より大きく、分割回数が０より大きいあいだ(最大１０回)
-  while (splitMaterials.length > 0 && spritProbs.length > 0) {
-    let room = splitMaterials[0];
-    let spritProb = spritProbs[0];
-    splitMaterials.shift();
-    spritProbs.shift();
+  // //部屋の初期化
+  // let splitMaterials: IRoom[] = [
+  //   {
+  //     start: { x: 1, y: 1 },
+  //     end: { x: newX - 2, y: newY - 2 },
+  //   },
+  // ];
+  // //空の配列が帰ってきた場合、emptyRoomsに入れる
+  // let splitedRooms: IRoom[] = [];
+  // //確率
+  // let spritProbs = [1, 1, 1, 1, 1, 1, 0.5, 0.5, 0.5, 0.5];
+  // // 部屋数が0より大きく、分割回数が０より大きいあいだ(最大１０回)
+  // while (splitMaterials.length > 0 && spritProbs.length > 0) {
+  //   let room = splitMaterials[0];
+  //   let spritProb = spritProbs[0];
+  //   splitMaterials.shift();
+  //   spritProbs.shift();
 
-    let newRooms = splitRoom(blocks, room, spritProb, random);
-    //splitRoomで生成された部屋を配列に追加
-    for (var i = 0; i < newRooms.length; i++) {
-      splitMaterials.push(newRooms[i]);
-    }
-    //分割されなかった場合元のroomをresultにいれる
-    if (newRooms.length === 0) {
-      splitedRooms.push(room);
-    }
-  }
-  //処理が終了しても素材がまだ残っていた場合空にする
-  while (splitMaterials.length > 0) {
-    splitedRooms.push(splitMaterials[0]);
-    splitMaterials.shift();
-  }
-  //階段の生成処理
-  let newDownStairs = 1;
-  //newDownStairsが0になるまで繰り返す
-  while (newDownStairs > 0) {
-    // x,yをランダムに取得
-    let x = random.num(newX - 2) + 1;
-    let y = random.num(newY - 2) + 1;
-    let isUpstairsPoint = false;
-    // upstairsは一つ前の階層の階段の位置
-    for (let i = 0; i < upstairs.length; i++) {
-      // x,yが前回と同じだった場合fをfalseにしてループ処理終了
-      if (x === upstairs[i].x && y === upstairs[i].y) {
-        isUpstairsPoint = true;
-        break;
-      }
-    }
-    //前回と違ったらランダムな位置に階段を置いて処理終了
-    if (!isUpstairsPoint) {
-      blocks[x][y].base = MapType.downstair;
-      newDownStairs--;
-    }
-  }
-  //階段を降りた場所が壁だったらフロアに変更する
-  for (let i = 0; i < upstairs.length; i++) {
-    if ((blocks[upstairs[i].x][upstairs[i].y].base = MapType.wall)) {
-      blocks[upstairs[i].x][upstairs[i].y].base = MapType.floor;
-    }
-  }
+  //   let newRooms = splitRoom(blocks, room, spritProb, random);
+  //   //splitRoomで生成された部屋を配列に追加
+  //   for (var i = 0; i < newRooms.length; i++) {
+  //     splitMaterials.push(newRooms[i]);
+  //   }
+  //   //分割されなかった場合元のroomをresultにいれる
+  //   if (newRooms.length === 0) {
+  //     splitedRooms.push(room);
+  //   }
+  // }
+  // //処理が終了しても素材がまだ残っていた場合空にする
+  // while (splitMaterials.length > 0) {
+  //   splitedRooms.push(splitMaterials[0]);
+  //   splitMaterials.shift();
+  // }
+  // //階段の生成処理
+  // let newDownStairs = 1;
+  // //newDownStairsが0になるまで繰り返す
+  // while (newDownStairs > 0) {
+  //   // x,yをランダムに取得
+  //   let x = random.num(newX - 2) + 1;
+  //   let y = random.num(newY - 2) + 1;
+  //   let isUpstairsPoint = false;
+  //   // upstairsは一つ前の階層の階段の位置
+  //   for (let i = 0; i < upstairs.length; i++) {
+  //     // x,yが前回と同じだった場合fをfalseにしてループ処理終了
+  //     if (x === upstairs[i].x && y === upstairs[i].y) {
+  //       isUpstairsPoint = true;
+  //       break;
+  //     }
+  //   }
+  //   //前回と違ったらランダムな位置に階段を置いて処理終了
+  //   if (!isUpstairsPoint) {
+  //     blocks[x][y].base = MapType.downstair;
+  //     newDownStairs--;
+  //   }
+  // }
+  // //階段を降りた場所が壁だったらフロアに変更する
+  // for (let i = 0; i < upstairs.length; i++) {
+  //   if ((blocks[upstairs[i].x][upstairs[i].y].base = MapType.wall)) {
+  //     blocks[upstairs[i].x][upstairs[i].y].base = MapType.floor;
+  //   }
+  // }
   return {
     size: { x: newX, y: newY },
     blocks: blocks,
     enemys: [],
   };
+}
+
+export function putDownStairs(rooms: IRoom[]) {
+  let isPut = false;
+  for (let i = 0; !isPut; i++) {
+    let room = rooms[Random.rangeInt(0, rooms.length)];
+    let point = PointMaker.room(room);
+    let targetBlock = S.fields[S.player.depth].blocks[point.x][point.y];
+    if (targetBlock.base === MapType.floor) {
+      isPut = true;
+      targetBlock.base = MapType.downstair;
+      console.log(point);
+    }
+  }
 }

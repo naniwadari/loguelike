@@ -1,4 +1,4 @@
-import { Random } from "./Random";
+import { RandomSeed } from "./RandomSeed";
 import { MapType } from "./config";
 
 const minRoomWidth = 6; //偶数
@@ -20,7 +20,7 @@ export function splitRoom(
   blocks: any,
   room: IRoom,
   splitProb: number,
-  random: Random
+  random: RandomSeed
 ) {
   let avoidProb = random.fraction();
   if (avoidProb <= splitProb) {
