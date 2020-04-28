@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var config_1 = require("./config");
-var RandomSeed_1 = require("./RandomSeed");
+const config_1 = require("./config");
+const Random_1 = require("./Random");
 function createField(depth, upstairs, baseSeed) {
-    var random = new RandomSeed_1.RandomSeed(baseSeed + "," + depth.toString(10));
-    var blocks = [];
-    var newX = config_1.MapBluePrint.LX;
-    var newY = config_1.MapBluePrint.LY;
+    let random = new Random_1.RandomSeed(baseSeed + "," + depth.toString(10));
+    let blocks = [];
+    let newX = config_1.MapBluePrint.LX;
+    let newY = config_1.MapBluePrint.LY;
     if (depth > 0) {
         newX = config_1.MapBluePrint.wideX;
         newY = config_1.MapBluePrint.wideY;
     }
-    for (var i = 0; i < newX; i++) {
+    for (let i = 0; i < newX; i++) {
         // マップブロックの座標{ i , j }にそれぞれブロックタイプを入れていく
         blocks[i] = [];
-        for (var j = 0; j < newY; j++) {
+        for (let j = 0; j < newY; j++) {
             if (i === 0 || j === 0 || i === newX - 1 || j === newY - 1) {
                 blocks[i][j] = {
                     base: config_1.MapType.wall,

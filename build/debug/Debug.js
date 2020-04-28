@@ -1,11 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var State_1 = require("../State");
-var config_1 = require("../config");
-var createFloor_1 = require("../dangeon/createFloor");
-var Draw_1 = require("../draw/Draw");
-exports.default = (function () {
-    window.addEventListener("keydown", function (e) {
+const State_1 = require("../State");
+const config_1 = require("../config");
+const Draw_1 = require("../draw/Draw");
+const CreateFloor_1 = __importDefault(require("../floor/CreateFloor"));
+exports.default = () => {
+    window.addEventListener("keydown", (e) => {
         // デバッグキー P
         if (e.keyCode === 80) {
             searchDownstairsPoint();
@@ -16,9 +19,9 @@ exports.default = (function () {
             mapRecreate();
         }
     });
-});
+};
 function mapRecreate() {
-    State_1.S.fields[State_1.S.player.depth].blocks = createFloor_1.createFloor();
+    State_1.S.fields[State_1.S.player.depth].blocks = CreateFloor_1.default({ width: 25, height: 25 });
     Draw_1.draw(Draw_1.con, State_1.S.env);
 }
 function forceGameOver() {
@@ -27,11 +30,11 @@ function forceGameOver() {
     console.log("強制ゲームオーバー");
 }
 function searchDownstairsPoint() {
-    var field = State_1.S.fields[State_1.S.player.depth];
-    var downStairsPoint = { x: 0, y: 0 };
-    for (var i = 0; i < field.blocks.length; i++) {
-        for (var j = 0; j < field.blocks.length; j++) {
-            var targetBlock = field.blocks[i][j];
+    const field = State_1.S.fields[State_1.S.player.depth];
+    let downStairsPoint = { x: 0, y: 0 };
+    for (let i = 0; i < field.blocks.length; i++) {
+        for (let j = 0; j < field.blocks.length; j++) {
+            let targetBlock = field.blocks[i][j];
             if (targetBlock.base === config_1.MapType.downstair) {
                 downStairsPoint = { x: i, y: j };
                 break;
@@ -43,8 +46,8 @@ function searchDownstairsPoint() {
 }
 function searchEnemysPoint() {
     console.log("モンスターの座標");
-    var enemys = State_1.S.fields[State_1.S.player.depth].enemys;
-    for (var i = 0; i < enemys.length; i++) {
+    const enemys = State_1.S.fields[State_1.S.player.depth].enemys;
+    for (let i = 0; i < enemys.length; i++) {
         console.log(enemys[i].point);
     }
 }

@@ -5,8 +5,8 @@ var EnemyId;
     EnemyId[EnemyId["slime"] = 0] = "slime";
     EnemyId[EnemyId["rat"] = 1] = "rat";
 })(EnemyId = exports.EnemyId || (exports.EnemyId = {}));
-var Enemy = /** @class */ (function () {
-    function Enemy(point, Material, level) {
+class Enemy {
+    constructor(point, Material, level) {
         this.name = Material.name;
         this.point = point;
         this.id = Material.id;
@@ -32,27 +32,14 @@ var Enemy = /** @class */ (function () {
         this.ATK = this.totalATK;
         this.DEF = this.totalDEF;
     }
-    Object.defineProperty(Enemy.prototype, "totalHP", {
-        get: function () {
-            return this.baseHP + this.equipHP;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Enemy.prototype, "totalATK", {
-        get: function () {
-            return this.baseATK + this.equipATK;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Enemy.prototype, "totalDEF", {
-        get: function () {
-            return this.baseDEF + this.equipDEF;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return Enemy;
-}());
+    get totalHP() {
+        return this.baseHP + this.equipHP;
+    }
+    get totalATK() {
+        return this.baseATK + this.equipATK;
+    }
+    get totalDEF() {
+        return this.baseDEF + this.equipDEF;
+    }
+}
 exports.Enemy = Enemy;

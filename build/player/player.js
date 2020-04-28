@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var config_1 = require("../config");
-var State_1 = require("../State");
-var Player = /** @class */ (function () {
-    function Player(x, y) {
+const config_1 = require("../config");
+const State_1 = require("../State");
+class Player {
+    constructor(x, y) {
         this.depth = 0;
         this.point = { x: x, y: y };
         this.x = x;
@@ -21,95 +21,82 @@ var Player = /** @class */ (function () {
         this.ATK = this.totalATK;
         this.DEF = this.totalDEF;
     }
-    Object.defineProperty(Player.prototype, "totalHP", {
-        get: function () {
-            return this.baseHP + this.equipHP;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Player.prototype, "totalATK", {
-        get: function () {
-            return this.baseATK + this.equipATK;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Player.prototype, "totalDEF", {
-        get: function () {
-            return this.baseDEF + this.equipDEF;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Player.prototype.moveLeft = function () {
+    get totalHP() {
+        return this.baseHP + this.equipHP;
+    }
+    get totalATK() {
+        return this.baseATK + this.equipATK;
+    }
+    get totalDEF() {
+        return this.baseDEF + this.equipDEF;
+    }
+    moveLeft() {
         if (this.x === 0) {
             return this;
         }
         this.x = --this.x;
         return this;
-    };
-    Player.prototype.moveUp = function () {
+    }
+    moveUp() {
         if (this.y === 0) {
             return this;
         }
         this.y = --this.y;
         return this;
-    };
-    Player.prototype.moveRight = function () {
+    }
+    moveRight() {
         if (this.x === State_1.S.fieldSize.x - 1) {
             return this;
         }
         this.x = ++this.x;
         return this;
-    };
-    Player.prototype.moveDown = function () {
+    }
+    moveDown() {
         if (this.y === State_1.S.fieldSize.y - 1) {
             return this;
         }
         this.y = ++this.y;
         return this;
-    };
-    Player.prototype.moveUpperLeft = function () {
+    }
+    moveUpperLeft() {
         if (this.x === 0 || this.y === 0) {
             return this;
         }
         this.x = --this.x;
         this.y = --this.y;
         return this;
-    };
-    Player.prototype.moveUpperRight = function () {
+    }
+    moveUpperRight() {
         if (this.x === State_1.S.fieldSize.x - 1 || this.y === 0) {
             return this;
         }
         this.x = ++this.x;
         this.y = --this.y;
         return this;
-    };
-    Player.prototype.moveDownnerLeft = function () {
+    }
+    moveDownnerLeft() {
         if (this.x === State_1.S.fieldSize.x - 1 || this.y === State_1.S.fieldSize.y - 1) {
             return this;
         }
         this.x = --this.x;
         this.y = ++this.y;
         return this;
-    };
-    Player.prototype.moveDownnerRight = function () {
+    }
+    moveDownnerRight() {
         if (this.x === State_1.S.fieldSize.x - 1 || this.y === State_1.S.fieldSize.y - 1) {
             return this;
         }
         this.x = ++this.x;
         this.y = ++this.y;
         return this;
-    };
-    Player.prototype.stairDown = function () {
-        var block = State_1.S.fields[this.depth].blocks[this.x][this.y];
+    }
+    stairDown() {
+        const block = State_1.S.fields[this.depth].blocks[this.x][this.y];
         if (block.base === config_1.MapType.downstair) {
             ++this.depth;
         }
         else {
         }
-    };
-    return Player;
-}());
+    }
+}
 exports.default = Player;

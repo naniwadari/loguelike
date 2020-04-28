@@ -17,16 +17,16 @@ var TEXT;
 })(TEXT = exports.TEXT || (exports.TEXT = {}));
 var actionMsg;
 (function (actionMsg) {
-    actionMsg.attack = function (name, damage) {
-        return name + "\u306B" + damage + "\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u305F";
+    actionMsg.attack = (name, damage) => {
+        return `${name}に${damage}のダメージを与えた`;
     };
-    actionMsg.kill = function (name, exp) {
-        return name + "\u3092\u5012\u3057\u305F\u3002" + exp + "\u306E\u7D4C\u9A13\u5024\u3092\u5F97\u305F";
+    actionMsg.kill = (name, exp) => {
+        return `${name}を倒した。${exp}の経験値を得た`;
     };
-    actionMsg.levelUp = function (level) {
-        return "\u30EC\u30D9\u30EB\u304C" + level + "\u306B\u3042\u304C\u3063\u305F";
+    actionMsg.levelUp = (level) => {
+        return `レベルが${level}にあがった`;
     };
-    actionMsg.beAttacked = function (name, damage) {
-        return name + "\u304B\u3089" + damage + "\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u305F";
+    actionMsg.beAttacked = (name, damage) => {
+        return `${name}から${damage}のダメージを受けた`;
     };
 })(actionMsg = exports.actionMsg || (exports.actionMsg = {}));

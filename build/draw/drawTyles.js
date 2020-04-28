@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var config_1 = require("../config");
-var State_1 = require("../State");
+const config_1 = require("../config");
+const State_1 = require("../State");
 //階段などのイメージ
-var structureImg = new Image();
+const structureImg = new Image();
 structureImg.src = "./src/image/GBstructure.png";
 //床のイメージ
-var tyleImg = new Image();
+const tyleImg = new Image();
 tyleImg.src = "./src/image/GBtyle.png";
 //壁のイメージ
-var wallImg = new Image();
+const wallImg = new Image();
 wallImg.src = "./src/image/GBwall.png";
 function drawTyles(con, drawStartPoint) {
-    for (var i = 0; i < config_1.DrawRange.x; i++) {
-        for (var j = 0; j < config_1.DrawRange.y; j++) {
-            var block = State_1.S.fields[State_1.S.player.depth].blocks[drawStartPoint.x + i][drawStartPoint.y + j];
-            var tyleDrawPoint = { x: i, y: j };
+    for (let i = 0; i < config_1.DrawRange.x; i++) {
+        for (let j = 0; j < config_1.DrawRange.y; j++) {
+            const block = State_1.S.fields[State_1.S.player.depth].blocks[drawStartPoint.x + i][drawStartPoint.y + j];
+            const tyleDrawPoint = { x: i, y: j };
             if (block.base === config_1.MapType.floor) {
                 DrawTyle.floor(con, tyleDrawPoint);
             }

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var config_1 = require("../config");
-var Room = /** @class */ (function () {
-    function Room(point, size, index) {
+const config_1 = require("../config");
+class Room {
+    constructor(point, size, index) {
         if (index) {
             this.index = index;
         }
@@ -14,51 +14,51 @@ var Room = /** @class */ (function () {
         this.toPath = [];
     }
     //部屋が一つしかないなら早期リターン
-    Room.prototype.findNear = function (rooms) {
-        var roomDistances = [];
+    findNear(rooms) {
+        let roomDistances = [];
         if (rooms.length <= 1) {
             return undefined;
         }
-        for (var i = 0; i < rooms.length; i++) {
-            var room = rooms[i];
-            var distance = Math.abs(this.center.x - room.center.x) +
+        for (let i = 0; i < rooms.length; i++) {
+            const room = rooms[i];
+            const distance = Math.abs(this.center.x - room.center.x) +
                 Math.abs(this.center.y - room.center.y);
             //距離ゼロは自室なので加えない
             if (distance !== 0) {
-                var result = { index: i, distance: distance };
+                const result = { index: i, distance: distance };
                 roomDistances.push(result);
             }
         }
         //部屋の距離を比較して配列を並び替える
-        roomDistances = roomDistances.sort(function (a, b) {
+        roomDistances = roomDistances.sort((a, b) => {
             return a.distance > b.distance ? 1 : -1;
         });
         //一番近い部屋を返す
         return rooms[roomDistances[0].index];
-    };
+    }
     //終点を計算
-    Room.prototype.calcEnd = function (point, size) {
-        var result = {
+    calcEnd(point, size) {
+        const result = {
             x: point.x + size.width - 1,
             y: point.y + size.height - 1,
         };
         return result;
-    };
+    }
     //中心点を計算
-    Room.prototype.calcCenter = function (point, size) {
-        var result = {
+    calcCenter(point, size) {
+        const result = {
             x: Math.floor(point.x + size.width / 2),
             y: Math.floor(point.y + size.height / 2),
         };
         return result;
-    };
-    Room.prototype.isNoDuplicate = function (rooms) {
-        var result = true;
-        var area_x = {
+    }
+    isNoDuplicate(rooms) {
+        let result = true;
+        const area_x = {
             start: this.start.x - config_1.RoomConf.distance_x,
             end: this.end.x + config_1.RoomConf.distance_y,
         };
-        var area_y = {
+        const area_y = {
             start: this.start.y - config_1.RoomConf.distance_y,
             end: this.end.y + config_1.RoomConf.distance_y,
         };
@@ -66,8 +66,8 @@ var Room = /** @class */ (function () {
         if (rooms.length === 0)
             return result;
         //各部屋のxとyを比較する
-        for (var i = 0; i < rooms.length; i++) {
-            var room = rooms[i];
+        for (let i = 0; i < rooms.length; i++) {
+            let room = rooms[i];
             if ((area_x.start <= room.start.x &&
                 room.start.x <= area_x.end &&
                 area_y.start <= room.start.y &&
@@ -81,10 +81,10 @@ var Room = /** @class */ (function () {
             }
         }
         return result;
-    };
+    }
     //作成しようとしている部屋がフロアからはみだしていないか確認する
-    Room.prototype.isInFloor = function (floorSize) {
-        var result = true;
+    isInFloor(floorSize) {
+        let result = true;
         //部屋がフロアからはみ出していないか確認
         if (this.start.x < 1 ||
             this.start.y < 1 ||
@@ -93,7 +93,6 @@ var Room = /** @class */ (function () {
             result = false;
         }
         return result;
-    };
-    return Room;
-}());
+    }
+}
 exports.default = Room;

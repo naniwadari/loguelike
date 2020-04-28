@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var State_1 = require("./State");
-var config_1 = require("./config");
-exports.default = (function () {
-    var drawStartPoint = { x: 0, y: 0 };
+const State_1 = require("./State");
+const config_1 = require("./config");
+exports.default = () => {
+    let drawStartPoint = { x: 0, y: 0 };
     // 描画を開始するX座標を計算
     //プレイヤーのxが描画範囲の半分以内なら始点は0
     if (State_1.S.player.x <= Math.floor(config_1.DrawRange.x / 2)) {
@@ -27,4 +27,4 @@ exports.default = (function () {
         drawStartPoint.y = State_1.S.player.y - Math.floor(config_1.DrawRange.y / 2);
     }
     return drawStartPoint;
-});
+};

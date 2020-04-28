@@ -3,30 +3,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var State_1 = require("../State");
-var calcDamage_1 = __importDefault(require("./calcDamage"));
-var messages_1 = require("../text/messages");
-var text_1 = require("../text/text");
-var config_1 = require("../config");
+const State_1 = require("../State");
+const calcDamage_1 = __importDefault(require("./calcDamage"));
+const messages_1 = require("../text/messages");
+const text_1 = require("../text/text");
+const config_1 = require("../config");
 var battleEvent;
 (function (battleEvent) {
     function searchEnemy(point, enemys) {
-        var targetEnemy = undefined;
-        var enemyIndex = 0;
-        for (var i = 0; i < enemys.length; i++) {
+        let targetEnemy = undefined;
+        let enemyIndex = 0;
+        for (let i = 0; i < enemys.length; i++) {
             if (enemys[i].point.x === point.x && enemys[i].point.y === point.y) {
                 targetEnemy = enemys[i];
                 enemyIndex = i;
-                var result_1 = { enemy: targetEnemy, index: enemyIndex };
-                return result_1;
+                const result = { enemy: targetEnemy, index: enemyIndex };
+                return result;
             }
         }
-        var result = { enemy: undefined, index: undefined };
+        const result = { enemy: undefined, index: undefined };
         return result;
     }
     battleEvent.searchEnemy = searchEnemy;
     function attackResult(enemy) {
-        var damage = calcDamage_1.default(State_1.S.player.ATK, enemy.DEF);
+        let damage = calcDamage_1.default(State_1.S.player.ATK, enemy.DEF);
         enemy.HP -= damage;
         State_1.S.messages.add(new messages_1.Message(text_1.actionMsg.attack(enemy.name, damage), config_1.MessageType.normal));
     }

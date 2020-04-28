@@ -1,9 +1,6 @@
 "use strict";
 //移動キーの入力制御
 Object.defineProperty(exports, "__esModule", { value: true });
-var arrowKey = /** @class */ (function () {
-    function arrowKey() {
-    }
-    return arrowKey;
-}());
+class arrowKey {
+}
 exports.arrowKey = arrowKey;

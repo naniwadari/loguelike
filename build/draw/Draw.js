@@ -3,16 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var State_1 = require("../State");
-var config_1 = require("../config");
-var culcDrawStartPoint_1 = __importDefault(require("../culcDrawStartPoint"));
-var drawDiagonalArrow_1 = __importDefault(require("./drawDiagonalArrow"));
-var drawMessage_1 = __importDefault(require("./drawMessage"));
-var drawTyles_1 = require("./drawTyles");
-var drawStatus_1 = __importDefault(require("./drawStatus"));
-var drawEnemys_1 = __importDefault(require("./drawEnemys"));
-var drawPlayer_1 = __importDefault(require("./drawPlayer"));
-var drawTitle_1 = __importDefault(require("./drawTitle"));
+const State_1 = require("../State");
+const config_1 = require("../config");
+const culcDrawStartPoint_1 = __importDefault(require("../culcDrawStartPoint"));
+const drawDiagonalArrow_1 = __importDefault(require("./drawDiagonalArrow"));
+const drawMessage_1 = __importDefault(require("./drawMessage"));
+const drawTyles_1 = require("./drawTyles");
+const drawStatus_1 = __importDefault(require("./drawStatus"));
+const drawEnemys_1 = __importDefault(require("./drawEnemys"));
+const drawPlayer_1 = __importDefault(require("./drawPlayer"));
+const drawTitle_1 = __importDefault(require("./drawTitle"));
 exports.canvas = document.getElementById("game");
 exports.con = exports.canvas.getContext("2d");
 function draw(con, env) {
@@ -22,8 +22,8 @@ function draw(con, env) {
         drawTitle_1.default(con);
         return;
     }
-    var drawStartPoint = culcDrawStartPoint_1.default();
-    var playerDrawPoint = {
+    const drawStartPoint = culcDrawStartPoint_1.default();
+    const playerDrawPoint = {
         x: State_1.S.player.x - drawStartPoint.x,
         y: State_1.S.player.y - drawStartPoint.y,
     };

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Enemy_1 = require("./Enemy");
+const Enemy_1 = require("./Enemy");
 exports.EnemyOnFloor = [
     [],
     [Enemy_1.EnemyId.slime, Enemy_1.EnemyId.rat],

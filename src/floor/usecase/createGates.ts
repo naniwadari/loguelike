@@ -7,7 +7,6 @@ interface findDirection {
   direction: Direction;
   distance: number;
 }
-
 export function createGates(rooms: Room[]) {
   const tmpRooms = rooms.slice();
   let gates: IGate[] = [];
@@ -38,7 +37,7 @@ export function createGates(rooms: Room[]) {
 
 //パスを作る起点となるドアを決定する
 export function createGate(room: Room, target: Room): IGate {
-  const direction = findDirection(room, target);
+  const direction = findDireciton(room, target);
   let A: IPoint;
   let B: IPoint;
   //掘る方向が左右
@@ -68,7 +67,24 @@ export function createGate(room: Room, target: Room): IGate {
 }
 
 //指定した部屋との上下左右の距離の差を比較して最も小さいものを返す
-function findDirection(room: Room, target: Room) {
+export function findDireciton(room: Room, target: Room) {
+  if (target.center.x <= room.start.x && target.center.y <= room.end.y) {
+    return Direction.left;
+  } else if (target.center.x <= room.end.x && target.center.y >= room.end.y) {
+    return Direction.bottom;
+  } else if (target.center.x >= room.end.x && target.center.y >= room.start.y) {
+    return Direction.right;
+  } else if (
+    target.center.x >= room.start.x &&
+    target.center.y <= room.start.y
+  ) {
+    return Direction.top;
+  } else {
+    return Direction.top;
+  }
+}
+
+export function oldfindDirection(room: Room, target: Room) {
   let distances: findDirection[] = [];
   distances.push({
     direction: Direction.left,
@@ -94,7 +110,7 @@ function findDirection(room: Room, target: Room) {
 }
 
 //通路の始点をランダムに決める
-function randomGate(room: Room, direction: Direction) {
+export function randomGate(room: Room, direction: Direction) {
   let gate: IPoint = { x: 0, y: 0 };
   //方角毎に通路の始点をランダムに決める
   if (direction === Direction.left) {
