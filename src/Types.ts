@@ -1,8 +1,16 @@
 import { Enemy } from "./enemy/Enemy";
 import { MapType } from "./config";
+import { Direction } from "./config";
+
 export interface Point {
   x: number;
   y: number;
+}
+
+export interface IGate {
+  A: IPoint;
+  B: IPoint;
+  direction: Direction;
 }
 
 export interface IField {

@@ -5,6 +5,18 @@ var SCREEN;
     SCREEN[SCREEN["X"] = 1600] = "X";
     SCREEN[SCREEN["Y"] = 800] = "Y";
 })(SCREEN = exports.SCREEN || (exports.SCREEN = {}));
+var Direction;
+(function (Direction) {
+    Direction[Direction["top"] = 0] = "top";
+    Direction[Direction["right"] = 1] = "right";
+    Direction[Direction["bottom"] = 2] = "bottom";
+    Direction[Direction["left"] = 3] = "left";
+})(Direction = exports.Direction || (exports.Direction = {}));
+var EnemyConf;
+(function (EnemyConf) {
+    EnemyConf[EnemyConf["popInitMin"] = 0] = "popInitMin";
+    EnemyConf[EnemyConf["popInitMax"] = 3] = "popInitMax";
+})(EnemyConf = exports.EnemyConf || (exports.EnemyConf = {}));
 var MessageLength;
 (function (MessageLength) {
     MessageLength[MessageLength["limit"] = 8] = "limit";
@@ -21,15 +33,28 @@ var MapBluePrint;
     MapBluePrint[MapBluePrint["LY"] = 25] = "LY";
     MapBluePrint[MapBluePrint["PX"] = 32] = "PX";
     MapBluePrint[MapBluePrint["PY"] = 32] = "PY";
-    MapBluePrint[MapBluePrint["wideX"] = 40] = "wideX";
-    MapBluePrint[MapBluePrint["wideY"] = 40] = "wideY";
+    MapBluePrint[MapBluePrint["wideX"] = 25] = "wideX";
+    MapBluePrint[MapBluePrint["wideY"] = 25] = "wideY";
 })(MapBluePrint = exports.MapBluePrint || (exports.MapBluePrint = {}));
 var MapType;
 (function (MapType) {
-    MapType[MapType["floor"] = 0] = "floor";
-    MapType[MapType["wall"] = 1] = "wall";
+    MapType[MapType["wall"] = 0] = "wall";
+    MapType[MapType["floor"] = 1] = "floor";
     MapType[MapType["downstair"] = 2] = "downstair";
 })(MapType = exports.MapType || (exports.MapType = {}));
+var RoomConf;
+(function (RoomConf) {
+    // 部屋のサイズ
+    RoomConf[RoomConf["maxWidth"] = 10] = "maxWidth";
+    RoomConf[RoomConf["maxHeight"] = 10] = "maxHeight";
+    RoomConf[RoomConf["minWidth"] = 7] = "minWidth";
+    RoomConf[RoomConf["minHeight"] = 7] = "minHeight";
+    //部屋作成の試行回数
+    RoomConf[RoomConf["trialNum"] = 50] = "trialNum";
+    //部屋と部屋の距離
+    RoomConf[RoomConf["distance_x"] = 3] = "distance_x";
+    RoomConf[RoomConf["distance_y"] = 3] = "distance_y";
+})(RoomConf = exports.RoomConf || (exports.RoomConf = {}));
 var TyleSize;
 (function (TyleSize) {
     TyleSize[TyleSize["x"] = 32] = "x";

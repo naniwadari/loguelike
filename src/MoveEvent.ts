@@ -3,7 +3,7 @@ import { S } from "./State";
 import { con, draw } from "./draw/Draw";
 import Player from "./player/player";
 import { map } from "./Map";
-import { createField, putDownStairs } from "./createField";
+// import { createField, putDownStairs } from "./createField";
 import { Message } from "./text/messages";
 import { TEXT } from "./text/text";
 import { MessageType, CanStand } from "./config";
@@ -11,7 +11,9 @@ import { Point } from "./Types";
 import { battleEvent } from "./battle/battleEvents";
 import doEnemyTurn from "./enemy/doEnemyTurn";
 import { createFloor, rooms } from "./dangeon/createFloor";
+import CreateFloor from "../src/floor/CreateFloor";
 import popEnemy from "./enemy/popEnemy";
+
 export default () => {
   window.addEventListener("keydown", (e) => {
     e.preventDefault();
@@ -100,15 +102,24 @@ export default () => {
         S.player.stairDown();
         S.messages.add(new Message(TEXT.downstair, MessageType.normal));
         if (!S.fields[S.player.depth]) {
-          S.fields[S.player.depth] = createField(
-            S.player.depth,
-            [{ x: S.player.x, y: S.player.y }],
-            S.seed
-          );
+          // S.fields[S.player.depth] = createField(
+          //   S.player.depth,
+          //   [{ x: S.player.x, y: S.player.y }],
+          //   S.seed
+          // );
+          S.fields[S.player.depth] = {
+            size: { x: 25, y: 25 },
+            enemys: [],
+            blocks: [],
+          };
           //テスト用に書き換え
-          S.fields[S.player.depth].blocks = createFloor();
-          S.fields[S.player.depth].enemys = popEnemy(rooms);
-          putDownStairs(rooms);
+          // S.fields[S.player.depth].blocks = createFloor();
+          S.fields[S.player.depth].blocks = CreateFloor({
+            width: 25,
+            height: 25,
+          });
+          // S.fields[S.player.depth].enemys = popEnemy(rooms);
+          // putDownStairs(rooms);
           //フィールドサイズを更新
           S.fieldSize = S.fields[S.player.depth].size;
         }

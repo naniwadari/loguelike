@@ -1,12 +1,12 @@
-import { IRoom, IPoint } from "../dangeon/createFloor";
+import { IPoint } from "../dangeon/createFloor";
 import { EnemyList, EnemyOnFloor } from "./EnemyList";
 import { Enemy } from "./Enemy";
 import { S } from "../State";
-import { Random } from "../module/random";
+import { Random } from "../module/RandomNum";
 import { PointMaker } from "../module/PointMaker";
 import { EnemyConf } from "../config";
-
-export default (rooms: IRoom[]) => {
+import Room from "../floor/Room";
+export default (rooms: Room[]) => {
   let popEnemys: Enemy[] = [];
   for (let i = 0; i < rooms.length; i++) {
     //部屋に湧く敵の数を決める

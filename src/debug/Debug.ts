@@ -1,8 +1,8 @@
 import { S } from "../State";
 import { Point } from "../Types";
 import { MapType } from "../config";
-import { createFloor } from "../dangeon/createFloor";
 import { draw, con } from "../draw/Draw";
+import CreateFloor from "../floor/CreateFloor";
 export default () => {
   window.addEventListener("keydown", (e) => {
     // デバッグキー P
@@ -17,7 +17,7 @@ export default () => {
   });
 };
 function mapRecreate() {
-  S.fields[S.player.depth].blocks = createFloor();
+  S.fields[S.player.depth].blocks = CreateFloor({ width: 25, height: 25 });
   draw(con, S.env);
 }
 function forceGameOver() {

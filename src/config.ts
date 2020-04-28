@@ -3,6 +3,13 @@ export enum SCREEN {
   Y = 800,
 }
 
+export enum Direction {
+  top = 0,
+  right = 1,
+  bottom = 2,
+  left = 3,
+}
+
 export enum EnemyConf {
   popInitMin = 0,
   popInitMax = 3,

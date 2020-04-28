@@ -5,12 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var MoveEvent_1 = __importDefault(require("./MoveEvent"));
 var State_1 = require("./State");
-var Draw_1 = require("./Draw");
-var ArrowKeyEvents_1 = __importDefault(require("./ArrowKeyEvents"));
+var Draw_1 = require("./draw/Draw");
+var ArrowKeyEvents_1 = __importDefault(require("./key/ArrowKeyEvents"));
 var createField_1 = require("./createField");
-var player_1 = __importDefault(require("./player"));
-var messages_1 = require("./messages");
-var text_1 = require("./text");
+var player_1 = __importDefault(require("./player/player"));
+var messages_1 = require("./text/messages");
+var text_1 = require("./text/text");
 var config_1 = require("./config");
 var Debug_1 = __importDefault(require("./debug/Debug"));
 // 決定キーを押すとinitイベントが走る

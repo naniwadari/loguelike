@@ -1,12 +1,9 @@
 import { MapBluePrint, MapType } from "./config";
-import { RandomSeed } from "./RandomSeed";
-import { splitRoom } from "./splitRoom";
-import PopEnemys from "./enemy/popEnemy";
-import { Enemy } from "./enemy/Enemy";
+import { RandomSeed } from "./Random";
 import { IField } from "./Types";
 import { IRoom } from "./dangeon/createFloor";
 import { PointMaker } from "./module/PointMaker";
-import { Random } from "./module/random";
+import { Random } from "./module/RandomNum";
 import { S } from "./State";
 
 export function createField(
@@ -117,16 +114,16 @@ export function createField(
   };
 }
 
-export function putDownStairs(rooms: IRoom[]) {
-  let isPut = false;
-  for (let i = 0; !isPut; i++) {
-    let room = rooms[Random.rangeInt(0, rooms.length)];
-    let point = PointMaker.room(room);
-    let targetBlock = S.fields[S.player.depth].blocks[point.x][point.y];
-    if (targetBlock.base === MapType.floor) {
-      isPut = true;
-      targetBlock.base = MapType.downstair;
-      console.log(point);
-    }
-  }
-}
+// export function putDownStairs(rooms: IRoom[]) {
+//   let isPut = false;
+//   for (let i = 0; !isPut; i++) {
+//     let room = rooms[Random.rangeInt(0, rooms.length)];
+//     let point = PointMaker.room(room);
+//     let targetBlock = S.fields[S.player.depth].blocks[point.x][point.y];
+//     if (targetBlock.base === MapType.floor) {
+//       isPut = true;
+//       targetBlock.base = MapType.downstair;
+//       console.log(point);
+//     }
+//   }
+// }

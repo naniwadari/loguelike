@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var text_1 = require("../text");
+var text_1 = require("../text/text");
 var config_1 = require("../config");
 var State_1 = require("../State");
 function fillStatusText(con, text, lineNum) {

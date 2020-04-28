@@ -3,17 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var KeyCode_1 = require("./KeyCode");
+var KeyCode_1 = require("./key/KeyCode");
 var State_1 = require("./State");
-var Draw_1 = require("./Draw");
-var player_1 = __importDefault(require("./player"));
+var Draw_1 = require("./draw/Draw");
+var player_1 = __importDefault(require("./player/player"));
 var Map_1 = require("./Map");
-var createField_1 = require("./createField");
-var messages_1 = require("./messages");
-var text_1 = require("./text");
+// import { createField, putDownStairs } from "./createField";
+var messages_1 = require("./text/messages");
+var text_1 = require("./text/text");
 var config_1 = require("./config");
 var battleEvents_1 = require("./battle/battleEvents");
-var doEnemyTurn_1 = __importDefault(require("./doEnemyTurn"));
+var doEnemyTurn_1 = __importDefault(require("./enemy/doEnemyTurn"));
+var CreateFloor_1 = __importDefault(require("../src/floor/CreateFloor"));
 exports.default = (function () {
     window.addEventListener("keydown", function (e) {
         e.preventDefault();
@@ -108,7 +109,19 @@ exports.default = (function () {
                 State_1.S.player.stairDown();
                 State_1.S.messages.add(new messages_1.Message(text_1.TEXT.downstair, config_1.MessageType.normal));
                 if (!State_1.S.fields[State_1.S.player.depth]) {
-                    State_1.S.fields[State_1.S.player.depth] = createField_1.createField(State_1.S.player.depth, [{ x: State_1.S.player.x, y: State_1.S.player.y }], State_1.S.seed);
+                    // S.fields[S.player.depth] = createField(
+                    //   S.player.depth,
+                    //   [{ x: S.player.x, y: S.player.y }],
+                    //   S.seed
+                    // );
+                    //テスト用に書き換え
+                    // S.fields[S.player.depth].blocks = createFloor();
+                    State_1.S.fields[State_1.S.player.depth].blocks = CreateFloor_1.default({
+                        width: 25,
+                        height: 25,
+                    });
+                    // S.fields[S.player.depth].enemys = popEnemy(rooms);
+                    // putDownStairs(rooms);
                     //フィールドサイズを更新
                     State_1.S.fieldSize = State_1.S.fields[State_1.S.player.depth].size;
                 }

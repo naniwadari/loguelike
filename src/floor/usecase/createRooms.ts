@@ -1,7 +1,7 @@
 import { ISize, IPoint } from "../../Types";
 import { RoomConf } from "../../config";
-import { Random } from "../../module/Random";
-import Room from "./Room";
+import { Random } from "../../module/RandomNum";
+import Room from "../Room";
 
 //条件にあった部屋を作り出して配列を返す
 export default (lim: number, floorSize: ISize) => {

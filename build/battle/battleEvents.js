@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var State_1 = require("../State");
 var calcDamage_1 = __importDefault(require("./calcDamage"));
-var messages_1 = require("../messages");
-var text_1 = require("../text");
+var messages_1 = require("../text/messages");
+var text_1 = require("../text/text");
 var config_1 = require("../config");
 var battleEvent;
 (function (battleEvent) {

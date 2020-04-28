@@ -1,4 +1,4 @@
-import { RandomSeed } from "./RandomSeed";
+import { RandomSeed } from "./Random";
 import { MapType } from "./config";
 
 const minRoomWidth = 6; //偶数

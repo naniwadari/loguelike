@@ -1,7 +1,8 @@
 import { IPoint, IBlock } from "../Types";
 import { MapType } from "../config";
+import { Floor } from "./Floor";
 
-export class Dig {
+export default class Dig {
   start: IPoint;
   end: IPoint;
   constructor(A: IPoint, B: IPoint) {
@@ -9,12 +10,13 @@ export class Dig {
   }
 
   //部屋を掘る
-  room(blocks: IBlock[][]) {
+  square(blocks: IBlock[][]) {
     for (let i = this.start.x; i <= this.end.x; i++) {
       for (let j = this.start.y; j <= this.end.y; j++) {
         blocks[i][j].base = MapType.floor;
       }
     }
+    return blocks;
   }
 
   //横にパスを掘る
@@ -23,10 +25,11 @@ export class Dig {
     //掘り進めるポイント
     const start_end: IPoint = { x: axisX, y: this.start.y };
     const end_end: IPoint = { x: axisX, y: this.end.y };
-    new Dig(this.start, start_end).side(blocks);
-    new Dig(this.end, end_end).side(blocks);
+    blocks = new Dig(this.start, start_end).side(blocks);
+    blocks = new Dig(this.end, end_end).side(blocks);
     //両部屋から掘り進めた道をつなげる
-    new Dig(start_end, end_end).vertical(blocks);
+    blocks = new Dig(start_end, end_end).vertical(blocks);
+    return blocks;
   }
 
   //縦にパスを掘る
@@ -34,10 +37,11 @@ export class Dig {
     const axisY = Math.floor(Math.abs(this.start.y + this.end.y) / 2);
     const start_end: IPoint = { x: this.start.x, y: axisY };
     const end_end: IPoint = { x: this.end.x, y: axisY };
-    new Dig(this.start, start_end).vertical(blocks);
-    new Dig(this.end, end_end).vertical(blocks);
+    blocks = new Dig(this.start, start_end).vertical(blocks);
+    blocks = new Dig(this.end, end_end).vertical(blocks);
     //両部屋から掘り進めた道をつなげる
-    new Dig(start_end, end_end).side(blocks);
+    blocks = new Dig(start_end, end_end).side(blocks);
+    return blocks;
   }
 
   //縦に掘る
@@ -45,7 +49,7 @@ export class Dig {
     //縦軸がずれてたら処理終了
     if (this.start.x !== this.end.x) {
       console.log("基準となる軸がずれています");
-      return;
+      return blocks;
     }
     const axisX = this.start.x;
     if (this.start.y <= this.end.y) {
@@ -57,13 +61,14 @@ export class Dig {
         blocks[axisX][i].base = MapType.floor;
       }
     }
+    return blocks;
   }
 
   //横に掘る
   side(blocks: IBlock[][]) {
     if (this.start.y !== this.end.y) {
       console.log("基準となる軸がずれています");
-      return;
+      return blocks;
     }
     const axisY = this.start.y;
     if (this.start.x <= this.end.x) {
@@ -75,5 +80,6 @@ export class Dig {
         blocks[i][axisY].base = MapType.floor;
       }
     }
+    return blocks;
   }
 }

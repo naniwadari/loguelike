@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var State_1 = require("../State");
 var config_1 = require("../config");
+var createFloor_1 = require("../dangeon/createFloor");
+var Draw_1 = require("../draw/Draw");
 exports.default = (function () {
     window.addEventListener("keydown", function (e) {
         // デバッグキー P
@@ -11,10 +13,14 @@ exports.default = (function () {
         }
         // 強制ゲームオーバーキー 0
         else if (e.keyCode === 48) {
-            forceGameOver();
+            mapRecreate();
         }
     });
 });
+function mapRecreate() {
+    State_1.S.fields[State_1.S.player.depth].blocks = createFloor_1.createFloor();
+    Draw_1.draw(Draw_1.con, State_1.S.env);
+}
 function forceGameOver() {
     State_1.S.player.HP = 0;
     State_1.S.Frag.gameover = true;

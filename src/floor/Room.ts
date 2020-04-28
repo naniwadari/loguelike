@@ -1,5 +1,5 @@
-import { ISize, IPoint } from "../../Types";
-import { RoomConf } from "../../config";
+import { ISize, IPoint } from "../Types";
+import { RoomConf } from "../config";
 
 interface IRoomDistance {
   index: number;
@@ -13,7 +13,7 @@ export default class Room {
   end: IPoint;
   center: IPoint;
   hasPath: number[];
-  toPath?: number;
+  toPath: number[];
 
   constructor(point: IPoint, size: ISize, index?: number) {
     if (index) {
@@ -24,6 +24,7 @@ export default class Room {
     this.end = this.calcEnd(point, size);
     this.center = this.calcCenter(point, size);
     this.hasPath = [];
+    this.toPath = [];
   }
 
   //部屋が一つしかないなら早期リターン
@@ -48,7 +49,7 @@ export default class Room {
       return a.distance > b.distance ? 1 : -1;
     });
     //一番近い部屋を返す
-    return roomDistances[0];
+    return rooms[roomDistances[0].index];
   }
 
   //終点を計算
@@ -85,14 +86,14 @@ export default class Room {
     for (let i = 0; i < rooms.length; i++) {
       let room = rooms[i];
       if (
-        (area_x.start <= room.start.x ||
-          area_x.end >= room.start.x ||
-          area_x.start <= room.end.x ||
-          area_x.end >= room.end.x) &&
-        (area_y.start <= room.start.y ||
-          area_y.end >= room.start.y ||
-          area_y.start <= room.end.y ||
-          area_y.end >= room.end.y)
+        (area_x.start <= room.start.x &&
+          room.start.x <= area_x.end &&
+          area_y.start <= room.start.y &&
+          room.start.y <= area_y.end) ||
+        (area_x.start <= room.end.x &&
+          room.end.x <= area_x.end &&
+          area_y.start <= room.end.y &&
+          room.end.y <= area_y.end)
       ) {
         result = false;
         break;

@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var player_1 = __importDefault(require("./player"));
+var player_1 = __importDefault(require("./player/player"));
 var config_1 = require("./config");
-var messages_1 = require("./messages");
+var messages_1 = require("./text/messages");
 exports.S = {
     fields: [],
     fieldSize: { x: config_1.MapBluePrint.LX, y: config_1.MapBluePrint.LY },
