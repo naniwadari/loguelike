@@ -63,7 +63,7 @@ const minRoomSize = { width: 5, height: 5 };
 //部屋の生成を試みる回数
 const roomCreateCount = 30;
 //生成された部屋を格納する配列
-let rooms: IRoom[] = [];
+export let rooms: IRoom[] = [];
 let paths: Ipath[] = [];
 
 export function createFloor() {

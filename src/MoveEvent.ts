@@ -10,7 +10,8 @@ import { MessageType, CanStand } from "./config";
 import { Point } from "./Types";
 import { battleEvent } from "./battle/battleEvents";
 import doEnemyTurn from "./enemy/doEnemyTurn";
-import { createFloor } from "./dangeon/createFloor";
+import { createFloor, rooms } from "./dangeon/createFloor";
+import popEnemy from "./enemy/popEnemy";
 export default () => {
   window.addEventListener("keydown", (e) => {
     e.preventDefault();
@@ -106,6 +107,7 @@ export default () => {
           );
           //テスト用に書き換え
           S.fields[S.player.depth].blocks = createFloor();
+          S.fields[S.player.depth].enemys = popEnemy(rooms);
           //フィールドサイズを更新
           S.fieldSize = S.fields[S.player.depth].size;
         }

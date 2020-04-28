@@ -1,5 +1,11 @@
 import { EnemyId, EnemyMaterial } from "./Enemy";
 
+export const EnemyOnFloor: EnemyId[][] = [
+  [], //0階
+  [EnemyId.slime, EnemyId.rat], //1階
+  [EnemyId.slime, EnemyId.rat], //2階
+];
+
 export const EnemyList: EnemyMaterial[] = [
   {
     id: EnemyId.slime,

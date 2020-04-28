@@ -3,6 +3,11 @@ export enum SCREEN {
   Y = 800,
 }
 
+export enum EnemyConf {
+  popInitMin = 0,
+  popInitMax = 3,
+}
+
 export enum MessageLength {
   limit = 8,
 }

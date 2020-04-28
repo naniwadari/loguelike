@@ -78,8 +78,6 @@ export function createField(
     splitedRooms.push(splitMaterials[0]);
     splitMaterials.shift();
   }
-  //モンスターのポップ
-  const popEnemys: Enemy[] = PopEnemys(splitedRooms, random, upstairs);
   //階段の生成処理
   let newDownStairs = 1;
   //newDownStairsが0になるまで繰り返す
@@ -111,6 +109,6 @@ export function createField(
   return {
     size: { x: newX, y: newY },
     blocks: blocks,
-    enemys: popEnemys,
+    enemys: [],
   };
 }
