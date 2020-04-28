@@ -32,6 +32,19 @@ export enum MapType {
   downstair = 2,
 }
 
+export enum RoomConf {
+  // 部屋のサイズ
+  maxWidth = 10,
+  maxHeight = 10,
+  minWidth = 7,
+  minHeight = 7,
+  //部屋作成の試行回数
+  trialNum = 50,
+  //部屋と部屋の距離
+  distance_x = 3,
+  distance_y = 3,
+}
+
 export enum TyleSize {
   x = 32,
   y = 32,

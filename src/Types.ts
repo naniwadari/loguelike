@@ -1,5 +1,5 @@
 import { Enemy } from "./enemy/Enemy";
-
+import { MapType } from "./config";
 export interface Point {
   x: number;
   y: number;
@@ -8,6 +8,16 @@ export interface Point {
 export interface IField {
   size: Point;
   blocks: any[];
+  enemys: Enemy[];
+}
+
+export interface IBlock {
+  base: MapType;
+}
+
+export interface IFloor {
+  size: IPoint;
+  blocks: IBlock[][];
   enemys: Enemy[];
 }
 
