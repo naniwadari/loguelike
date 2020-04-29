@@ -14,6 +14,5 @@ const floorsize = { width: 25, height: 25 };
 describe("createRooms", () => {
   test("integration createRooms", () => {
     const result = createRooms(lim, floorsize);
-    console.log(result);
   });
 });
