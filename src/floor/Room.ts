@@ -1,11 +1,6 @@
 import { ISize, IPoint } from "../Types";
 import { RoomConf } from "../config";
 
-interface IRoomDistance {
-  index: number;
-  distance: number;
-}
-
 export default class Room {
   index?: number;
   size: ISize;
@@ -25,31 +20,6 @@ export default class Room {
     this.center = this.calcCenter(point, size);
     this.hasPath = [];
     this.toPath = [];
-  }
-
-  //部屋が一つしかないなら早期リターン
-  findNear(rooms: Room[]) {
-    let roomDistances: IRoomDistance[] = [];
-    if (rooms.length <= 1) {
-      return undefined;
-    }
-    for (let i = 0; i < rooms.length; i++) {
-      const room = rooms[i];
-      const distance =
-        Math.abs(this.center.x - room.center.x) +
-        Math.abs(this.center.y - room.center.y);
-      //距離ゼロは自室なので加えない
-      if (distance !== 0) {
-        const result = { index: i, distance: distance };
-        roomDistances.push(result);
-      }
-    }
-    //部屋の距離を比較して配列を並び替える
-    roomDistances = roomDistances.sort((a: IRoomDistance, b: IRoomDistance) => {
-      return a.distance > b.distance ? 1 : -1;
-    });
-    //一番近い部屋を返す
-    return rooms[roomDistances[0].index];
   }
 
   //終点を計算

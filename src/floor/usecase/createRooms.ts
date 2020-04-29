@@ -6,7 +6,7 @@ import Room from "../Room";
 //条件にあった部屋を作り出して配列を返す
 export default (lim: number, floorSize: ISize) => {
   let rooms: Room[] = [];
-  let successCount: number = 0;
+  let successCount: number = 1;
   for (let i = 0; i < lim; i++) {
     const size = randomRoomSize();
     const startPoint = randomRoomStartPoint(floorSize);

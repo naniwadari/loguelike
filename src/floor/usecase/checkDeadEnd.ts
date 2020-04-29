@@ -1,4 +1,5 @@
 import Room from "../Room";
+import { RoomSearch } from "../../module/RoomSearch";
 
 export default (rooms: Room[]) => {
   let noCheckedRooms = rooms.slice();
@@ -14,12 +15,12 @@ export default (rooms: Room[]) => {
     let needPath: any;
     if (i === 0) {
       let now = rooms[0];
-      removeRoom(noCheckedRooms, now);
-      next = findNextRoom(noCheckedRooms, now);
+      RoomSearch.remove(noCheckedRooms, now);
+      next = RoomSearch.connectTo(noCheckedRooms, now);
     } else {
       let now = next;
-      removeRoom(noCheckedRooms, now);
-      next = findNextRoom(noCheckedRooms, now);
+      RoomSearch.remove(noCheckedRooms, now);
+      next = RoomSearch.connectTo(noCheckedRooms, now);
       if (!next) {
         needPath = { to: now, from: noCheckedRooms[0] };
         break;
@@ -33,34 +34,3 @@ export default (rooms: Room[]) => {
     return { result: isConnect, needPath: needPath };
   }
 };
-
-//該当する部屋があれば配列から削除する
-function removeRoom(rooms: Room[], room: Room) {
-  rooms.some((v: Room, i) => {
-    if (v.index === room.index) rooms.splice(i, 1);
-  });
-}
-
-// 次の部屋を検索する
-function findNextRoom(rooms: Room[], now: Room) {
-  let nextIndex = now.toPath[now.toPath.length - 1];
-  let result = findRoomByIndex(rooms, nextIndex);
-  return result;
-}
-
-//次の部屋をインデックスで検索する
-function findRoomByIndex(rooms: Room[], index: number) {
-  let result: Room[] = rooms.filter((room: Room) => {
-    return room.index === index;
-  });
-  return result[0];
-}
-
-function findRoom(rooms: Room[], room: Room) {
-  let isFind: boolean;
-  isFind = rooms.some((v: Room, i) => {
-    if (v.index === room.index) return true;
-    else return false;
-  });
-  return isFind;
-}
