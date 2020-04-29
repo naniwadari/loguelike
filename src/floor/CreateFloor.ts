@@ -11,8 +11,6 @@ import { Floor } from "./Floor";
 export default (floorSize: ISize) => {
   let rooms: Room[] = [];
   let gates: IGate[] = [];
-  let isConnect = false;
-  let blocks: IBlock[][] = [];
   //部屋の生成
   rooms = createRooms(RoomConf.trialNum, floorSize);
   //ゲートポイントの生成
@@ -22,8 +20,8 @@ export default (floorSize: ISize) => {
   console.log(gates);
   console.log(rooms);
   let floor = new Floor(floorSize, rooms, gates);
-  blocks = fillUpWall(floor, blocks);
-  blocks = digRooms(floor, blocks);
-  blocks = digPaths(floor, blocks);
-  return blocks;
+  floor.blocks = fillUpWall(floor, floor.blocks);
+  floor.blocks = digRooms(floor, floor.blocks);
+  floor.blocks = digPaths(floor, floor.blocks);
+  return floor;
 };

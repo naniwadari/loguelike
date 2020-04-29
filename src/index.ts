@@ -8,12 +8,13 @@ import { Message } from "./text/messages";
 import { TEXT } from "./text/text";
 import { MessageType } from "./config";
 import Debug from "./debug/Debug";
+import CreateFloor from "./floor/CreateFloor";
 
 // 決定キーを押すとinitイベントが走る
 export function init() {
   S.Frag.gameover = false;
 
-  S.fields[0] = createField(0, [], S.seed);
+  S.floors[0] = CreateFloor({ width: 25, height: 25 });
   const newPlayer = new Player(12, 12);
   S.player = newPlayer;
   S.messages.add(new Message(TEXT.init, MessageType.special));

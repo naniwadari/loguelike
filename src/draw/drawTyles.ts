@@ -16,7 +16,7 @@ export function drawTyles(con: any, drawStartPoint: Point) {
   for (let i = 0; i < DrawRange.x; i++) {
     for (let j = 0; j < DrawRange.y; j++) {
       const block =
-        S.fields[S.player.depth].blocks[drawStartPoint.x + i][
+        S.floors[S.player.depth].blocks[drawStartPoint.x + i][
           drawStartPoint.y + j
         ];
       const tyleDrawPoint = { x: i, y: j };

@@ -4,10 +4,6 @@ import { Random } from "../../module/RandomNum";
 import { RoomSearch } from "../../module/RoomSearch";
 import { IPoint, IGate } from "../../Types";
 
-interface findDirection {
-  direction: Direction;
-  distance: number;
-}
 interface IRoomDistance {
   index: number;
   distance: number;

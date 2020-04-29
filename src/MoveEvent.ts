@@ -54,7 +54,7 @@ export default () => {
       if (movePlayer.x !== S.player.x || movePlayer.y !== S.player.y) {
         const movePoint: Point = { x: movePlayer.x, y: movePlayer.y };
         //移動先に敵がいた場合
-        const enemys = S.fields[S.player.depth].enemys;
+        const enemys = S.enemys;
         const result = battleEvent.searchEnemy(movePoint, enemys);
         if (
           (result.enemy && result.index) ||
@@ -74,7 +74,7 @@ export default () => {
         } else {
           //移動予定のブロックを特定
           const targetBlock =
-            S.fields[S.player.depth].blocks[movePoint.x][movePoint.y];
+            S.floors[S.player.depth].blocks[movePoint.x][movePoint.y];
           //移動先が通過可能なブロックならプレイヤーの座標を更新
           if (CanStand[targetBlock.base]) {
             S.player.x = movePoint.x;
@@ -97,7 +97,8 @@ export default () => {
   window.addEventListener("keydown", (e) => {
     e.preventDefault(); //スペースでのスクロールを防止
     if (e.keyCode === KeyCode.space) {
-      const block = S.fields[S.player.depth].blocks[S.player.x][S.player.y];
+      console.log(S.floors[S.player.depth]);
+      const block = S.floors[S.player.depth].blocks[S.player.x][S.player.y];
       if (block.base === map.B_DOWNSTAIR) {
         S.player.stairDown();
         S.messages.add(new Message(TEXT.downstair, MessageType.normal));
@@ -112,12 +113,13 @@ export default () => {
             enemys: [],
             blocks: [],
           };
-          //テスト用に書き換え
-          // S.fields[S.player.depth].blocks = createFloor();
-          S.fields[S.player.depth].blocks = CreateFloor({
+          const floor = CreateFloor({
             width: 50,
             height: 40,
           });
+          S.floors[S.player.depth] = floor;
+          //テスト用に書き換え
+          // S.fields[S.player.depth].blocks = createFloor();
           // S.fields[S.player.depth].enemys = popEnemy(rooms);
           // putDownStairs(rooms);
           //フィールドサイズを更新

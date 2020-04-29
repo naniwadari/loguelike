@@ -7,7 +7,7 @@ import { MessageType, CanStand } from "../config";
 import { Point } from "../Types";
 
 export default function () {
-  const enemys = S.fields[S.player.depth].enemys;
+  const enemys = S.enemys;
   for (let i = 0; i < enemys.length; i++) {
     const enemy = enemys[i];
     //プレイヤーを探す
@@ -23,7 +23,7 @@ export default function () {
     //プレイヤーがいなかった場合移動を試みる
     const movePoint = randomMoveEnemy(enemy);
     //移動予定のブロック情報
-    const block = S.fields[S.player.depth].blocks[movePoint.x][movePoint.y];
+    const block = S.floors[S.player.depth].blocks[movePoint.x][movePoint.y];
     const isPointUsing = movePointSearch(movePoint, enemys);
     //移動先に誰もいなければEnemyの位置情報を更新
     if (

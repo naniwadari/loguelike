@@ -7,11 +7,12 @@ export class Floor {
   size: ISize;
   rooms: Room[];
   gates: IGate[];
-
+  blocks: IBlock[][];
   constructor(floorSize: ISize, rooms: Room[], gates: IGate[]) {
     this.size = floorSize;
     this.rooms = rooms;
     this.gates = gates;
+    this.blocks = [];
   }
 
   fillWall(blocks: IBlock[][]) {

@@ -6,7 +6,7 @@ import { EnemyId, Enemy } from "../enemy/Enemy";
 export default (con: any, drawStartPoint: Point) => {
   con.textBaseline = "middle";
   con.textAlign = "center";
-  const enemys = S.fields[S.player.depth].enemys;
+  const enemys: Enemy[] = S.enemys;
   for (let i = 0; i < enemys.length; i++) {
     if (
       enemys[i].point.x >= drawStartPoint.x &&
