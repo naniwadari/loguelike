@@ -9,7 +9,7 @@ interface IState {
   fields: IField[];
   floors: Floor[];
   enemys: Enemy[];
-  fieldSize: { x: number; y: number };
+  // fieldSize: { x: number; y: number };
   player: Player;
   messages: MessageList;
   Frag: { [key: string]: boolean };
@@ -21,7 +21,7 @@ export let S: IState = {
   fields: [],
   floors: [],
   enemys: [],
-  fieldSize: { x: MapBluePrint.LX, y: MapBluePrint.LY },
+  // fieldSize: { x: MapBluePrint.LX, y: MapBluePrint.LY },
   player: new Player(0, 0),
   messages: new MessageList(),
   Frag: {

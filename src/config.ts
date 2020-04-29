@@ -32,7 +32,10 @@ export enum MapBluePrint {
   wideX = 60,
   wideY = 40,
 }
-
+export enum FloorConf {
+  width = 40,
+  height = 40,
+}
 export enum MapType {
   wall = 0,
   floor = 1,

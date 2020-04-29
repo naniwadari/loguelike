@@ -74,7 +74,12 @@ function randomMoveEnemy(enemy: Enemy) {
     y++;
   }
   //座標が許可される範囲なら更新する
-  if (x > 0 && x < S.fieldSize.x && y > 0 && y < S.fieldSize.y) {
+  if (
+    x > 0 &&
+    x < S.floors[S.player.depth].size.width &&
+    y > 0 &&
+    y < S.floors[S.player.depth].size.height
+  ) {
     const movePoint = { x: x, y: y };
     return movePoint;
   } else {

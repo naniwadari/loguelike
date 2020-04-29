@@ -2,6 +2,7 @@ import { ISize, IBlock, IGate, IPoint } from "../Types";
 import { MapType, Direction } from "../config";
 import Room from "./Room";
 import Dig from "./Dig";
+import { Random } from "../module/RandomNum";
 
 export class Floor {
   size: ISize;
@@ -21,6 +22,15 @@ export class Floor {
     this.gates = gates;
     this.downstair = downstair;
     this.blocks = [];
+  }
+
+  coordinateCanStand() {
+    const roomNum = Random.rangeInt(0, this.rooms.length - 1);
+    const room = this.rooms[roomNum];
+    const x = Random.rangeInt(room.start.x, room.end.x);
+    const y = Random.rangeInt(room.start.y, room.end.y);
+    const point = { x: x, y: y };
+    return point;
   }
 
   fillWall(blocks: IBlock[][]) {

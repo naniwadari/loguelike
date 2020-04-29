@@ -65,7 +65,7 @@ export default class Player {
   }
 
   moveRight() {
-    if (this.x === S.fieldSize.x - 1) {
+    if (this.x === S.floors[S.player.depth].size.width - 1) {
       return this;
     }
     this.x = ++this.x;
@@ -73,7 +73,7 @@ export default class Player {
   }
 
   moveDown() {
-    if (this.y === S.fieldSize.y - 1) {
+    if (this.y === S.floors[S.player.depth].size.height - 1) {
       return this;
     }
     this.y = ++this.y;
@@ -90,7 +90,7 @@ export default class Player {
   }
 
   moveUpperRight() {
-    if (this.x === S.fieldSize.x - 1 || this.y === 0) {
+    if (this.x === S.floors[S.player.depth].size.width - 1 || this.y === 0) {
       return this;
     }
     this.x = ++this.x;
@@ -99,7 +99,10 @@ export default class Player {
   }
 
   moveDownnerLeft() {
-    if (this.x === S.fieldSize.x - 1 || this.y === S.fieldSize.y - 1) {
+    if (
+      this.x === S.floors[S.player.depth].size.width - 1 ||
+      this.y === S.floors[S.player.depth].size.height - 1
+    ) {
       return this;
     }
     this.x = --this.x;
@@ -108,7 +111,10 @@ export default class Player {
   }
 
   moveDownnerRight() {
-    if (this.x === S.fieldSize.x - 1 || this.y === S.fieldSize.y - 1) {
+    if (
+      this.x === S.floors[S.player.depth].size.width - 1 ||
+      this.y === S.floors[S.player.depth].size.height - 1
+    ) {
       return this;
     }
     this.x = ++this.x;
@@ -117,7 +123,8 @@ export default class Player {
   }
 
   stairDown() {
-    const block = S.floors[this.depth].blocks[this.x][this.y];
+    let floor = S.floors[this.depth];
+    const block = floor.blocks[this.x][this.y];
     if (block.base === MapType.downstair) {
       ++this.depth;
     }

@@ -6,13 +6,14 @@ import { map } from "./Map";
 // import { createField, putDownStairs } from "./createField";
 import { Message } from "./text/messages";
 import { TEXT } from "./text/text";
-import { MessageType, CanStand } from "./config";
+import { MessageType, CanStand, MapType } from "./config";
 import { Point } from "./Types";
 import { battleEvent } from "./battle/battleEvents";
 import doEnemyTurn from "./enemy/doEnemyTurn";
 import { createFloor, rooms } from "./dangeon/createFloor";
 import CreateFloor from "../src/floor/CreateFloor";
 import popEnemy from "./enemy/popEnemy";
+import getOffFloor from "./event/getOffFloor";
 
 export default () => {
   window.addEventListener("keydown", (e) => {
@@ -97,34 +98,24 @@ export default () => {
   window.addEventListener("keydown", (e) => {
     e.preventDefault(); //スペースでのスクロールを防止
     if (e.keyCode === KeyCode.space) {
-      console.log(S.floors[S.player.depth]);
       const block = S.floors[S.player.depth].blocks[S.player.x][S.player.y];
-      if (block.base === map.B_DOWNSTAIR) {
-        S.player.stairDown();
-        S.messages.add(new Message(TEXT.downstair, MessageType.normal));
-        if (!S.fields[S.player.depth]) {
-          // S.fields[S.player.depth] = createField(
-          //   S.player.depth,
-          //   [{ x: S.player.x, y: S.player.y }],
-          //   S.seed
-          // );
-          S.fields[S.player.depth] = {
-            size: { x: 50, y: 40 },
-            enemys: [],
-            blocks: [],
-          };
-          const floor = CreateFloor({
-            width: 50,
-            height: 40,
-          });
-          S.floors[S.player.depth] = floor;
-          //テスト用に書き換え
-          // S.fields[S.player.depth].blocks = createFloor();
-          // S.fields[S.player.depth].enemys = popEnemy(rooms);
-          // putDownStairs(rooms);
-          //フィールドサイズを更新
-          S.fieldSize = S.fields[S.player.depth].size;
-        }
+      if (block.base === MapType.downstair) {
+        getOffFloor();
+        // S.player.stairDown();
+        // S.messages.add(new Message(TEXT.downstair, MessageType.normal));
+        // if (!S.fields[S.player.depth]) {
+        //   S.fields[S.player.depth] = {
+        //     size: { x: 50, y: 40 },
+        //     enemys: [],
+        //     blocks: [],
+        //   };
+        //   const floor = CreateFloor({
+        //     width: 50,
+        //     height: 40,
+        //   });
+        //   S.floors[S.player.depth] = floor;
+        // S.fieldSize = S.fields[S.player.depth].size;
+        // }
       }
     } else {
       return;
