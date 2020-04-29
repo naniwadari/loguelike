@@ -27,13 +27,16 @@ export function createGates(rooms: Room[]) {
       RoomSearch.remove(tmpRooms, room);
       rooms = RoomSearch.update(rooms, room);
       rooms = RoomSearch.update(rooms, nearRoom);
-      // } else {
-      //   const gate = createGate(room, rooms[0]);
-      //   if (gate) {
-      //     gates.push(gate);
-      //     if (rooms[0].index) room.toPath.push(rooms[0].index);
-      //     if (room.index) rooms[0].hasPath.push(room.index);
-      //   }
+    } else {
+      let targetIndex = Random.rangeInt(0, rooms.length - 1);
+      let target = RoomSearch.byIndex(rooms, targetIndex);
+      if (room && target) {
+        if (target.index) room.toPath.push(target.index);
+        if (room.index) target.hasPath.push(room.index);
+        RoomSearch.remove(tmpRooms, room);
+        rooms = RoomSearch.update(rooms, room);
+        rooms = RoomSearch.update(rooms, target);
+      }
     }
   }
   return { rooms: rooms, gates: gates };
