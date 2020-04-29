@@ -26,6 +26,7 @@ export function createGates(rooms: Room[]) {
     } else {
       let targetIndex = Random.rangeInt(0, rooms.length - 1);
       let target = RoomSearch.byIndex(rooms, targetIndex);
+<<<<<<< HEAD
       if (room && target) {
         if (target.index) room.toPath.push(target.index);
         if (room.index) target.hasPath.push(room.index);
@@ -33,6 +34,13 @@ export function createGates(rooms: Room[]) {
         rooms = RoomSearch.update(rooms, room);
         rooms = RoomSearch.update(rooms, target);
       }
+=======
+      if (target.index) room.toPath.push(target.index);
+      if (room.index) target.hasPath.push(room.index);
+      RoomSearch.remove(tmpRooms, room);
+      rooms = RoomSearch.update(rooms, room);
+      rooms = RoomSearch.update(rooms, target);
+>>>>>>> cfbabbc1c373d8266781066db2f765cce0adbc5e
     }
   }
   return { rooms: rooms, gates: gates };
