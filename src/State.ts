@@ -6,10 +6,8 @@ import { Floor } from "./floor/Floor";
 import { Enemy } from "./enemy/Enemy";
 
 interface IState {
-  fields: IField[];
   floors: Floor[];
   enemys: Enemy[];
-  // fieldSize: { x: number; y: number };
   player: Player;
   messages: MessageList;
   Frag: { [key: string]: boolean };
@@ -18,7 +16,6 @@ interface IState {
   seed: string;
 }
 export let S: IState = {
-  fields: [],
   floors: [],
   enemys: [],
   // fieldSize: { x: MapBluePrint.LX, y: MapBluePrint.LY },

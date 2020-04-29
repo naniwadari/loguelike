@@ -26,7 +26,7 @@ export default (floor: Floor) => {
       if (isNotOverlap) {
         const list = EnemyOnFloor[S.player.depth];
         //階層の出現リストからランダムに敵を選ぶ
-        const enemyNum = Random.rangeInt(0, list.length - 1);
+        const enemyNum = Random.rangeInt(0, list.length);
         const EnemyId = list[enemyNum];
         const material = EnemyList[EnemyId];
         const popEnemy = new Enemy(popPoint, material);

@@ -12,7 +12,7 @@ export enum Direction {
 
 export enum EnemyConf {
   popInitMin = 0,
-  popInitMax = 3,
+  popInitMax = 2,
 }
 
 export enum MessageLength {
