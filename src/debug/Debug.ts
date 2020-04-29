@@ -3,6 +3,7 @@ import { Point } from "../Types";
 import { MapType } from "../config";
 import { draw, con } from "../draw/Draw";
 import CreateFloor from "../floor/CreateFloor";
+import getOffFloor from "../event/getOffFloor";
 export default () => {
   window.addEventListener("keydown", (e) => {
     // デバッグキー P
@@ -10,14 +11,14 @@ export default () => {
       searchDownstairsPoint();
       searchEnemysPoint();
     }
-    // 強制ゲームオーバーキー 0
+    // マップリクリエイトキー　0
     else if (e.keyCode === 48) {
       mapRecreate();
     }
   });
 };
 function mapRecreate() {
-  S.floors[S.player.depth] = CreateFloor({ width: 50, height: 40 });
+  getOffFloor();
   draw(con, S.env);
 }
 function forceGameOver() {
@@ -27,23 +28,14 @@ function forceGameOver() {
 }
 
 function searchDownstairsPoint() {
-  const field = S.fields[S.player.depth];
-  let downStairsPoint: Point = { x: 0, y: 0 };
-  for (let i = 0; i < field.blocks.length; i++) {
-    for (let j = 0; j < field.blocks.length; j++) {
-      let targetBlock = field.blocks[i][j];
-      if (targetBlock.base === MapType.downstair) {
-        downStairsPoint = { x: i, y: j };
-        break;
-      }
-    }
-  }
+  const floor = S.floors[S.player.depth];
+  let downStairsPoint = floor.downstair;
   console.log("階段の座標");
   console.log(downStairsPoint);
 }
 function searchEnemysPoint() {
   console.log("モンスターの座標");
-  const enemys = S.fields[S.player.depth].enemys;
+  const enemys = S.enemys;
   for (let i = 0; i < enemys.length; i++) {
     console.log(enemys[i].point);
   }

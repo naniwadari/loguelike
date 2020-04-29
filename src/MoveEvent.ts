@@ -101,21 +101,6 @@ export default () => {
       const block = S.floors[S.player.depth].blocks[S.player.x][S.player.y];
       if (block.base === MapType.downstair) {
         getOffFloor();
-        // S.player.stairDown();
-        // S.messages.add(new Message(TEXT.downstair, MessageType.normal));
-        // if (!S.fields[S.player.depth]) {
-        //   S.fields[S.player.depth] = {
-        //     size: { x: 50, y: 40 },
-        //     enemys: [],
-        //     blocks: [],
-        //   };
-        //   const floor = CreateFloor({
-        //     width: 50,
-        //     height: 40,
-        //   });
-        //   S.floors[S.player.depth] = floor;
-        // S.fieldSize = S.fields[S.player.depth].size;
-        // }
       }
     } else {
       return;

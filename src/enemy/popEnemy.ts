@@ -24,7 +24,10 @@ export default (floor: Floor) => {
       });
       //被っていなかったらモンスターの配列に入れる
       if (isNotOverlap) {
-        const list = EnemyOnFloor[S.player.depth];
+        let list = EnemyOnFloor[S.player.depth];
+        if (!list) {
+          list = EnemyOnFloor[1];
+        }
         //階層の出現リストからランダムに敵を選ぶ
         const enemyNum = Random.rangeInt(0, list.length);
         const EnemyId = list[enemyNum];

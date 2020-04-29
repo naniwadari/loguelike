@@ -1,7 +1,5 @@
 import Player from "./player/player";
-import { MapBluePrint } from "./config";
 import { MessageList } from "./text/messages";
-import { IField, IFloor } from "./Types";
 import { Floor } from "./floor/Floor";
 import { Enemy } from "./enemy/Enemy";
 
