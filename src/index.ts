@@ -1,4 +1,4 @@
-import MoveEvent from "./MoveEvent";
+import MoveEvent from "./event/MoveEvent";
 import { S } from "./State";
 import { con, draw } from "./draw/Draw";
 import ArrowKeyEvents from "./key/ArrowKeyEvents";
@@ -18,7 +18,7 @@ export function init() {
   S.messages.add(new Message(TEXT.init, MessageType.special));
 }
 
-//フィールド条件
+//画面描画
 draw(con, S.env);
 
 //キーボードイベント

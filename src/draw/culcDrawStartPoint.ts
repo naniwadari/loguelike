@@ -1,5 +1,5 @@
-import { S } from "./State";
-import { DrawRange } from "./config";
+import { S } from "../State";
+import { DrawRange } from "../config";
 
 export default () => {
   let drawStartPoint = { x: 0, y: 0 };

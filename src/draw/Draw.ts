@@ -1,6 +1,6 @@
 import { S } from "../State";
 import { SCREEN } from "../config";
-import culcDrawStartPoint from "../culcDrawStartPoint";
+import culcDrawStartPoint from "./culcDrawStartPoint";
 import drawDiagonalArrow from "./drawDiagonalArrow";
 import drawMessage from "./drawMessage";
 import { drawTyles } from "./drawTyles";

@@ -1,19 +1,12 @@
-import { KeyCode } from "./key/KeyCode";
-import { S } from "./State";
-import { con, draw } from "./draw/Draw";
-import Player from "./player/player";
-import { map } from "./Map";
-// import { createField, putDownStairs } from "./createField";
-import { Message } from "./text/messages";
-import { TEXT } from "./text/text";
-import { MessageType, CanStand, MapType } from "./config";
-import { Point } from "./Types";
-import { battleEvent } from "./battle/battleEvents";
-import doEnemyTurn from "./enemy/doEnemyTurn";
-import { createFloor, rooms } from "./dangeon/createFloor";
-import CreateFloor from "../src/floor/CreateFloor";
-import popEnemy from "./enemy/popEnemy";
-import getOffFloor from "./event/getOffFloor";
+import { KeyCode } from "../key/KeyCode";
+import { S } from "../State";
+import { con, draw } from "../draw/Draw";
+import Player from "../player/player";
+import { CanStand, MapType } from "../config";
+import { Point } from "../Types";
+import { battleEvent } from "../battle/battleEvents";
+import doEnemyTurn from "../enemy/doEnemyTurn";
+import getOffFloor from "./getOffFloor";
 
 export default () => {
   window.addEventListener("keydown", (e) => {
@@ -81,7 +74,6 @@ export default () => {
             S.player.x = movePoint.x;
             S.player.y = movePoint.y;
           } else {
-            S.messages.add(new Message(TEXT.wall, MessageType.normal));
             draw(con, S.env);
           }
         }

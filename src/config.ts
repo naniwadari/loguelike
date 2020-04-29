@@ -24,18 +24,12 @@ export enum MessageType {
   special = 1,
   danger = 2,
 }
-export enum MapBluePrint {
-  LX = 25,
-  LY = 25,
-  PX = 32,
-  PY = 32,
-  wideX = 60,
-  wideY = 40,
-}
+
 export enum FloorConf {
   width = 40,
   height = 40,
 }
+
 export enum MapType {
   wall = 0,
   floor = 1,
