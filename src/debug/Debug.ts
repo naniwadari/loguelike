@@ -17,7 +17,7 @@ export default () => {
   });
 };
 function mapRecreate() {
-  S.fields[S.player.depth].blocks = CreateFloor({ width: 50, height: 40 });
+  S.floors[S.player.depth] = CreateFloor({ width: 50, height: 40 });
   draw(con, S.env);
 }
 function forceGameOver() {
