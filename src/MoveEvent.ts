@@ -108,15 +108,15 @@ export default () => {
           //   S.seed
           // );
           S.fields[S.player.depth] = {
-            size: { x: 25, y: 25 },
+            size: { x: 50, y: 40 },
             enemys: [],
             blocks: [],
           };
           //テスト用に書き換え
           // S.fields[S.player.depth].blocks = createFloor();
           S.fields[S.player.depth].blocks = CreateFloor({
-            width: 25,
-            height: 25,
+            width: 50,
+            height: 40,
           });
           // S.fields[S.player.depth].enemys = popEnemy(rooms);
           // putDownStairs(rooms);

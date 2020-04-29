@@ -21,7 +21,7 @@ export default (lim: number, floorSize: ISize) => {
 };
 
 //ランダムに部屋のサイズを返す
-function randomRoomSize() {
+export function randomRoomSize() {
   const width = Random.rangeInt(RoomConf.minWidth, RoomConf.maxWidth);
   const height = Random.rangeInt(RoomConf.minHeight, RoomConf.maxHeight);
   const size: ISize = { width: width, height: height };
@@ -29,7 +29,7 @@ function randomRoomSize() {
 }
 
 //ランダムに部屋の左上の座標を返す
-function randomRoomStartPoint(floorSize: ISize) {
+export function randomRoomStartPoint(floorSize: ISize) {
   //ランダムで座標を生成
   const x = Random.rangeInt(1, floorSize.width);
   const y = Random.rangeInt(1, floorSize.height);

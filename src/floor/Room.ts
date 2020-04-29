@@ -41,30 +41,31 @@ export default class Room {
   }
 
   isNoDuplicate(rooms: Room[]) {
-    let result = true;
+    let result = false;
     const area_x = {
       start: this.start.x - RoomConf.distance_x,
-      end: this.end.x + RoomConf.distance_y,
+      end: this.end.x + RoomConf.distance_x,
     };
     const area_y = {
       start: this.start.y - RoomConf.distance_y,
       end: this.end.y + RoomConf.distance_y,
     };
     //まだ部屋が無い場合、確実に生成できるので処理終了
-    if (rooms.length === 0) return result;
+    if (rooms.length === 0) {
+      result = true;
+      return result;
+    }
     //各部屋のxとyを比較する
     for (let i = 0; i < rooms.length; i++) {
       let room = rooms[i];
       if (
-        (area_x.start <= room.start.x &&
-          room.start.x <= area_x.end &&
-          area_y.start <= room.start.y &&
-          room.start.y <= area_y.end) ||
-        (area_x.start <= room.end.x &&
-          room.end.x <= area_x.end &&
-          area_y.start <= room.end.y &&
-          room.end.y <= area_y.end)
+        area_x.start > room.end.x ||
+        area_x.end < room.start.x ||
+        area_y.start > room.end.y ||
+        area_y.end < room.start.y
       ) {
+        result = true;
+      } else {
         result = false;
         break;
       }
@@ -79,8 +80,8 @@ export default class Room {
     if (
       this.start.x < 1 ||
       this.start.y < 1 ||
-      this.end.x > floorSize.width - 1 ||
-      this.end.y > floorSize.height - 1
+      this.end.x > floorSize.width - 2 ||
+      this.end.y > floorSize.height - 2
     ) {
       result = false;
     }

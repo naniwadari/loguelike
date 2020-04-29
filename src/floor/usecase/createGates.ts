@@ -21,21 +21,19 @@ export function createGates(rooms: Room[]) {
     const nearRoom = findNearRoom(room, tmpRooms);
     if (nearRoom) {
       const gate = createGate(room, nearRoom);
-      if (gate) {
-        gates.push(gate);
-        if (nearRoom.index) room.toPath.push(nearRoom.index);
-        if (room.index) nearRoom.hasPath.push(room.index);
-        RoomSearch.remove(tmpRooms, room);
-        rooms = RoomSearch.update(rooms, room);
-        rooms = RoomSearch.update(rooms, nearRoom);
-      }
-    } else if (room) {
-      const gate = createGate(room, rooms[0]);
-      if (gate) {
-        gates.push(gate);
-        if (rooms[0].index) room.toPath.push(rooms[0].index);
-        if (room.index) rooms[0].hasPath.push(room.index);
-      }
+      gates.push(gate);
+      if (nearRoom.index) room.toPath.push(nearRoom.index);
+      if (room.index) nearRoom.hasPath.push(room.index);
+      RoomSearch.remove(tmpRooms, room);
+      rooms = RoomSearch.update(rooms, room);
+      rooms = RoomSearch.update(rooms, nearRoom);
+      // } else {
+      //   const gate = createGate(room, rooms[0]);
+      //   if (gate) {
+      //     gates.push(gate);
+      //     if (rooms[0].index) room.toPath.push(rooms[0].index);
+      //     if (room.index) rooms[0].hasPath.push(room.index);
+      //   }
     }
   }
   return { rooms: rooms, gates: gates };

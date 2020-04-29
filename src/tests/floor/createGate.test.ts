@@ -21,11 +21,12 @@ let rooms = [room1, room2, room3];
 
 /* テスト */
 describe("createGates", () => {
-  test("should return collectGates", () => {
+  test("should return collect room.toPath", () => {
     const result = createGates(rooms);
     expect(result.gates.length).toBe(3);
-    console.log(result.rooms);
-    console.log(result.gates);
+    expect(result.rooms[0].toPath[0]).toBe(2);
+    expect(result.rooms[1].toPath[0]).toBe(3);
+    expect(result.rooms[2].toPath[0]).toBe(1);
   });
 });
 

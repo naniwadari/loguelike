@@ -29,8 +29,8 @@ export enum MapBluePrint {
   LY = 25,
   PX = 32,
   PY = 32,
-  wideX = 25,
-  wideY = 25,
+  wideX = 60,
+  wideY = 40,
 }
 
 export enum MapType {
@@ -48,8 +48,8 @@ export enum RoomConf {
   //部屋作成の試行回数
   trialNum = 50,
   //部屋と部屋の距離
-  distance_x = 3,
-  distance_y = 3,
+  distance_x = 5,
+  distance_y = 5,
 }
 
 export enum TyleSize {
