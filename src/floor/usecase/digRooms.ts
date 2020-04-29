@@ -1,4 +1,3 @@
-import Room from "../Room";
 import Dig from "../Dig";
 import { IBlock } from "../../Types";
 import { Floor } from "../Floor";

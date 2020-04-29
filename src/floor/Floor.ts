@@ -1,4 +1,4 @@
-import { ISize, IBlock, IGate } from "../Types";
+import { ISize, IBlock, IGate, IPoint } from "../Types";
 import { MapType, Direction } from "../config";
 import Room from "./Room";
 import Dig from "./Dig";
@@ -7,11 +7,19 @@ export class Floor {
   size: ISize;
   rooms: Room[];
   gates: IGate[];
+  downstair: IPoint;
   blocks: IBlock[][];
-  constructor(floorSize: ISize, rooms: Room[], gates: IGate[]) {
+
+  constructor(
+    floorSize: ISize,
+    rooms: Room[],
+    gates: IGate[],
+    downstair: IPoint
+  ) {
     this.size = floorSize;
     this.rooms = rooms;
     this.gates = gates;
+    this.downstair = downstair;
     this.blocks = [];
   }
 
