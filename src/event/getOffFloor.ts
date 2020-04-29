@@ -4,6 +4,7 @@ import { MessageType, FloorConf } from "../config";
 import { Message } from "../text/messages";
 import CreateFloor from "../floor/CreateFloor";
 import { ISize } from "../Types";
+import popEnemy from "../enemy/popEnemy";
 
 export default () => {
   S.player.stairDown();
@@ -20,5 +21,9 @@ export default () => {
     let playerPoint = floor.coordinateCanStand();
     S.player.x = playerPoint.x;
     S.player.y = playerPoint.y;
+    //モンスターのリセット
+    S.enemys = [];
+    //モンスターのイニシャライズ
+    S.enemys = popEnemy(floor);
   }
 };

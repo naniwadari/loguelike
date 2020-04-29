@@ -278,6 +278,18 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar En
 
 /***/ }),
 
+/***/ "./src/enemy/EnemyList.ts":
+/*!********************************!*\
+  !*** ./src/enemy/EnemyList.ts ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Enemy_1 = __webpack_require__(/*! ./Enemy */ \"./src/enemy/Enemy.ts\");\nexports.EnemyOnFloor = [\n    [],\n    [Enemy_1.EnemyId.slime, Enemy_1.EnemyId.rat],\n    [Enemy_1.EnemyId.slime, Enemy_1.EnemyId.rat],\n];\nexports.EnemyList = [\n    {\n        id: Enemy_1.EnemyId.slime,\n        name: \"スライム\",\n        level: 1,\n        HP: 5,\n        ATK: 1,\n        DEF: 1,\n        EXP: 1,\n    },\n    {\n        id: Enemy_1.EnemyId.rat,\n        name: \"大ネズミ\",\n        level: 1,\n        HP: 7,\n        ATK: 2,\n        DEF: 2,\n        EXP: 3,\n    },\n];\n\n\n//# sourceURL=webpack:///./src/enemy/EnemyList.ts?");
+
+/***/ }),
+
 /***/ "./src/enemy/doEnemyTurn.ts":
 /*!**********************************!*\
   !*** ./src/enemy/doEnemyTurn.ts ***!
@@ -290,6 +302,18 @@ eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {
 
 /***/ }),
 
+/***/ "./src/enemy/popEnemy.ts":
+/*!*******************************!*\
+  !*** ./src/enemy/popEnemy.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar EnemyList_1 = __webpack_require__(/*! ./EnemyList */ \"./src/enemy/EnemyList.ts\");\nvar Enemy_1 = __webpack_require__(/*! ./Enemy */ \"./src/enemy/Enemy.ts\");\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\nvar RandomNum_1 = __webpack_require__(/*! ../module/RandomNum */ \"./src/module/RandomNum.ts\");\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nexports.default = (function (floor) {\n    var popEnemys = [];\n    for (var i = 0; i < floor.rooms.length; i++) {\n        //部屋に湧く敵の数を決める\n        var popCountLim = RandomNum_1.Random.rangeInt(config_1.EnemyConf.popInitMin, config_1.EnemyConf.popInitMax);\n        for (var j = 0; j < popCountLim; j++) {\n            // ポップポイントをランダムで決める\n            var popPoint = floor.coordinateCanStand();\n            //プレイヤーと同じ位置のポップを避ける\n            var isNotOverlap = checkOverlappingPlayer(popPoint, {\n                x: State_1.S.player.x,\n                y: State_1.S.player.y,\n            });\n            //被っていなかったらモンスターの配列に入れる\n            if (isNotOverlap) {\n                var list = EnemyList_1.EnemyOnFloor[State_1.S.player.depth];\n                //階層の出現リストからランダムに敵を選ぶ\n                var enemyNum = RandomNum_1.Random.rangeInt(0, list.length - 1);\n                var EnemyId = list[enemyNum];\n                var material = EnemyList_1.EnemyList[EnemyId];\n                var popEnemy = new Enemy_1.Enemy(popPoint, material);\n                popEnemys.push(popEnemy);\n            }\n        }\n    }\n    return popEnemys;\n});\n//プレイヤーと同じ位置での発生を避ける\nfunction checkOverlappingPlayer(enemyPoint, playerPoint) {\n    if (enemyPoint.x === playerPoint.x && enemyPoint.y === playerPoint.y) {\n        return false;\n    }\n    return true;\n}\n\n\n//# sourceURL=webpack:///./src/enemy/popEnemy.ts?");
+
+/***/ }),
+
 /***/ "./src/event/getOffFloor.ts":
 /*!**********************************!*\
   !*** ./src/event/getOffFloor.ts ***!
@@ -298,7 +322,7 @@ eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\nvar text_1 = __webpack_require__(/*! ../text/text */ \"./src/text/text.ts\");\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nvar messages_1 = __webpack_require__(/*! ../text/messages */ \"./src/text/messages.ts\");\nvar CreateFloor_1 = __importDefault(__webpack_require__(/*! ../floor/CreateFloor */ \"./src/floor/CreateFloor.ts\"));\nexports.default = (function () {\n    State_1.S.player.stairDown();\n    State_1.S.messages.add(new messages_1.Message(text_1.TEXT.downstair, config_1.MessageType.normal));\n    if (!State_1.S.floors[State_1.S.player.depth]) {\n        var floorSize = {\n            width: config_1.FloorConf.width,\n            height: config_1.FloorConf.height,\n        };\n        var floor = CreateFloor_1.default(floorSize);\n        //フロアステートの更新\n        State_1.S.floors[State_1.S.player.depth] = floor;\n        //プレイヤーの位置更新\n        var playerPoint = floor.coordinateCanStand();\n        State_1.S.player.x = playerPoint.x;\n        State_1.S.player.y = playerPoint.y;\n    }\n});\n\n\n//# sourceURL=webpack:///./src/event/getOffFloor.ts?");
+eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar State_1 = __webpack_require__(/*! ../State */ \"./src/State.ts\");\nvar text_1 = __webpack_require__(/*! ../text/text */ \"./src/text/text.ts\");\nvar config_1 = __webpack_require__(/*! ../config */ \"./src/config.ts\");\nvar messages_1 = __webpack_require__(/*! ../text/messages */ \"./src/text/messages.ts\");\nvar CreateFloor_1 = __importDefault(__webpack_require__(/*! ../floor/CreateFloor */ \"./src/floor/CreateFloor.ts\"));\nvar popEnemy_1 = __importDefault(__webpack_require__(/*! ../enemy/popEnemy */ \"./src/enemy/popEnemy.ts\"));\nexports.default = (function () {\n    State_1.S.player.stairDown();\n    State_1.S.messages.add(new messages_1.Message(text_1.TEXT.downstair, config_1.MessageType.normal));\n    if (!State_1.S.floors[State_1.S.player.depth]) {\n        var floorSize = {\n            width: config_1.FloorConf.width,\n            height: config_1.FloorConf.height,\n        };\n        var floor = CreateFloor_1.default(floorSize);\n        //フロアステートの更新\n        State_1.S.floors[State_1.S.player.depth] = floor;\n        //プレイヤーの位置更新\n        var playerPoint = floor.coordinateCanStand();\n        State_1.S.player.x = playerPoint.x;\n        State_1.S.player.y = playerPoint.y;\n        //モンスターのリセット\n        State_1.S.enemys = [];\n        //モンスターのイニシャライズ\n        State_1.S.enemys = popEnemy_1.default(floor);\n    }\n});\n\n\n//# sourceURL=webpack:///./src/event/getOffFloor.ts?");
 
 /***/ }),
 

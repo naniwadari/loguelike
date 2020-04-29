@@ -1,14 +1,14 @@
-import { IPoint } from "../dangeon/createFloor";
+import { IPoint } from "../Types";
 import { EnemyList, EnemyOnFloor } from "./EnemyList";
 import { Enemy } from "./Enemy";
 import { S } from "../State";
 import { Random } from "../module/RandomNum";
-import { PointMaker } from "../module/PointMaker";
 import { EnemyConf } from "../config";
-import Room from "../floor/Room";
-export default (rooms: Room[]) => {
+import { Floor } from "../floor/Floor";
+
+export default (floor: Floor) => {
   let popEnemys: Enemy[] = [];
-  for (let i = 0; i < rooms.length; i++) {
+  for (let i = 0; i < floor.rooms.length; i++) {
     //部屋に湧く敵の数を決める
     let popCountLim = Random.rangeInt(
       EnemyConf.popInitMin,
@@ -16,8 +16,7 @@ export default (rooms: Room[]) => {
     );
     for (let j = 0; j < popCountLim; j++) {
       // ポップポイントをランダムで決める
-      const popPoint: IPoint = PointMaker.room(rooms[i]);
-
+      const popPoint: IPoint = floor.coordinateCanStand();
       //プレイヤーと同じ位置のポップを避ける
       const isNotOverlap = checkOverlappingPlayer(popPoint, {
         x: S.player.x,
@@ -27,8 +26,8 @@ export default (rooms: Room[]) => {
       if (isNotOverlap) {
         const list = EnemyOnFloor[S.player.depth];
         //階層の出現リストからランダムに敵を選ぶ
-        const randomNum = Random.rangeInt(0, list.length);
-        const EnemyId = list[randomNum];
+        const enemyNum = Random.rangeInt(0, list.length - 1);
+        const EnemyId = list[enemyNum];
         const material = EnemyList[EnemyId];
         const popEnemy = new Enemy(popPoint, material);
         popEnemys.push(popEnemy);
