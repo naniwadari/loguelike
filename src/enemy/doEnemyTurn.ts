@@ -3,92 +3,243 @@ import { Enemy } from "../enemy/Enemy";
 import calcDamage from "../battle/calcDamage";
 import { Message } from "../text/messages";
 import { actionMsg, TEXT } from "../text/text";
-import { MessageType, CanStand } from "../config";
-import { Point } from "../Types";
+import { MessageType, CanStand, EnemyConf, Direction } from "../config";
+import { Point, IPoint, IArea } from "../Types";
+import { Floor } from "../floor/Floor";
+import Room from "../floor/Room";
 
 export default function () {
   const enemys = S.enemys;
+  const player = { x: S.player.x, y: S.player.y };
+  const floor = S.floors[S.player.depth];
+  console.log(`プレイヤーの位置`);
+  console.log(player);
   for (let i = 0; i < enemys.length; i++) {
-    const enemy = enemys[i];
+    let enemy = enemys[i];
+    const viewArea = calcFieldOfView(enemy);
+    console.log(`索敵範囲`);
+    console.log(viewArea);
     //プレイヤーを探す
-    const searchResult = searchPlayer(enemy);
-    //プレイヤーがいた場合攻撃を行う
-    if (searchResult) {
-      attackPlayer(enemy);
-    }
-    //攻撃の結果プレイヤーのHPがゼロになったらゲームオーバー
-    if (S.player.HP <= 0) {
-      defeatPlayer();
-    }
-    //プレイヤーがいなかった場合移動を試みる
-    const movePoint = randomMoveEnemy(enemy);
-    //移動予定のブロック情報
-    const block = S.floors[S.player.depth].blocks[movePoint.x][movePoint.y];
-    const isPointUsing = movePointSearch(movePoint, enemys);
-    //移動先に誰もいなければEnemyの位置情報を更新
-    if (
-      CanStand[block.base] &&
-      !isPointUsing &&
-      (S.player.x !== movePoint.x || S.player.y !== movePoint.y)
-    ) {
-      enemy.point = { x: movePoint.x, y: movePoint.y };
+    const result = isPointInArea(player, viewArea);
+    console.log(`索敵結果 : ${result}`);
+    console.log(`敵の位置`);
+    console.log(enemy.point);
+    //視野内にプレイヤーを見つけた場合追尾する
+    if (result) {
+      enemy = activeEnemy(enemy, enemys, player, floor);
+      //攻撃の結果プレイヤーのHPがゼロになったらゲームオーバー
+      if (S.player.HP <= 0) {
+        defeatPlayer();
+      }
+    } else {
+      //プレイヤーがいなかった場合移動を試みる
+      const moveTo = randomMove(enemy);
+      //移動予定のブロック情報
+      const isInFloor = floor.isInFloor(moveTo);
+      const isCanStand = floor.isCanStand(moveTo);
+      const isPointEmpty = moveToSearch(moveTo, enemys);
+      const isPointNoPlayer = player.x !== moveTo.x || player.y !== moveTo.y;
+      const moveCheck =
+        isInFloor && isCanStand && isPointEmpty && isPointNoPlayer;
+      //移動可能なら移動
+      if (moveCheck) {
+        enemy.point = { x: moveTo.x, y: moveTo.y };
+      }
     }
   }
 }
 
+export function activeEnemy(
+  enemy: Enemy,
+  enemys: Enemy[],
+  player: IPoint,
+  floor: Floor
+) {
+  /****** 攻撃判定 *******/
+  //プレイヤーと隣接しているか？
+  let isAdjacent = searchPlayer(enemy);
+  //隣接していたら攻撃を行って処理終了
+  if (isAdjacent) {
+    attackPlayer(enemy);
+    return enemy;
+  }
+
+  /****** 移動処理 *******/
+  //Dはdirection
+  const firstD = findNearDirection(player, enemy);
+  const secondDs = findSecondNearDirection(firstD);
+  const thirdDs = findThirdNearDirection(firstD);
+  //チェックする方向の配列
+  const tryDs: Direction[] = [
+    firstD,
+    secondDs.next,
+    secondDs.previous,
+    thirdDs.next,
+    thirdDs.previous,
+  ];
+  //移動を試みる
+  for (let i = 0; i < tryDs.length; i++) {
+    // console.log(`${i}回目`);
+    let direction = tryDs[i];
+    let moveTo = movePoint(enemy, direction);
+    let isCanStand = floor.isCanStand(moveTo);
+    let isPointNoEnemy = moveToSearch(moveTo, enemys);
+    let isPointNoPlayer = player.x !== moveTo.x || player.y !== moveTo.y;
+    let moveCheck = isCanStand && isPointNoEnemy && isPointNoPlayer;
+    // console.log(`moveCheck : ${moveCheck}`);
+    if (moveCheck) {
+      enemy.point = moveTo;
+      break;
+    }
+  }
+  return enemy;
+}
+
+// プレイヤーがいなかった場合のモンスターの行動
+export function nonActiveEnemy(
+  enemy: Enemy,
+  floor: Floor,
+  enemys: Enemy[],
+  player: IPoint
+) {
+  const moveTo = randomMove(enemy);
+  const isCanStand = floor.isCanStand(moveTo);
+  const isPointEmpty = moveToSearch(moveTo, enemys);
+  if (
+    isCanStand &&
+    isPointEmpty &&
+    (player.x !== moveTo.x || player.y !== moveTo.y)
+  ) {
+    enemy.point = moveTo;
+  } else {
+  }
+}
+
+export function isEnemyInRoom(enemy: Enemy, rooms: Room[]) {
+  let isInRoom = false;
+  for (let i = 0; i < rooms.length; i++) {
+    const room = rooms[i];
+    const result = room.isInRoom(enemy.point);
+    if (result) {
+      isInRoom = true;
+      break;
+    }
+  }
+  return isInRoom;
+}
 //指定された座標にモンスターが存在するか判断、いたらtrueを返す
-function movePointSearch(point: Point, enemys: Enemy[]) {
-  let searchResult = false;
+export function moveToSearch(point: Point, enemys: Enemy[]) {
+  let searchResult = true;
   for (let i = 0; i < enemys.length; i++) {
     if (enemys[i].point.x === point.x && enemys[i].point.y === point.y) {
-      searchResult = true;
+      searchResult = false;
       break;
     }
   }
   return searchResult;
 }
-//モンスターが移動する予定の座標を返す
-function randomMoveEnemy(enemy: Enemy) {
-  const direction = Math.floor(Math.random() * 8); //番号で移動方向を決める
+
+//ランダムでモンスターが移動する予定の座標を返す
+export function randomMove(enemy: Enemy) {
+  const direction: Direction = Math.floor(Math.random() * 8); //番号で移動方向を決める
+  const moveTo = movePoint(enemy, direction);
+  return moveTo;
+}
+
+export function movePoint(enemy: Enemy, direction: Direction) {
   let x = enemy.point.x;
   let y = enemy.point.y;
-  if (direction === 0) {
-    x--;
-  } else if (direction === 1) {
-    y--;
-  } else if (direction === 2) {
-    x++;
-  } else if (direction === 3) {
-    y++;
-  } else if (direction === 4) {
+  let MoveTo: IPoint;
+  if (direction === Direction.left) x--;
+  else if (direction === Direction.top) y--;
+  else if (direction === Direction.right) x++;
+  else if (direction === Direction.bottom) y++;
+  else if (direction === Direction.topLeft) {
     x--;
     y--;
-  } else if (direction === 5) {
+  } else if (direction === Direction.topRight) {
     x++;
     y--;
-  } else if (direction === 6) {
+  } else if (direction === Direction.bottomLeft) {
     x--;
     y++;
-  } else if (direction === 7) {
+  } else if (direction === Direction.bottomRight) {
     x++;
     y++;
   }
-  //座標が許可される範囲なら更新する
-  if (
-    x > 0 &&
-    x < S.floors[S.player.depth].size.width &&
-    y > 0 &&
-    y < S.floors[S.player.depth].size.height
-  ) {
-    const movePoint = { x: x, y: y };
-    return movePoint;
+  MoveTo = { x: x, y: y };
+  return MoveTo;
+}
+
+export function findNearDirection(point: IPoint, enemy: Enemy) {
+  const target = point;
+  const self = enemy.point;
+  let direction: Direction;
+  //左上
+  if (target.x < self.x && target.y < self.y) direction = Direction.topLeft;
+  //真上
+  else if (target.x === self.x && target.y < self.y) direction = Direction.top;
+  //右上
+  else if (target.x > self.x && target.y < self.y)
+    direction = Direction.topRight;
+  //右
+  else if (target.x > self.x && target.y === self.y)
+    direction = Direction.right;
+  //右下
+  else if (target.x > self.x && target.y > self.y)
+    direction = Direction.bottomRight;
+  //真下
+  else if (target.x === self.x && target.y > self.y)
+    direction = Direction.bottom;
+  //左下
+  else if (target.x < self.y && target.y > self.y)
+    direction = Direction.bottomLeft;
+  //左
+  else direction = Direction.left;
+
+  return direction;
+}
+
+export function findSecondNearDirection(direction: Direction) {
+  let next: Direction;
+  let previous: Direction;
+  if (direction === Direction.topLeft) {
+    next = Direction.top;
+    previous = --direction;
+  } else if (direction === Direction.top) {
+    next = ++direction;
+    previous = Direction.topLeft;
   } else {
-    return enemy.point;
+    next = ++direction;
+    previous = --direction;
   }
+  return { next: next, previous: previous };
+}
+
+export function findThirdNearDirection(direction: Direction) {
+  let next: Direction;
+  let previous: Direction;
+  if (direction === Direction.topLeft) {
+    next = Direction.topRight;
+    previous = direction - 2;
+  } else if (direction === Direction.left) {
+    next = Direction.top;
+    previous = direction - 2;
+  } else if (direction === Direction.top) {
+    next = direction + 2;
+    previous = Direction.left;
+  } else if (direction === Direction.topRight) {
+    next = direction + 2;
+    previous = Direction.topLeft;
+  } else {
+    next = direction + 2;
+    previous = direction - 2;
+  }
+  return { next: next, previous: previous };
 }
 
 //プレイヤーが倒された場合
-function defeatPlayer() {
+export function defeatPlayer() {
   S.player.HP = 0;
   S.Frag.gameover = true;
   const addMsg = new Message(TEXT.die, MessageType.danger);
@@ -96,7 +247,7 @@ function defeatPlayer() {
 }
 
 //モンスターがプレイヤーに攻撃する処理
-function attackPlayer(enemy: Enemy) {
+export function attackPlayer(enemy: Enemy) {
   const damage = calcDamage(enemy.ATK, S.player.DEF);
   S.player.HP -= damage;
   S.messages.add(
@@ -104,8 +255,29 @@ function attackPlayer(enemy: Enemy) {
   );
 }
 
+export function calcFieldOfView(enemy: Enemy) {
+  const view = EnemyConf.fieldOfView;
+  const start = { x: enemy.point.x - view, y: enemy.point.y - view };
+  const end = { x: enemy.point.x + view, y: enemy.point.y + view };
+  const fieldOfView: IArea = { start: start, end: end };
+  return fieldOfView;
+}
+
+export function isPointInArea(point: IPoint, area: IArea) {
+  let isIn = false;
+  if (
+    point.x <= area.end.x &&
+    point.x >= area.start.x &&
+    point.y <= area.end.y &&
+    point.y >= area.start.x
+  ) {
+    isIn = true;
+  }
+  return isIn;
+}
+
 //モンスターの周辺にプレイヤーがいればtrueを返す
-function searchPlayer(enemy: Enemy) {
+export function searchPlayer(enemy: Enemy) {
   //エネミーの座標取り出し
   const player = S.player;
   const self = enemy.point;

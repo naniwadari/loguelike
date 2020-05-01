@@ -1,5 +1,5 @@
 import { Point } from "../Types";
-
+import { S } from "../State";
 export enum EnemyId {
   slime = 0,
   rat = 1,
@@ -68,5 +68,81 @@ export class Enemy {
   }
   get totalDEF() {
     return this.baseDEF + this.equipDEF;
+  }
+
+  moveLeft() {
+    if (this.point.x === 0) {
+      return this;
+    }
+    this.point.x = --this.point.x;
+    return this;
+  }
+  moveUp() {
+    if (this.point.y === 0) {
+      return this;
+    }
+    this.point.y = --this.point.y;
+    return this;
+  }
+
+  moveRight() {
+    if (this.point.x === S.floors[S.player.depth].size.width - 1) {
+      return this;
+    }
+    this.point.x = ++this.point.x;
+    return this;
+  }
+
+  moveDown() {
+    if (this.point.y === S.floors[S.player.depth].size.height - 1) {
+      return this;
+    }
+    this.point.y = ++this.point.y;
+    return this;
+  }
+
+  moveUpperLeft() {
+    if (this.point.x === 0 || this.point.y === 0) {
+      return this;
+    }
+    this.point.x = --this.point.x;
+    this.point.y = --this.point.y;
+    return this;
+  }
+
+  moveUpperRight() {
+    if (
+      this.point.x === S.floors[S.player.depth].size.width - 1 ||
+      this.point.y === 0
+    ) {
+      return this;
+    }
+    this.point.x = ++this.point.x;
+    this.point.y = --this.point.y;
+    return this;
+  }
+
+  moveDownnerLeft() {
+    if (
+      this.point.x === S.floors[S.player.depth].size.width - 1 ||
+      this.point.y === S.floors[S.player.depth].size.height - 1
+    ) {
+      return this;
+    }
+    this.point.x = --this.point.x;
+    this.point.y = ++this.point.y;
+    return this;
+  }
+
+  moveDownnerRight() {
+    if (
+      this.point.x === S.floors[S.player.depth].size.width - 1 ||
+      this.point.y === S.floors[S.player.depth].size.height - 1
+    ) {
+      return this;
+    }
+    this.point.x = ++this.point.x;
+    this.point.y = ++this.point.y;
+    return this;
   }
 }

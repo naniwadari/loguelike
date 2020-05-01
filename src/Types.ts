@@ -7,6 +7,10 @@ export interface Point {
   y: number;
 }
 
+export interface IArea {
+  start: IPoint;
+  end: IPoint;
+}
 export interface IGate {
   A: IPoint;
   B: IPoint;

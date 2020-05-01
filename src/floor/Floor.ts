@@ -3,6 +3,7 @@ import { MapType, Direction } from "../config";
 import Room from "./Room";
 import Dig from "./Dig";
 import { Random } from "../module/RandomNum";
+import { S } from "@root/State";
 
 export class Floor {
   size: ISize;
@@ -31,6 +32,29 @@ export class Floor {
     const y = Random.rangeInt(room.start.y, room.end.y);
     const point = { x: x, y: y };
     return point;
+  }
+
+  isInFloor(point: IPoint) {
+    let result = false;
+    if (
+      point.x > 0 &&
+      point.x < this.size.width - 2 &&
+      point.y > 0 &&
+      point.y < this.size.height - 2
+    ) {
+      result = true;
+    }
+    return result;
+  }
+
+  isCanStand(point: IPoint) {
+    let isCanStand = false;
+    let x = point.x;
+    let y = point.y;
+    if (this.blocks[x][y].base === MapType.floor) {
+      isCanStand = true;
+    }
+    return isCanStand;
   }
 
   fillWall(blocks: IBlock[][]) {

@@ -40,6 +40,20 @@ export default class Room {
     return result;
   }
 
+  //与えられた座標が部屋の中にあるか判断する
+  isInRoom(point: IPoint) {
+    let isIn = false;
+    if (
+      point.x <= this.end.x &&
+      point.x >= this.start.x &&
+      point.y <= this.end.y &&
+      point.y >= this.start.x
+    ) {
+      isIn = true;
+    }
+    return isIn;
+  }
+
   isNoDuplicate(rooms: Room[]) {
     let result = false;
     const area_x = {

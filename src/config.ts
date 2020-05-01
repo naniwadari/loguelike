@@ -5,14 +5,20 @@ export enum SCREEN {
 
 export enum Direction {
   top = 0,
-  right = 1,
-  bottom = 2,
-  left = 3,
+  topRight = 1,
+  right = 2,
+  bottomRight = 3,
+  bottom = 4,
+  bottomLeft = 5,
+  left = 6,
+  topLeft = 7,
 }
 
 export enum EnemyConf {
   popInitMin = 0,
   popInitMax = 2,
+  //モンスターの視野
+  fieldOfView = 5,
 }
 
 export enum MessageLength {

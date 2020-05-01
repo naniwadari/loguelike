@@ -37,6 +37,6 @@ function searchEnemysPoint() {
   console.log("モンスターの座標");
   const enemys = S.enemys;
   for (let i = 0; i < enemys.length; i++) {
-    console.log(enemys[i].point);
+    console.log(enemys[i]);
   }
 }
