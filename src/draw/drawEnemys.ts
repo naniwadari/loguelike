@@ -33,17 +33,20 @@ function drawEnemy(con: any, enemy: Enemy, drawStartPoint: Point) {
 
 export module drawEnemyImg {
   export function slime(con: any, popPoint: Point, drawStartPoint: Point) {
-    // con.fillStyle = "blue";
-    // con.font = "16px consolas";
+    const ratio = 0.6;
+    const size_x = TyleSize.x * ratio;
+    const size_y = TyleSize.y * ratio;
+    const fix = (TyleSize.x * (1 - ratio)) / 2;
     con.drawImage(
       blackballImg,
       0,
+      0,
       32,
       32,
-      popPoint.x * TyleSize.x,
-      popPoint.y * TyleSize.y,
-      TyleSize.x,
-      TyleSize.y
+      (popPoint.x - drawStartPoint.x) * TyleSize.x + fix,
+      (popPoint.y - drawStartPoint.y) * TyleSize.y + fix,
+      size_x,
+      size_y
     );
     // con.fillText(
     //   "●",

@@ -13,6 +13,7 @@ export default function () {
   const player = { x: S.player.x, y: S.player.y };
   const floor = S.floors[S.player.depth];
   console.log(`プレイヤーの位置`);
+
   console.log(player);
   for (let i = 0; i < enemys.length; i++) {
     let enemy = enemys[i];
@@ -22,9 +23,9 @@ export default function () {
     //プレイヤーを探す
     const result = isPointInArea(player, viewArea);
     console.log(`索敵結果 : ${result}`);
-    console.log(`敵の位置`);
+    console.log("移動前の敵の位置");
     console.log(enemy.point);
-    //視野内にプレイヤーを見つけた場合追尾する
+    // 視野内にプレイヤーを見つけた場合追尾する;
     if (result) {
       enemy = activeEnemy(enemy, enemys, player, floor);
       //攻撃の結果プレイヤーのHPがゼロになったらゲームオーバー
@@ -32,20 +33,10 @@ export default function () {
         defeatPlayer();
       }
     } else {
-      //プレイヤーがいなかった場合移動を試みる
-      const moveTo = randomMove(enemy);
-      //移動予定のブロック情報
-      const isInFloor = floor.isInFloor(moveTo);
-      const isCanStand = floor.isCanStand(moveTo);
-      const isPointEmpty = moveToSearch(moveTo, enemys);
-      const isPointNoPlayer = player.x !== moveTo.x || player.y !== moveTo.y;
-      const moveCheck =
-        isInFloor && isCanStand && isPointEmpty && isPointNoPlayer;
-      //移動可能なら移動
-      if (moveCheck) {
-        enemy.point = { x: moveTo.x, y: moveTo.y };
-      }
+      enemy = nonActiveEnemy(enemy, enemys, player, floor);
     }
+    console.log("移動後の敵の位置");
+    console.log(enemy.point);
   }
 }
 
@@ -98,20 +89,20 @@ export function activeEnemy(
 // プレイヤーがいなかった場合のモンスターの行動
 export function nonActiveEnemy(
   enemy: Enemy,
-  floor: Floor,
   enemys: Enemy[],
-  player: IPoint
+  player: IPoint,
+  floor: Floor
 ) {
   const moveTo = randomMove(enemy);
   const isCanStand = floor.isCanStand(moveTo);
-  const isPointEmpty = moveToSearch(moveTo, enemys);
-  if (
-    isCanStand &&
-    isPointEmpty &&
-    (player.x !== moveTo.x || player.y !== moveTo.y)
-  ) {
+  const isPointNoEnemy = moveToSearch(moveTo, enemys);
+  const isPointNoPlayer = player.x !== moveTo.x || player.y !== moveTo.y;
+  const moveCheck = isCanStand && isPointNoEnemy && isPointNoPlayer;
+  if (moveCheck) {
     enemy.point = moveTo;
+    return enemy;
   } else {
+    return enemy;
   }
 }
 
@@ -266,10 +257,10 @@ export function calcFieldOfView(enemy: Enemy) {
 export function isPointInArea(point: IPoint, area: IArea) {
   let isIn = false;
   if (
-    point.x <= area.end.x &&
     point.x >= area.start.x &&
-    point.y <= area.end.y &&
-    point.y >= area.start.x
+    point.x <= area.end.x &&
+    point.y >= area.start.y &&
+    point.y <= area.end.y
   ) {
     isIn = true;
   }
