@@ -77,7 +77,6 @@ export async function fadeIn(layer: any) {
         return resolve();
       }
       Layer.eyecatch(layer, alpha);
-      console.log(alpha);
     }, interval);
   });
 }
