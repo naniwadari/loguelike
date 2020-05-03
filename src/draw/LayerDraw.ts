@@ -61,12 +61,6 @@ export async function blackout(layer: CanvasRenderingContext2D) {
   });
 }
 
-export function calcFadeElement(start: number, ratio: number) {
-  let passed = calcPassedTime(start);
-  let alpha = passed / ratio;
-  return { passed: passed, alpha: alpha };
-}
-
 export async function fadeIn(layer: any) {
   let start = Date.now();
   let inTime = FadeConf.inTimeShort;
@@ -98,7 +92,6 @@ export async function fadeOut(layer: any) {
     let timer = setInterval(() => {
       let passed = calcPassedTime(start);
       let alpha = calcOutAlpha(passed, ratio);
-      if (alpha <= 0) alpha = 0;
       //規定時間が過ぎたらレイヤーをクリアして処理終了
       if (passed >= inTime) {
         clearInterval(timer);
