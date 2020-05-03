@@ -1,7 +1,8 @@
 import { KeyCode } from "./KeyCode";
 import { S } from "../State";
-import { con, canvas, draw } from "../draw/Draw";
+import { con, draw } from "../draw/Draw";
 import { init } from "../index";
+import { layer, layerOut } from "../draw/LayerDraw";
 
 export default () => {
   // 移動キーが押されているか
@@ -58,22 +59,21 @@ export default () => {
 
   /* Zキー */
   window.addEventListener("keydown", (e) => {
-    //タイトル画面での操作
-    if (!S.Frag.start) {
-      if (e.keyCode === KeyCode.action) {
+    if (e.keyCode === KeyCode.action) {
+      //タイトル画面での操作
+      if (!S.Frag.start) {
         S.Frag.start = true;
         init();
         draw(con, S.env);
+        return;
       }
-      return;
-    }
-    //ゲームオーバー時の操作
-    if (S.Frag.gameover) {
-      if (e.keyCode === KeyCode.action) {
+      //ゲームオーバー時の操作
+      if (S.Frag.gameover) {
         S.Frag.start = false;
+        layerOut(layer, S.env);
         draw(con, S.env);
+        return;
       }
-      return;
     }
   });
 

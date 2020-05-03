@@ -1,6 +1,6 @@
 export enum TEXT {
   title = "Logue Like",
-  start = "Start",
+  start = "Zキーで始める",
   downstair = "階段を降りました",
   wall = "壁にぶつかった！",
   init = "ダンジョン最高〜〜〜!!",

@@ -3,10 +3,11 @@ import { Enemy } from "../enemy/Enemy";
 import calcDamage from "../battle/calcDamage";
 import { Message } from "../text/messages";
 import { actionMsg, TEXT } from "../text/text";
-import { MessageType, CanStand, EnemyConf, Direction } from "../config";
+import { MessageType, EnemyConf, Direction } from "../config";
 import { Point, IPoint, IArea } from "../Types";
 import { Floor } from "../floor/Floor";
 import Room from "../floor/Room";
+import { layerIn, layer } from "../draw/LayerDraw";
 
 export default function () {
   const enemys = S.enemys;
@@ -31,6 +32,7 @@ export default function () {
       //攻撃の結果プレイヤーのHPがゼロになったらゲームオーバー
       if (S.player.HP <= 0) {
         defeatPlayer();
+        layerIn(layer, S.env);
       }
     } else {
       enemy = nonActiveEnemy(enemy, enemys, player, floor);

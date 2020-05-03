@@ -11,7 +11,10 @@ export async function layerIn(layer: any, env: any) {
     await fadeIn(layer);
     return;
   }
-  return;
+  if (S.Frag.gameover) {
+    Layer.gameover(layer);
+    return;
+  }
 }
 
 export async function layerOut(layer: any, env: any) {
@@ -21,7 +24,9 @@ export async function layerOut(layer: any, env: any) {
     Layer.clear(layer);
     return;
   }
-  return;
+  if (S.Frag.gameover) {
+    Layer.clear(layer);
+  }
 }
 
 export async function whiteout(layer: CanvasRenderingContext2D) {
@@ -32,7 +37,6 @@ export async function whiteout(layer: CanvasRenderingContext2D) {
     let timer = setInterval(() => {
       let passed = calcPassedTime(start);
       let alpha = calcOutAlpha(passed, ratio);
-      //規定時間が過ぎたら処理終了
       if (passed >= settime) {
         clearInterval(timer);
         return resolve();
@@ -51,7 +55,6 @@ export async function blackout(layer: CanvasRenderingContext2D) {
     let timer = setInterval(() => {
       let passed = calcPassedTime(start);
       let alpha = calcInAlpha(passed, ratio);
-      //規定時間が過ぎたら処理終了
       if (passed >= settime) {
         clearInterval(timer);
         return resolve();
@@ -71,7 +74,6 @@ export async function fadeIn(layer: any) {
     let timer = setInterval(() => {
       let passed = calcPassedTime(start);
       let alpha = calcInAlpha(passed, ratio);
-      //規定時間が過ぎたらレイヤーをクリアして処理終了
       if (passed >= inTime) {
         clearInterval(timer);
         return resolve();
@@ -91,7 +93,6 @@ export async function fadeOut(layer: any) {
     let timer = setInterval(() => {
       let passed = calcPassedTime(start);
       let alpha = calcOutAlpha(passed, ratio);
-      //規定時間が過ぎたらレイヤーをクリアして処理終了
       if (passed >= inTime) {
         clearInterval(timer);
         return resolve();
