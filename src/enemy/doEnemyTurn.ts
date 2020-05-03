@@ -70,14 +70,14 @@ export function activeEnemy(
   ];
   //移動を試みる
   for (let i = 0; i < tryDs.length; i++) {
-    // console.log(`${i}回目`);
+    console.log(`${i}回目`);
     let direction = tryDs[i];
     let moveTo = movePoint(enemy, direction);
     let isCanStand = floor.isCanStand(moveTo);
     let isPointNoEnemy = moveToSearch(moveTo, enemys);
     let isPointNoPlayer = player.x !== moveTo.x || player.y !== moveTo.y;
     let moveCheck = isCanStand && isPointNoEnemy && isPointNoPlayer;
-    // console.log(`moveCheck : ${moveCheck}`);
+    console.log(`moveCheck : ${moveCheck}`);
     if (moveCheck) {
       enemy.point = moveTo;
       break;

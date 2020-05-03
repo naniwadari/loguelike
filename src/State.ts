@@ -22,6 +22,7 @@ export let S: IState = {
   Frag: {
     start: false,
     gameover: false,
+    eyecatch: false,
   },
   env: { diagonal: false },
   KeyPress: {

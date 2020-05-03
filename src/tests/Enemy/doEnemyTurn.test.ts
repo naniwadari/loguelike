@@ -3,9 +3,9 @@ import { EnemyList } from "@root/enemy/EnemyList";
 import * as t from "@root/enemy/doEnemyTurn";
 import { EnemyConf, Direction } from "@root/config";
 /* モック */
-const enemyPoint = { x: 5, y: 5 };
+const point = { x: 5, y: 5 };
 const material = EnemyList[0];
-const enemy = new Enemy(enemyPoint, material);
+const enemy = new Enemy(point, material);
 
 const topleft = { x: 0, y: 0 };
 const left = { x: 0, y: 5 };
@@ -99,6 +99,7 @@ describe("findThirdNearDirection", () => {
     expect(result.previous).toBe(Direction.bottom);
   });
 });
+
 describe("isPointInArea", () => {
   test("should return true", () => {
     let testResult = true;

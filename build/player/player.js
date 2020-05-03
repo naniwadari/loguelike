@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_1 = require("../config");
-const State_1 = require("../State");
-class Player {
-    constructor(x, y) {
+var config_1 = require("../config");
+var State_1 = require("../State");
+var Player = /** @class */ (function () {
+    function Player(x, y) {
         this.depth = 0;
         this.point = { x: x, y: y };
         this.x = x;
@@ -21,82 +21,97 @@ class Player {
         this.ATK = this.totalATK;
         this.DEF = this.totalDEF;
     }
-    get totalHP() {
-        return this.baseHP + this.equipHP;
-    }
-    get totalATK() {
-        return this.baseATK + this.equipATK;
-    }
-    get totalDEF() {
-        return this.baseDEF + this.equipDEF;
-    }
-    moveLeft() {
+    Object.defineProperty(Player.prototype, "totalHP", {
+        get: function () {
+            return this.baseHP + this.equipHP;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Player.prototype, "totalATK", {
+        get: function () {
+            return this.baseATK + this.equipATK;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Player.prototype, "totalDEF", {
+        get: function () {
+            return this.baseDEF + this.equipDEF;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Player.prototype.moveLeft = function () {
         if (this.x === 0) {
             return this;
         }
         this.x = --this.x;
         return this;
-    }
-    moveUp() {
+    };
+    Player.prototype.moveUp = function () {
         if (this.y === 0) {
             return this;
         }
         this.y = --this.y;
         return this;
-    }
-    moveRight() {
-        if (this.x === State_1.S.fieldSize.x - 1) {
+    };
+    Player.prototype.moveRight = function () {
+        if (this.x === State_1.S.floors[State_1.S.player.depth].size.width - 1) {
             return this;
         }
         this.x = ++this.x;
         return this;
-    }
-    moveDown() {
-        if (this.y === State_1.S.fieldSize.y - 1) {
+    };
+    Player.prototype.moveDown = function () {
+        if (this.y === State_1.S.floors[State_1.S.player.depth].size.height - 1) {
             return this;
         }
         this.y = ++this.y;
         return this;
-    }
-    moveUpperLeft() {
+    };
+    Player.prototype.moveUpperLeft = function () {
         if (this.x === 0 || this.y === 0) {
             return this;
         }
         this.x = --this.x;
         this.y = --this.y;
         return this;
-    }
-    moveUpperRight() {
-        if (this.x === State_1.S.fieldSize.x - 1 || this.y === 0) {
+    };
+    Player.prototype.moveUpperRight = function () {
+        if (this.x === State_1.S.floors[State_1.S.player.depth].size.width - 1 || this.y === 0) {
             return this;
         }
         this.x = ++this.x;
         this.y = --this.y;
         return this;
-    }
-    moveDownnerLeft() {
-        if (this.x === State_1.S.fieldSize.x - 1 || this.y === State_1.S.fieldSize.y - 1) {
+    };
+    Player.prototype.moveDownnerLeft = function () {
+        if (this.x === State_1.S.floors[State_1.S.player.depth].size.width - 1 ||
+            this.y === State_1.S.floors[State_1.S.player.depth].size.height - 1) {
             return this;
         }
         this.x = --this.x;
         this.y = ++this.y;
         return this;
-    }
-    moveDownnerRight() {
-        if (this.x === State_1.S.fieldSize.x - 1 || this.y === State_1.S.fieldSize.y - 1) {
+    };
+    Player.prototype.moveDownnerRight = function () {
+        if (this.x === State_1.S.floors[State_1.S.player.depth].size.width - 1 ||
+            this.y === State_1.S.floors[State_1.S.player.depth].size.height - 1) {
             return this;
         }
         this.x = ++this.x;
         this.y = ++this.y;
         return this;
-    }
-    stairDown() {
-        const block = State_1.S.fields[this.depth].blocks[this.x][this.y];
+    };
+    Player.prototype.stairDown = function () {
+        var floor = State_1.S.floors[this.depth];
+        var block = floor.blocks[this.x][this.y];
         if (block.base === config_1.MapType.downstair) {
             ++this.depth;
         }
-        else {
-        }
-    }
-}
+    };
+    return Player;
+}());
 exports.default = Player;
+//# sourceMappingURL=player.js.map

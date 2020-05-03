@@ -14,6 +14,18 @@ export enum Direction {
   topLeft = 7,
 }
 
+export enum FadeConf {
+  blackout = 500,
+  blackoutRatio = 100,
+  whiteout = 1000,
+  whiteoutRatio = 200,
+  inTimeShort = 1700,
+  outTimeShort = 500,
+  fadeRatio = 1000, //ミリ秒を割って透明度を変化させるため、その子数
+  fastFadeRatio = 500,
+  interval = 20, //何ミリ秒ごとに実行するかの指定
+}
+
 export enum EnemyConf {
   popInitMin = 0,
   popInitMax = 2,

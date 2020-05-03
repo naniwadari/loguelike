@@ -4,8 +4,20 @@
     <title>ローグライクゲーム</title>
   </head>
   <body>
-    <div class="ssss"></div>
-    <canvas id="game" width="1600" height="800" tabindex="1"></canvas>
+    <div class="canvas-wrrapper">
+      <canvas id="game" width="1600" height="800" tabindex="1"></canvas>
+      <canvas id="layer" width="1600" height="800" tabindex="1"></canvas>
+    </div>
   </body>
+  <style>
+    .canvas-wrapper {
+      position: relative;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
   <script type="text/javascript" src="./dist/index.js"></script>
 </html>

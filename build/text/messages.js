@@ -1,22 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_1 = require("../config");
-class MessageList {
-    constructor() {
+var config_1 = require("../config");
+var MessageList = /** @class */ (function () {
+    function MessageList() {
         this.list = [];
     }
-    add(message) {
+    MessageList.prototype.add = function (message) {
         this.list.push(message);
         while (this.list.length > config_1.MessageLength.limit) {
             this.list.shift();
         }
-    }
-}
+    };
+    return MessageList;
+}());
 exports.MessageList = MessageList;
-class Message {
-    constructor(text, type) {
+var Message = /** @class */ (function () {
+    function Message(text, type) {
         this.text = text;
         this.type = type;
     }
-}
+    return Message;
+}());
 exports.Message = Message;
+//# sourceMappingURL=messages.js.map

@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_1 = require("../config");
-const State_1 = require("../State");
+var config_1 = require("../config");
+var State_1 = require("../State");
 //階段などのイメージ
-const structureImg = new Image();
+var structureImg = new Image();
 structureImg.src = "./src/image/GBstructure.png";
 //床のイメージ
-const tyleImg = new Image();
+var tyleImg = new Image();
 tyleImg.src = "./src/image/GBtyle.png";
 //壁のイメージ
-const wallImg = new Image();
+var wallImg = new Image();
 wallImg.src = "./src/image/GBwall.png";
 function drawTyles(con, drawStartPoint) {
-    for (let i = 0; i < config_1.DrawRange.x; i++) {
-        for (let j = 0; j < config_1.DrawRange.y; j++) {
-            const block = State_1.S.fields[State_1.S.player.depth].blocks[drawStartPoint.x + i][drawStartPoint.y + j];
-            const tyleDrawPoint = { x: i, y: j };
+    for (var i = 0; i < config_1.DrawRange.x; i++) {
+        for (var j = 0; j < config_1.DrawRange.y; j++) {
+            var block = State_1.S.floors[State_1.S.player.depth].blocks[drawStartPoint.x + i][drawStartPoint.y + j];
+            var tyleDrawPoint = { x: i, y: j };
             if (block.base === config_1.MapType.floor) {
                 DrawTyle.floor(con, tyleDrawPoint);
             }
@@ -46,3 +46,4 @@ var DrawTyle;
     }
     DrawTyle.downstair = downstair;
 })(DrawTyle = exports.DrawTyle || (exports.DrawTyle = {}));
+//# sourceMappingURL=drawTyles.js.map

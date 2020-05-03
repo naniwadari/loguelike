@@ -8,6 +8,7 @@ import drawStatus from "./drawStatus";
 import drawEnemys from "./drawEnemys";
 import drawPlayer from "./drawPlayer";
 import drawTitle from "./drawTitle";
+import drawEyecatch from "./drawEyecatch";
 
 export const canvas = <HTMLCanvasElement>document.getElementById("game");
 export const con: any = canvas.getContext("2d");

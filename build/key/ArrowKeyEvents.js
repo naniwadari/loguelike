@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const KeyCode_1 = require("./KeyCode");
-const State_1 = require("../State");
-const Draw_1 = require("../draw/Draw");
-const index_1 = require("../index");
-exports.default = () => {
+var KeyCode_1 = require("./KeyCode");
+var State_1 = require("../State");
+var Draw_1 = require("../draw/Draw");
+var index_1 = require("../index");
+exports.default = (function () {
     // 移動キーが押されているか
-    window.addEventListener("keydown", (e) => {
+    window.addEventListener("keydown", function (e) {
         if (e.keyCode === KeyCode_1.KeyCode.left) {
             State_1.S.KeyPress.left = true;
         }
@@ -27,7 +27,7 @@ exports.default = () => {
         }
     });
     // 移動キーが離されたかどうか
-    window.addEventListener("keyup", (e) => {
+    window.addEventListener("keyup", function (e) {
         if (e.keyCode === KeyCode_1.KeyCode.left) {
             State_1.S.KeyPress.left = false;
         }
@@ -42,7 +42,7 @@ exports.default = () => {
         }
     });
     // shiftキー
-    window.addEventListener("keydown", (e) => {
+    window.addEventListener("keydown", function (e) {
         if (e.keyCode === KeyCode_1.KeyCode.shift) {
             if (!State_1.S.env.diagonal) {
                 State_1.S.env.diagonal = true;
@@ -52,7 +52,7 @@ exports.default = () => {
         }
     });
     // シフトを押しているかどうか
-    window.addEventListener("keyup", (e) => {
+    window.addEventListener("keyup", function (e) {
         if (e.keyCode === KeyCode_1.KeyCode.shift) {
             if (State_1.S.env.diagonal) {
                 State_1.S.env.diagonal = false;
@@ -61,7 +61,7 @@ exports.default = () => {
         }
     });
     /* Zキー */
-    window.addEventListener("keydown", (e) => {
+    window.addEventListener("keydown", function (e) {
         //タイトル画面での操作
         if (!State_1.S.Frag.start) {
             if (e.keyCode === KeyCode_1.KeyCode.action) {
@@ -81,10 +81,11 @@ exports.default = () => {
         }
     });
     // ブラウザ以外を見ているとき
-    window.addEventListener("blur", (e) => {
+    window.addEventListener("blur", function (e) {
         if (State_1.S.env.diagonal) {
             State_1.S.env.diagonal = false;
             Draw_1.draw(Draw_1.con, State_1.S.env);
         }
     });
-};
+});
+//# sourceMappingURL=ArrowKeyEvents.js.map

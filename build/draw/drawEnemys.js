@@ -1,13 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const State_1 = require("../State");
-const config_1 = require("../config");
-const Enemy_1 = require("../enemy/Enemy");
-exports.default = (con, drawStartPoint) => {
+var State_1 = require("../State");
+var config_1 = require("../config");
+var Enemy_1 = require("../enemy/Enemy");
+var blackballImg = new Image();
+blackballImg.src = "./src/image/blackball.png";
+exports.default = (function (con, drawStartPoint) {
     con.textBaseline = "middle";
     con.textAlign = "center";
-    const enemys = State_1.S.fields[State_1.S.player.depth].enemys;
-    for (let i = 0; i < enemys.length; i++) {
+    var enemys = State_1.S.enemys;
+    for (var i = 0; i < enemys.length; i++) {
         if (enemys[i].point.x >= drawStartPoint.x &&
             enemys[i].point.x < drawStartPoint.x + config_1.DrawRange.x &&
             enemys[i].point.y >= drawStartPoint.y &&
@@ -15,9 +17,9 @@ exports.default = (con, drawStartPoint) => {
             drawEnemy(con, enemys[i], drawStartPoint);
         }
     }
-};
+});
 function drawEnemy(con, enemy, drawStartPoint) {
-    const id = enemy.id;
+    var id = enemy.id;
     if (id === Enemy_1.EnemyId.slime) {
         drawEnemyImg.slime(con, enemy.point, drawStartPoint);
     }
@@ -28,9 +30,16 @@ function drawEnemy(con, enemy, drawStartPoint) {
 var drawEnemyImg;
 (function (drawEnemyImg) {
     function slime(con, popPoint, drawStartPoint) {
-        con.fillStyle = "blue";
-        con.font = "16px consolas";
-        con.fillText("●", (popPoint.x - drawStartPoint.x) * config_1.TyleSize.x + config_1.TyleSize.x / 2, (popPoint.y - drawStartPoint.y) * config_1.TyleSize.y + config_1.TyleSize.y / 2);
+        var ratio = 0.6;
+        var size_x = config_1.TyleSize.x * ratio;
+        var size_y = config_1.TyleSize.y * ratio;
+        var fix = (config_1.TyleSize.x * (1 - ratio)) / 2;
+        con.drawImage(blackballImg, 0, 0, 32, 32, (popPoint.x - drawStartPoint.x) * config_1.TyleSize.x + fix, (popPoint.y - drawStartPoint.y) * config_1.TyleSize.y + fix, size_x, size_y);
+        // con.fillText(
+        //   "●",
+        //   (popPoint.x - drawStartPoint.x) * TyleSize.x + TyleSize.x / 2,
+        //   (popPoint.y - drawStartPoint.y) * TyleSize.y + TyleSize.y / 2
+        // );
     }
     drawEnemyImg.slime = slime;
     function rat(con, popPoint, drawStartPoint) {
@@ -40,3 +49,4 @@ var drawEnemyImg;
     }
     drawEnemyImg.rat = rat;
 })(drawEnemyImg = exports.drawEnemyImg || (exports.drawEnemyImg = {}));
+//# sourceMappingURL=drawEnemys.js.map

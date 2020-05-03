@@ -3,17 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const player_1 = __importDefault(require("./player/player"));
-const config_1 = require("./config");
-const messages_1 = require("./text/messages");
+var player_1 = __importDefault(require("./player/player"));
+var messages_1 = require("./text/messages");
 exports.S = {
-    fields: [],
-    fieldSize: { x: config_1.MapBluePrint.LX, y: config_1.MapBluePrint.LY },
+    floors: [],
+    enemys: [],
+    // fieldSize: { x: MapBluePrint.LX, y: MapBluePrint.LY },
     player: new player_1.default(0, 0),
     messages: new messages_1.MessageList(),
     Frag: {
         start: false,
         gameover: false,
+        eyecatch: false,
     },
     env: { diagonal: false },
     KeyPress: {
@@ -24,3 +25,4 @@ exports.S = {
     },
     seed: Date.now().toString(10),
 };
+//# sourceMappingURL=State.js.map

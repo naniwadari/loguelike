@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const config_1 = require("../config");
-exports.default = (con, playerDrawPoint) => {
+var config_1 = require("../config");
+exports.default = (function (con, playerDrawPoint) {
     con.save();
     con.strokeStyle = "black";
     con.translate(playerDrawPoint.x * config_1.TyleSize.x + config_1.TyleSize.x / 2, playerDrawPoint.y * config_1.TyleSize.y + config_1.TyleSize.y / 2);
@@ -61,4 +61,5 @@ exports.default = (con, playerDrawPoint) => {
     con.closePath();
     con.stroke();
     con.restore();
-};
+});
+//# sourceMappingURL=drawDiagonalArrow.js.map

@@ -10,3 +10,4 @@ var KeyCode;
     KeyCode[KeyCode["shift"] = 16] = "shift";
     KeyCode[KeyCode["space"] = 32] = "space";
 })(KeyCode = exports.KeyCode || (exports.KeyCode = {}));
+//# sourceMappingURL=KeyCode.js.map

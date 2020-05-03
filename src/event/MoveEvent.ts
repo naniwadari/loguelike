@@ -7,6 +7,7 @@ import { Point } from "../Types";
 import { battleEvent } from "../battle/battleEvents";
 import doEnemyTurn from "../enemy/doEnemyTurn";
 import getOffFloor from "./getOffFloor";
+import { layerIn, layerOut, layer } from "../draw/LayerDraw";
 
 export default () => {
   window.addEventListener("keydown", (e) => {
@@ -87,16 +88,27 @@ export default () => {
     draw(con, S.env);
   });
 
-  window.addEventListener("keydown", (e) => {
+  window.addEventListener("keydown", async (e) => {
     e.preventDefault(); //スペースでのスクロールを防止
     if (e.keyCode === KeyCode.space) {
       const block = S.floors[S.player.depth].blocks[S.player.x][S.player.y];
       if (block.base === MapType.downstair) {
         getOffFloor();
+        S.Frag.eyecatch = true;
       }
     } else {
       return;
     }
+    await layerIn(layer, S.env);
     draw(con, S.env);
+    await layerOut(layer, S.env);
   });
 };
+
+async function testtime(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("this is return");
+    }, 2000);
+  });
+}

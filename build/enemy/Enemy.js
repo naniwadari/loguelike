@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var State_1 = require("../State");
 var EnemyId;
 (function (EnemyId) {
     EnemyId[EnemyId["slime"] = 0] = "slime";
     EnemyId[EnemyId["rat"] = 1] = "rat";
 })(EnemyId = exports.EnemyId || (exports.EnemyId = {}));
-class Enemy {
-    constructor(point, Material, level) {
+var Enemy = /** @class */ (function () {
+    function Enemy(point, Material, level) {
         this.name = Material.name;
         this.point = point;
         this.id = Material.id;
@@ -32,14 +33,91 @@ class Enemy {
         this.ATK = this.totalATK;
         this.DEF = this.totalDEF;
     }
-    get totalHP() {
-        return this.baseHP + this.equipHP;
-    }
-    get totalATK() {
-        return this.baseATK + this.equipATK;
-    }
-    get totalDEF() {
-        return this.baseDEF + this.equipDEF;
-    }
-}
+    Object.defineProperty(Enemy.prototype, "totalHP", {
+        get: function () {
+            return this.baseHP + this.equipHP;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Enemy.prototype, "totalATK", {
+        get: function () {
+            return this.baseATK + this.equipATK;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Enemy.prototype, "totalDEF", {
+        get: function () {
+            return this.baseDEF + this.equipDEF;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Enemy.prototype.moveLeft = function () {
+        if (this.point.x === 0) {
+            return this;
+        }
+        this.point.x = --this.point.x;
+        return this;
+    };
+    Enemy.prototype.moveUp = function () {
+        if (this.point.y === 0) {
+            return this;
+        }
+        this.point.y = --this.point.y;
+        return this;
+    };
+    Enemy.prototype.moveRight = function () {
+        if (this.point.x === State_1.S.floors[State_1.S.player.depth].size.width - 1) {
+            return this;
+        }
+        this.point.x = ++this.point.x;
+        return this;
+    };
+    Enemy.prototype.moveDown = function () {
+        if (this.point.y === State_1.S.floors[State_1.S.player.depth].size.height - 1) {
+            return this;
+        }
+        this.point.y = ++this.point.y;
+        return this;
+    };
+    Enemy.prototype.moveUpperLeft = function () {
+        if (this.point.x === 0 || this.point.y === 0) {
+            return this;
+        }
+        this.point.x = --this.point.x;
+        this.point.y = --this.point.y;
+        return this;
+    };
+    Enemy.prototype.moveUpperRight = function () {
+        if (this.point.x === State_1.S.floors[State_1.S.player.depth].size.width - 1 ||
+            this.point.y === 0) {
+            return this;
+        }
+        this.point.x = ++this.point.x;
+        this.point.y = --this.point.y;
+        return this;
+    };
+    Enemy.prototype.moveDownnerLeft = function () {
+        if (this.point.x === State_1.S.floors[State_1.S.player.depth].size.width - 1 ||
+            this.point.y === State_1.S.floors[State_1.S.player.depth].size.height - 1) {
+            return this;
+        }
+        this.point.x = --this.point.x;
+        this.point.y = ++this.point.y;
+        return this;
+    };
+    Enemy.prototype.moveDownnerRight = function () {
+        if (this.point.x === State_1.S.floors[State_1.S.player.depth].size.width - 1 ||
+            this.point.y === State_1.S.floors[State_1.S.player.depth].size.height - 1) {
+            return this;
+        }
+        this.point.x = ++this.point.x;
+        this.point.y = ++this.point.y;
+        return this;
+    };
+    return Enemy;
+}());
 exports.Enemy = Enemy;
+//# sourceMappingURL=Enemy.js.map
