@@ -87,6 +87,9 @@ export default () => {
       return;
     }
     doEnemyTurn();
+    if (S.Frag.gameover) {
+      layerIn(layer, S.env);
+    }
     draw(con, S.env);
   });
 

@@ -32,7 +32,6 @@ export default function () {
       //攻撃の結果プレイヤーのHPがゼロになったらゲームオーバー
       if (S.player.HP <= 0) {
         defeatPlayer();
-        layerIn(layer, S.env);
       }
     } else {
       enemy = nonActiveEnemy(enemy, enemys, player, floor);
