@@ -9,10 +9,9 @@ import doEnemyTurn from "../enemy/doEnemyTurn";
 import getOffFloor from "./getOffFloor";
 import { layerIn, layerOut, layer } from "../draw/LayerDraw";
 
-let floor = S.floors[S.player.depth];
-
 export default () => {
   window.addEventListener("keydown", (e) => {
+    let floor = S.floors[S.player.depth];
     e.preventDefault();
     if (
       e.keyCode === KeyCode.left ||

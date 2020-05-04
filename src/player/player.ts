@@ -1,5 +1,4 @@
 import { MapType } from "../config";
-import { S } from "../State";
 import { Point } from "../Types";
 import { Weapon } from "../item/Weapon";
 import { Floor } from "../floor/Floor";
