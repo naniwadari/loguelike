@@ -1,6 +1,6 @@
 import { Enemy } from "./enemy/Enemy";
-import { MapType } from "./config";
-import { Direction } from "./config";
+import { MapType, Direction } from "./config";
+import { ItemId, ItemType } from "./config/item";
 
 export interface Point {
   x: number;
@@ -41,6 +41,15 @@ export interface ISize {
 export interface IPoint {
   x: number;
   y: number;
+}
+
+export interface IItem {
+  id: ItemId;
+  types: ItemType;
+  name: string;
+  ATK: number;
+  DEF: number;
+  HP: number;
 }
 
 export interface IRoom {

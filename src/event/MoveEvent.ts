@@ -9,6 +9,8 @@ import doEnemyTurn from "../enemy/doEnemyTurn";
 import getOffFloor from "./getOffFloor";
 import { layerIn, layerOut, layer } from "../draw/LayerDraw";
 
+let floor = S.floors[S.player.depth];
+
 export default () => {
   window.addEventListener("keydown", (e) => {
     e.preventDefault();
@@ -22,13 +24,13 @@ export default () => {
       // shiftを押している
       if (e.shiftKey) {
         if (S.KeyPress.left && S.KeyPress.up) {
-          movePlayer.moveUpperLeft();
+          movePlayer.moveUpperLeft(floor);
         } else if (S.KeyPress.right && S.KeyPress.up) {
-          movePlayer.moveUpperRight();
+          movePlayer.moveUpperRight(floor);
         } else if (S.KeyPress.left && S.KeyPress.down) {
-          movePlayer.moveDownnerLeft();
+          movePlayer.moveDownnerLeft(floor);
         } else if (S.KeyPress.right && S.KeyPress.down) {
-          movePlayer.moveDownnerRight();
+          movePlayer.moveDownnerRight(floor);
         } else {
           return;
         }
@@ -40,9 +42,9 @@ export default () => {
         } else if (e.keyCode === KeyCode.up) {
           movePlayer.moveUp();
         } else if (e.keyCode === KeyCode.right) {
-          movePlayer.moveRight();
+          movePlayer.moveRight(floor);
         } else if (e.keyCode === KeyCode.down) {
-          movePlayer.moveDown();
+          movePlayer.moveDown(floor);
         }
       }
       // 現在の位置から移動していた場合

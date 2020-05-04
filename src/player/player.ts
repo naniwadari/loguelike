@@ -1,6 +1,8 @@
 import { MapType } from "../config";
 import { S } from "../State";
 import { Point } from "../Types";
+import { Weapon } from "../item/Weapon";
+import { Floor } from "../floor/Floor";
 export default class Player {
   depth: number;
   point: Point;
@@ -48,6 +50,18 @@ export default class Player {
     return this.baseDEF + this.equipDEF;
   }
 
+  equip(item: Weapon) {
+    this.equipATK = this.equipATK + item.ATK;
+    this.equipDEF = this.equipDEF + item.DEF;
+    this.equipHP = this.equipHP + item.HP;
+  }
+
+  removeEquip(item: Weapon) {
+    this.equipATK = this.equipATK - item.ATK;
+    this.equipDEF = this.equipDEF - item.DEF;
+    this.equipHP = this.equipHP - item.HP;
+  }
+
   moveLeft() {
     if (this.x === 0) {
       return this;
@@ -64,23 +78,23 @@ export default class Player {
     return this;
   }
 
-  moveRight() {
-    if (this.x === S.floors[S.player.depth].size.width - 1) {
+  moveRight(floor: Floor) {
+    if (this.x === floor.size.width - 1) {
       return this;
     }
     this.x = ++this.x;
     return this;
   }
 
-  moveDown() {
-    if (this.y === S.floors[S.player.depth].size.height - 1) {
+  moveDown(floor: Floor) {
+    if (this.y === floor.size.height - 1) {
       return this;
     }
     this.y = ++this.y;
     return this;
   }
 
-  moveUpperLeft() {
+  moveUpperLeft(floor: Floor) {
     if (this.x === 0 || this.y === 0) {
       return this;
     }
@@ -89,8 +103,8 @@ export default class Player {
     return this;
   }
 
-  moveUpperRight() {
-    if (this.x === S.floors[S.player.depth].size.width - 1 || this.y === 0) {
+  moveUpperRight(floor: Floor) {
+    if (this.x === floor.size.width - 1 || this.y === 0) {
       return this;
     }
     this.x = ++this.x;
@@ -98,11 +112,8 @@ export default class Player {
     return this;
   }
 
-  moveDownnerLeft() {
-    if (
-      this.x === S.floors[S.player.depth].size.width - 1 ||
-      this.y === S.floors[S.player.depth].size.height - 1
-    ) {
+  moveDownnerLeft(floor: Floor) {
+    if (this.x === floor.size.width - 1 || this.y === floor.size.height - 1) {
       return this;
     }
     this.x = --this.x;
@@ -110,11 +121,8 @@ export default class Player {
     return this;
   }
 
-  moveDownnerRight() {
-    if (
-      this.x === S.floors[S.player.depth].size.width - 1 ||
-      this.y === S.floors[S.player.depth].size.height - 1
-    ) {
+  moveDownnerRight(floor: Floor) {
+    if (this.x === floor.size.width - 1 || this.y === floor.size.height - 1) {
       return this;
     }
     this.x = ++this.x;
@@ -122,8 +130,8 @@ export default class Player {
     return this;
   }
 
-  stairDown() {
-    let floor = S.floors[this.depth];
+  stairDown(floor: Floor) {
+    // let floor = S.floors[this.depth];
     const block = floor.blocks[this.x][this.y];
     if (block.base === MapType.downstair) {
       ++this.depth;

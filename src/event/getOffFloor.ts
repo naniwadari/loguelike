@@ -7,7 +7,7 @@ import { ISize } from "../Types";
 import popEnemy from "../enemy/popEnemy";
 
 export default () => {
-  S.player.stairDown();
+  S.player.stairDown(S.floors[S.player.depth]);
   S.messages.add(new Message(TEXT.downstair, MessageType.normal));
   if (!S.floors[S.player.depth]) {
     const floorSize: ISize = {
