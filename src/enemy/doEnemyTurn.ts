@@ -13,19 +13,19 @@ export default function () {
   const enemys = S.enemys;
   const player = { x: S.player.x, y: S.player.y };
   const floor = S.floors[S.player.depth];
-  console.log(`プレイヤーの位置`);
+  // console.log(`プレイヤーの位置`);
 
-  console.log(player);
+  // console.log(player);
   for (let i = 0; i < enemys.length; i++) {
     let enemy = enemys[i];
     const viewArea = calcFieldOfView(enemy);
-    console.log(`索敵範囲`);
-    console.log(viewArea);
+    // console.log(`索敵範囲`);
+    // console.log(viewArea);
     //プレイヤーを探す
     const result = isPointInArea(player, viewArea);
-    console.log(`索敵結果 : ${result}`);
-    console.log("移動前の敵の位置");
-    console.log(enemy.point);
+    // console.log(`索敵結果 : ${result}`);
+    // console.log("移動前の敵の位置");
+    // console.log(enemy.point);
     // 視野内にプレイヤーを見つけた場合追尾する;
     if (result) {
       enemy = activeEnemy(enemy, enemys, player, floor);
@@ -36,8 +36,8 @@ export default function () {
     } else {
       enemy = nonActiveEnemy(enemy, enemys, player, floor);
     }
-    console.log("移動後の敵の位置");
-    console.log(enemy.point);
+    // console.log("移動後の敵の位置");
+    // console.log(enemy.point);
   }
 }
 

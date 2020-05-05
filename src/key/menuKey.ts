@@ -10,13 +10,17 @@ export default () => {
     }
 
     if (e.keyCode === KeyCode.menu) {
-      //メニューを開く
-      if (!S.Frag.menu) {
-        menuOpen(S, con);
-      }
       //メニューを閉じる
       if (S.Frag.menu) {
         menuClose(S, con);
+        console.log(S.Frag.menu);
+        return;
+      }
+      //メニューを開く
+      if (!S.Frag.menu) {
+        menuOpen(S, con);
+        console.log(S.Frag.menu);
+        return;
       }
     }
   });

@@ -9,6 +9,7 @@ import drawEnemys from "./drawEnemys";
 import drawPlayer from "./drawPlayer";
 import drawTitle from "./drawTitle";
 import drawEyecatch from "./drawEyecatch";
+import { drawBag } from "./drawBag";
 
 export const canvas = <HTMLCanvasElement>document.getElementById("game");
 export const con: any = canvas.getContext("2d");
@@ -36,6 +37,8 @@ export function draw(con: any, env: any) {
   drawMessage(con);
   //ステータスの描画
   drawStatus(con);
+  //バッグの中身の描画
+  drawBag(con, S);
   //斜め移動の矢印の描画
   if (S.env.diagonal) {
     drawDiagonalArrow(con, playerDrawPoint);

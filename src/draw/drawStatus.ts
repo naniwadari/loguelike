@@ -10,8 +10,8 @@ export default (con: any) => {
   const depth = S.player.depth + TEXT.depth;
   const level = TEXT.level + ":" + S.player.level;
   const HP = TEXT.hp + ":" + S.player.HP + "/" + S.player.totalHP;
-  const ATK = TEXT.ATK + ":" + S.player.ATK;
-  const DEF = TEXT.DEF + ":" + S.player.DEF;
+  const ATK = TEXT.ATK + ":" + S.player.totalATK;
+  const DEF = TEXT.DEF + ":" + S.player.totalDEF;
   const EXP = TEXT.EXP + ":" + S.player.EXP + "/" + S.player.requireEXP;
 
   con.save();

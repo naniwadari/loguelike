@@ -14,7 +14,7 @@ export default () => {
     }
     // マップリクリエイトキー　0
     else if (e.keyCode === 48) {
-      forceGameOver();
+      checkState();
     }
   });
 };
@@ -24,6 +24,9 @@ function mapRecreate() {
   draw(con, S.env);
 }
 
+function checkState() {
+  console.log(S);
+}
 function forceGameOver() {
   S.player.HP = 0;
   S.Frag.gameover = true;

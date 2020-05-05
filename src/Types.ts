@@ -4,6 +4,10 @@ import { ItemId, ItemType } from "./config/item";
 import { Floor } from "./floor/Floor";
 import Player from "./player/player";
 import { MessageList } from "./text/messages";
+import { Bag } from "./item/Bag";
+import { Weapon } from "./item/Weapon";
+import { Shield } from "./item/Shield";
+import { Potion } from "./item/Potion";
 
 export interface Point {
   x: number;
@@ -67,10 +71,16 @@ export interface IState {
   floors: Floor[];
   enemys: Enemy[];
   player: Player;
-  bags: IItem[];
+  bags: Bag;
+  bagCursor: number;
   messages: MessageList;
   Frag: { [key: string]: boolean };
   env: any;
   KeyPress: any;
   seed: string;
+}
+
+export interface IBag {
+  index: number;
+  item: IItem | Weapon | Shield | Potion;
 }

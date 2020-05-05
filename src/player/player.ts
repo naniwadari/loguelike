@@ -1,7 +1,8 @@
 import { MapType } from "../config";
-import { Point } from "../Types";
+import { Point, IItem, IBag } from "../Types";
 import { Weapon } from "../item/Weapon";
 import { Floor } from "../floor/Floor";
+import { ItemType } from "../config/item";
 export default class Player {
   depth: number;
   point: Point;
@@ -19,6 +20,8 @@ export default class Player {
   equipDEF: number;
   EXP: number;
   requireEXP: number;
+  weapon?: IBag;
+  shield?: IBag;
 
   constructor(x: number, y: number) {
     this.depth = 0;
@@ -49,16 +52,45 @@ export default class Player {
     return this.baseDEF + this.equipDEF;
   }
 
-  equip(item: Weapon) {
+  usePotion(bag: IBag) {
+    let item = bag.item;
+    let recoverHP = this.HP + item.HP;
+    this.equipATK = this.equipATK + item.ATK;
+    this.equipDEF = this.equipDEF + item.DEF;
+    if (recoverHP >= this.totalHP) {
+      recoverHP = this.totalHP;
+    }
+    this.HP = recoverHP;
+  }
+
+  equip(bag: IBag) {
+    let item = bag.item;
     this.equipATK = this.equipATK + item.ATK;
     this.equipDEF = this.equipDEF + item.DEF;
     this.equipHP = this.equipHP + item.HP;
+    if (item.types === ItemType.weapon) {
+      this.weapon = bag;
+      return;
+    }
+    if (item.types === ItemType.shield) {
+      this.shield = bag;
+      return;
+    }
   }
 
-  removeEquip(item: Weapon) {
+  removeEquip(bag: IBag) {
+    let item = bag.item;
     this.equipATK = this.equipATK - item.ATK;
     this.equipDEF = this.equipDEF - item.DEF;
     this.equipHP = this.equipHP - item.HP;
+    if (item.types === ItemType.weapon) {
+      this.weapon = undefined;
+      return;
+    }
+    if (item.types === ItemType.shield) {
+      this.shield = undefined;
+      return;
+    }
   }
 
   moveLeft() {

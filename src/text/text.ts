@@ -26,4 +26,13 @@ export module actionMsg {
   export let beAttacked = (name: string, damage: number) => {
     return `${name}から${damage}のダメージを受けた`;
   };
+  export let usePotion = (name: string, amount: number) => {
+    return `${name}を使った。${amount}HP回復した。`;
+  };
+  export let equip = (name: string) => {
+    return `${name}を装備した`;
+  };
+  export let removeEquip = (name: string) => {
+    return `${name}を外した`;
+  };
 }
