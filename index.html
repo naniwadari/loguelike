@@ -8,6 +8,16 @@
       <canvas id="game" width="1600" height="800" tabindex="1"></canvas>
       <canvas id="layer" width="1600" height="800" tabindex="1"></canvas>
     </div>
+    <div class="describe">
+      <h3>操作説明</h3>
+      <ul>
+        <li>Zキー・・・ゲームの開始・アイテムの装備・使用</li>
+        <li>Xキー・・・メニューを開く</li>
+        <li>スペースキー・・・階段を降りる</li>
+        <li>モンスターは隣接すると攻撃してきます。</li>
+        <li>モンスターに向かって移動するとモンスターに攻撃します。</li>
+      </ul>
+    </div>
   </body>
   <style>
     .canvas-wrapper {
@@ -17,6 +27,9 @@
       position: absolute;
       top: 0;
       left: 0;
+    }
+    .describe {
+      margin-top: 820px;
     }
   </style>
   <script type="text/javascript" src="./dist/index.js"></script>
