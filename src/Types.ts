@@ -1,6 +1,9 @@
 import { Enemy } from "./enemy/Enemy";
 import { MapType, Direction } from "./config";
 import { ItemId, ItemType } from "./config/item";
+import { Floor } from "./floor/Floor";
+import Player from "./player/player";
+import { MessageList } from "./text/messages";
 
 export interface Point {
   x: number;
@@ -58,4 +61,16 @@ export interface IRoom {
   point: IPoint;
   hasPath: number[];
   toPath?: number;
+}
+
+export interface IState {
+  floors: Floor[];
+  enemys: Enemy[];
+  player: Player;
+  bags: IItem[];
+  messages: MessageList;
+  Frag: { [key: string]: boolean };
+  env: any;
+  KeyPress: any;
+  seed: string;
 }

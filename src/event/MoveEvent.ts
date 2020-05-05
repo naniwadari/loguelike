@@ -11,6 +11,9 @@ import { layerIn, layerOut, layer } from "../draw/LayerDraw";
 
 export default () => {
   window.addEventListener("keydown", (e) => {
+    if (S.Frag.gameover || !S.Frag.start) {
+      return;
+    }
     let floor = S.floors[S.player.depth];
     e.preventDefault();
     if (

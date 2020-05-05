@@ -3,7 +3,6 @@ import { MapType, Direction } from "../config";
 import Room from "./Room";
 import Dig from "./Dig";
 import { Random } from "../module/RandomNum";
-import { S } from "@root/State";
 
 export class Floor {
   size: ISize;

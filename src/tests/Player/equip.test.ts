@@ -4,16 +4,18 @@ import { ItemId } from "@root/config/item";
 
 /* モックデータ */
 const point = { x: 1, y: 1 };
-const testP = new Player(point.x, point.y);
+const player = new Player(point.x, point.y);
 
 const itemId = ItemId.club;
 const item = new Weapon(itemId);
 
 /* テスト */
 
-describe("equip", () => {
-  test("should return collect property", () => {
-    testP.equip(item);
-    expect(testP.equipATK).toBe(item.ATK);
+describe("equip & remove", () => {
+  test("should return collect number", () => {
+    player.equip(item);
+    expect(player.equipATK).toBe(item.ATK);
+    player.removeEquip(item);
+    expect(player.equipATK).toBe(0);
   });
 });
