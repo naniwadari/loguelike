@@ -23,7 +23,6 @@ export function drawBag(con: CanvasRenderingContext2D, S: IState) {
   con.save();
   con.textBaseline = "top";
   con.textAlign = "left";
-  con.font = FontConf.L;
   con.translate(rectStart.x + margin, rectStart.y + margin);
   for (let i = 0; i < items.length; i++) {
     let text = items[i].item.name;
@@ -41,6 +40,7 @@ export function drawBag(con: CanvasRenderingContext2D, S: IState) {
       }
     }
     con.fillStyle = "white";
+    con.font = FontConf.L;
     con.fillText(text, x, (24 + lineheight) * i + 8);
   }
   con.restore();

@@ -7,5 +7,5 @@ export enum TextConf {
 export enum FontConf {
   S = "16px consolas",
   M = "20px consolas",
-  L = "24p consolas",
+  L = "24px consolas",
 }
