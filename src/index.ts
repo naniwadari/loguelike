@@ -33,18 +33,7 @@ export function init() {
   S.floors[0] = firstFloor;
   S.messages.add(new Message(TEXT.init, MessageType.special));
   //初期アイテムの追加
-  let initWeapon = new Weapon(ItemId.club);
-  let initShield = new Shield(ItemId.leatherShield);
   let initPotion = new Potion(ItemId.greenHerb);
-  S.bags.store(initWeapon);
-  S.bags.store(initShield);
-  S.bags.store(initPotion);
-  S.bags.store(initPotion);
-  S.bags.store(initPotion);
-  S.bags.store(initPotion);
-  S.bags.store(initPotion);
-  S.bags.store(initPotion);
-  S.bags.store(initPotion);
   S.bags.store(initPotion);
 }
 

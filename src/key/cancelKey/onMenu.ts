@@ -18,6 +18,9 @@ export function cancelOnMenu() {
 }
 
 export function throwItem(S: IState, con: any) {
+  if (S.bags.items.length === 0) {
+    return;
+  }
   let index = S.bagCursor;
   let items = S.bags.items;
   let item = Bag.searchByIndex(items, index);
