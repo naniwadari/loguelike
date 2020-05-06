@@ -16,6 +16,7 @@ import { ItemId } from "./config/item";
 import onMenu from "./key/moveKey/onMenu";
 import { Shield } from "./item/Shield";
 import { Potion } from "./item/Potion";
+import { cancelOnMenu } from "./key/cancelKey/onMenu";
 
 // 決定キーを押すとinitイベントが走る
 export function init() {
@@ -38,6 +39,13 @@ export function init() {
   S.bags.store(initWeapon);
   S.bags.store(initShield);
   S.bags.store(initPotion);
+  S.bags.store(initPotion);
+  S.bags.store(initPotion);
+  S.bags.store(initPotion);
+  S.bags.store(initPotion);
+  S.bags.store(initPotion);
+  S.bags.store(initPotion);
+  S.bags.store(initPotion);
 }
 
 //画面描画
@@ -50,6 +58,8 @@ actionKey();
 //メニューキー
 menuKey();
 onMenu();
+//キャンセルキー
+cancelOnMenu();
 /* プレイヤー移動イベント */
 MoveEvent();
 

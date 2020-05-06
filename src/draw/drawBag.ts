@@ -1,6 +1,7 @@
 import { DrawRange, TyleSize } from "../config";
 import { TextConf, FontConf } from "../config/draw";
 import { IState } from "../Types";
+import { ItemConf } from "../config/item";
 
 export function drawBag(con: CanvasRenderingContext2D, S: IState) {
   let items = S.bags.items;
@@ -9,7 +10,7 @@ export function drawBag(con: CanvasRenderingContext2D, S: IState) {
   let cursor = TextConf.cursorSize;
   let lineheight = TextConf.lineheight;
   let statusHeight = 30 * 6 + 8;
-  let height = margin + (24 + lineheight) * (8 + 1) + margin;
+  let height = margin + (24 + lineheight) * ItemConf.bagMax + margin * 2;
   let width = 230;
   let rectStart = {
     x: DrawRange.x * TyleSize.x + margin,

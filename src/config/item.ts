@@ -1,5 +1,10 @@
 import { IItem } from "../Types";
 
+export enum ItemConf {
+  popMin = 0,
+  popMax = 3,
+  bagMax = 10,
+}
 export enum ItemId {
   club = 1001,
   leatherShield = 2001,

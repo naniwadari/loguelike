@@ -48,11 +48,6 @@ export module drawEnemyImg {
       size_x,
       size_y
     );
-    // con.fillText(
-    //   "●",
-    //   (popPoint.x - drawStartPoint.x) * TyleSize.x + TyleSize.x / 2,
-    //   (popPoint.y - drawStartPoint.y) * TyleSize.y + TyleSize.y / 2
-    // );
   }
   export function rat(con: any, popPoint: Point, drawStartPoint: Point) {
     con.fillStyle = "blown";

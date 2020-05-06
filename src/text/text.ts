@@ -11,6 +11,7 @@ export enum TEXT {
   DEF = "防御力",
   EXP = "経験値",
   die = "あなたは力尽きた",
+  bagFull = "道具がいっぱいだ",
 }
 
 export module actionMsg {
@@ -34,5 +35,11 @@ export module actionMsg {
   };
   export let removeEquip = (name: string) => {
     return `${name}を外した`;
+  };
+  export let pickFallItem = (name: string) => {
+    return `${name}を拾った`;
+  };
+  export let throwItem = (name: string) => {
+    return `${name}を捨てた`;
   };
 }

@@ -2,12 +2,14 @@ import { KeyCode } from "../key/KeyCode";
 import { S } from "../State";
 import { con, draw } from "../draw/Draw";
 import Player from "../player/player";
-import { CanStand, MapType } from "../config";
-import { Point } from "../Types";
+import { CanStand, MapType, MessageType } from "../config";
+import { Point, IFallItem, IState, IPoint } from "../Types";
 import { battleEvent } from "../battle/battleEvents";
 import doEnemyTurn from "../enemy/doEnemyTurn";
 import getOffFloor from "./getOffFloor";
 import { layerIn, layerOut, layer } from "../draw/LayerDraw";
+import { actionMsg, TEXT } from "../text/text";
+import { ItemConf } from "../config/item";
 
 export default () => {
   window.addEventListener("keydown", (e) => {
@@ -52,6 +54,26 @@ export default () => {
       // 現在の位置から移動していた場合
       if (movePlayer.x !== S.player.x || movePlayer.y !== S.player.y) {
         const movePoint: Point = { x: movePlayer.x, y: movePlayer.y };
+        /* 移動先にアイテムがあった場合 */
+        const fallItems = S.fallItems;
+        const searchItemResult = searchFallItem(movePoint, fallItems);
+        console.log(searchItemResult);
+        if (searchItemResult) {
+          if (S.bags.items.length === ItemConf.bagMax) {
+            let cantPickMsg = { text: TEXT.bagFull, type: MessageType.normal };
+            S.messages.add(cantPickMsg);
+          } else {
+            let pickResult = pickFallItem(S, searchItemResult);
+            let pickFallItemMsg = {
+              text: actionMsg.pickFallItem(searchItemResult.item.name),
+              type: MessageType.normal,
+            };
+            S.bags = pickResult.bags;
+            S.fallItems = pickResult.fallItems;
+
+            S.messages.add(pickFallItemMsg);
+          }
+        }
         //移動先に敵がいた場合
         const enemys = S.enemys;
         const result = battleEvent.searchEnemy(movePoint, enemys);
@@ -112,10 +134,25 @@ export default () => {
   });
 };
 
-async function testtime(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve("this is return");
-    }, 2000);
+export function searchFallItem(movePoint: IPoint, fallItems: IFallItem[]) {
+  for (let i = 0; i < fallItems.length; i++) {
+    let fallItem = fallItems[i];
+    let point = fallItem.point;
+    if (point.x === movePoint.x && point.y === movePoint.y) {
+      return fallItem;
+    }
+  }
+}
+
+export function pickFallItem(S: IState, fallItem: IFallItem) {
+  S.bags.store(fallItem.item);
+  S.fallItems = removeByIndex(S.fallItems, fallItem.index);
+  return { bags: S.bags, fallItems: S.fallItems };
+}
+
+export function removeByIndex(items: IFallItem[], index: number) {
+  items.some((v: IFallItem, i) => {
+    if (v.index === index) items.splice(i, 1);
   });
+  return items;
 }

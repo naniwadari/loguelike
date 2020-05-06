@@ -5,6 +5,7 @@ export enum KeyCode {
   down = 40,
   action = 90, //z
   menu = 88, //x
+  cancel = 67,
   shift = 16,
   space = 32,
 }

@@ -71,6 +71,7 @@ export interface IState {
   floors: Floor[];
   enemys: Enemy[];
   player: Player;
+  fallItems: IFallItem[];
   bags: Bag;
   bagCursor: number;
   messages: MessageList;
@@ -78,6 +79,12 @@ export interface IState {
   env: any;
   KeyPress: any;
   seed: string;
+}
+
+export interface IFallItem {
+  index: number;
+  point: IPoint;
+  item: IItem;
 }
 
 export interface IBag {

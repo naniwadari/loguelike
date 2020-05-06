@@ -5,6 +5,7 @@ import { Message } from "../text/messages";
 import CreateFloor from "../floor/CreateFloor";
 import { ISize } from "../Types";
 import popEnemy from "../enemy/popEnemy";
+import popItem from "../item/popItem";
 
 export default () => {
   S.player.stairDown(S.floors[S.player.depth]);
@@ -25,5 +26,7 @@ export default () => {
     S.enemys = [];
     //モンスターのイニシャライズ
     S.enemys = popEnemy(floor);
+    //アイテムの生成
+    S.fallItems = popItem(floor);
   }
 };

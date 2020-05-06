@@ -28,6 +28,9 @@ function upOnMenu(con: any, S: IState) {
 }
 
 function downOnMenu(con: any, S: IState) {
+  if (S.bags.items.length === 0) {
+    return;
+  }
   if (S.bagCursor === S.bags.items.length - 1) {
     return;
   }

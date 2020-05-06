@@ -112,8 +112,14 @@ export function menuScene(S: IState, con: any) {
   //くすり
   if (item.types === ItemType.potion) {
     S.player.usePotion(bag);
-    Bag.removeByIndex(items, bag.index);
+    S.bags.take(bag.index);
     S.messages.add(usePotionMsg);
+    if (S.bagCursor === S.bags.items.length) {
+      --S.bagCursor;
+      if (S.bagCursor < 0) {
+        S.bagCursor = 0;
+      }
+    }
     draw(con, S.env);
     return;
   }
