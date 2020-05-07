@@ -14,7 +14,7 @@ export const NpcList: INpc[] = [
   {
     id: NpcId.first,
     type: NpcType.normal,
-    name: "ダイヤくん",
+    name: "うにくん",
     serif: [
       Serif.first1,
       Serif.first2,

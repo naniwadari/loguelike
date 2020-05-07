@@ -3,9 +3,12 @@ import { DrawRange, TyleSize } from "../config";
 import { Point } from "../Types";
 import { EnemyId, Enemy } from "../enemy/Enemy";
 
-const blackballImg = new Image();
-blackballImg.src = "./src/image/blackball.png";
-
+const slimeImg = new Image();
+slimeImg.src = "./src/image/character/slime.png";
+const foxImg = new Image();
+foxImg.src = "./src/image/character/fox.png";
+const tvImg = new Image();
+tvImg.src = "./src/image/character/tv.png";
 export default (con: any, drawStartPoint: Point) => {
   con.textBaseline = "middle";
   con.textAlign = "center";
@@ -26,19 +29,21 @@ function drawEnemy(con: any, enemy: Enemy, drawStartPoint: Point) {
   const id = enemy.id;
   if (id === EnemyId.slime) {
     drawEnemyImg.slime(con, enemy.point, drawStartPoint);
-  } else if (id === EnemyId.rat) {
-    drawEnemyImg.rat(con, enemy.point, drawStartPoint);
+  } else if (id === EnemyId.fox) {
+    drawEnemyImg.fox(con, enemy.point, drawStartPoint);
+  } else if (id === EnemyId.tv) {
+    drawEnemyImg.tv(con, enemy.point, drawStartPoint);
   }
 }
 
 export module drawEnemyImg {
   export function slime(con: any, popPoint: Point, drawStartPoint: Point) {
-    const ratio = 0.6;
+    const ratio = 1;
     const size_x = TyleSize.x * ratio;
     const size_y = TyleSize.y * ratio;
     const fix = (TyleSize.x * (1 - ratio)) / 2;
     con.drawImage(
-      blackballImg,
+      slimeImg,
       0,
       0,
       32,
@@ -49,13 +54,38 @@ export module drawEnemyImg {
       size_y
     );
   }
-  export function rat(con: any, popPoint: Point, drawStartPoint: Point) {
-    con.fillStyle = "blown";
-    con.font = "16px consolas";
-    con.fillText(
-      "R",
-      (popPoint.x - drawStartPoint.x) * TyleSize.x + TyleSize.x / 2,
-      (popPoint.y - drawStartPoint.y) * TyleSize.y + TyleSize.y / 2
+  export function fox(con: any, popPoint: Point, drawStartPoint: Point) {
+    const ratio = 1;
+    const size_x = TyleSize.x * ratio;
+    const size_y = TyleSize.y * ratio;
+    const fix = (TyleSize.x * (1 - ratio)) / 2;
+    con.drawImage(
+      foxImg,
+      0,
+      0,
+      32,
+      32,
+      (popPoint.x - drawStartPoint.x) * TyleSize.x + fix,
+      (popPoint.y - drawStartPoint.y) * TyleSize.y + fix,
+      size_x,
+      size_y
+    );
+  }
+  export function tv(con: any, popPoint: Point, drawStartPoint: Point) {
+    const ratio = 1;
+    const size_x = TyleSize.x * ratio;
+    const size_y = TyleSize.y * ratio;
+    const fix = (TyleSize.x * (1 - ratio)) / 2;
+    con.drawImage(
+      tvImg,
+      0,
+      0,
+      32,
+      32,
+      (popPoint.x - drawStartPoint.x) * TyleSize.x + fix,
+      (popPoint.y - drawStartPoint.y) * TyleSize.y + fix,
+      size_x,
+      size_y
     );
   }
 }

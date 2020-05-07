@@ -68,13 +68,13 @@ export enum RoomConf {
 }
 
 export enum TyleSize {
-  x = 32,
-  y = 32,
+  x = 53.3,
+  y = 53.3,
 }
 
 export enum DrawRange {
-  x = 25,
-  y = 25,
+  x = 15,
+  y = 15,
 }
 
 export const CanStand: boolean[] = [];

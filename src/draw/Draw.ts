@@ -31,8 +31,6 @@ export function draw(con: any, env: any) {
   };
   // タイルの描画
   drawTyles(con, drawStartPoint);
-  //モンスターの描画
-  drawEnemys(con, drawStartPoint);
   //メッセージの描画
   drawMessage(con);
   //ステータスの描画
@@ -43,6 +41,8 @@ export function draw(con: any, env: any) {
   drawFallItem(con, drawStartPoint);
   //npcの描画
   drawNpcs(S, con, drawStartPoint);
+  //モンスターの描画
+  drawEnemys(con, drawStartPoint);
   //プレイヤーの描画
   drawPlayer(con, playerDrawPoint);
   //斜め移動の矢印の描画

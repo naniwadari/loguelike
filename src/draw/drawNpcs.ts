@@ -25,7 +25,7 @@ export default (
 };
 
 let npcImg = new Image();
-npcImg.src = "./src/image/jewel32*32.png";
+npcImg.src = "./src/image/character/uni.png";
 function drawNpc(
   con: CanvasRenderingContext2D,
   npc: Npc,
@@ -41,7 +41,7 @@ function drawNpc(
     con.drawImage(
       npcImg,
       0,
-      32,
+      0,
       32,
       32,
       (point.x - drawStartPoint.x) * TyleSize.x + fix,

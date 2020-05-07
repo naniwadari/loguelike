@@ -2,7 +2,8 @@ import { Point } from "../Types";
 import { S } from "../State";
 export enum EnemyId {
   slime = 0,
-  rat = 1,
+  fox = 1,
+  tv = 2,
 }
 
 export interface EnemyMaterial {
