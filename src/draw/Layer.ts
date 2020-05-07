@@ -25,7 +25,7 @@ export module Layer {
 
   export function eyecatch(layer: CanvasRenderingContext2D, alpha: number) {
     let text = "ふぁーすとだんじょん" + "　" + `${S.player.depth}F`;
-    if (S.player.depth >= 10) {
+    if (S.player.depth >= 11) {
       text = "縺九▲縺溘≠縺ｪ縺溘′繧上ｋ縺?≠縺ｪ縺溘′繧上ｋ縺" + " " + "ｦ縺ｩ?";
     }
     layer.save();
