@@ -20,9 +20,6 @@ export const EnemyOnFloor: EnemyId[][] = [
   [EnemyId.underleg, EnemyId.fox, EnemyId.hayasainu],
   [EnemyId.tv, EnemyId.fox, EnemyId.hayasainu],
   [EnemyId.hayasainu, EnemyId.zawatsuki],
-  [EnemyId.hayasainu, EnemyId.zawatsuki],
-  [EnemyId.hayasainu, EnemyId.zawatsuki],
-  [EnemyId.hayasainu, EnemyId.zawatsuki],
   [EnemyId.prism],
 ];
 
