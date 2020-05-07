@@ -1,5 +1,5 @@
 import { TEXT } from "../text/text";
-import { SCREEN, DrawRange, TyleSize } from "../config";
+import { DrawRange, TyleSize } from "../config";
 
 export default (con: any) => {
   const size_x = DrawRange.x * TyleSize.x;

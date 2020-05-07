@@ -28,7 +28,7 @@ export function init() {
   S.Frag.gameover = false;
   //ステートの初期化
   S.floors = [];
-  S.player = new Player(12, 12);
+  S.player = new Player(7, 12);
   S.enemys = [];
   S.messages = new MessageList();
   //フロアの生成とメッセージの追加
@@ -38,7 +38,7 @@ export function init() {
   let initPotion = new Potion(ItemId.greenHerb);
   S.bags.store(initPotion);
   //NPCの追加
-  let npcPoint = { x: 5, y: 5 };
+  let npcPoint = { x: 6, y: 5 };
   let initNpc = new Npc(NpcId.first, NpcList, npcPoint);
   console.log(initNpc);
   S.npcs.push(initNpc);
