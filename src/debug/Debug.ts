@@ -5,22 +5,35 @@ import { draw, con } from "../draw/Draw";
 import CreateFloor from "../floor/CreateFloor";
 import getOffFloor from "../event/getOffFloor";
 import { layerIn, layer } from "../draw/LayerDraw";
+import { Weapon } from "../item/Weapon";
+import { ItemId } from "../config/item";
+import { Shield } from "../item/Shield";
+import { Potion } from "../item/Potion";
 export default () => {
   window.addEventListener("keydown", (e) => {
     // デバッグキー P
     if (e.keyCode === 80) {
-      searchDownstairsPoint();
-      searchEnemysPoint();
+      checkState();
     }
     // マップリクリエイトキー　0
     else if (e.keyCode === 48) {
-      checkState();
+      fillItem();
     }
   });
 };
 
 function mapRecreate() {
   getOffFloor();
+  draw(con, S.env);
+}
+
+function fillItem() {
+  let weapon = new Weapon(ItemId.club);
+  let shield = new Shield(ItemId.leatherShield);
+  let herb = new Potion(ItemId.greenHerb);
+  S.bags.store(weapon);
+  S.bags.store(shield);
+  S.bags.store(herb);
   draw(con, S.env);
 }
 

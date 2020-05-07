@@ -76,6 +76,7 @@ export default class Player {
       this.shield = bag;
       return;
     }
+    return;
   }
 
   removeEquip(bag: IBag) {

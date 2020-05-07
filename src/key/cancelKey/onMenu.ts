@@ -23,7 +23,11 @@ export function throwItem(S: IState, con: any) {
   }
   let index = S.bagCursor;
   let items = S.bags.items;
+  let player = S.player;
   let item = Bag.searchByIndex(items, index);
+  if (player.weapon === item || player.shield === item) {
+    player.removeEquip(item);
+  }
   let throwMsg = {
     text: actionMsg.throwItem(item.item.name),
     type: MessageType.normal,
