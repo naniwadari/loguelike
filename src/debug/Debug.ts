@@ -1,8 +1,5 @@
 import { S } from "../State";
-import { Point } from "../Types";
-import { MapType } from "../config";
 import { draw, con } from "../draw/Draw";
-import CreateFloor from "../floor/CreateFloor";
 import getOffFloor from "../event/getOffFloor";
 import { layerIn, layer } from "../draw/LayerDraw";
 import { Weapon } from "../item/Weapon";
@@ -17,7 +14,8 @@ export default () => {
     }
     // マップリクリエイトキー　0
     else if (e.keyCode === 48) {
-      fillItem();
+      getOffFloor();
+      draw(con, S.env);
     }
   });
 };

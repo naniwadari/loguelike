@@ -162,11 +162,7 @@ export default class Player {
     return this;
   }
 
-  stairDown(floor: Floor) {
-    // let floor = S.floors[this.depth];
-    const block = floor.blocks[this.x][this.y];
-    if (block.base === MapType.downstair) {
-      ++this.depth;
-    }
+  stairDown() {
+    ++this.depth;
   }
 }

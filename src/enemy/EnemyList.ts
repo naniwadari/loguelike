@@ -1,4 +1,14 @@
-import { EnemyId, EnemyMaterial } from "./Enemy";
+import { EnemyMaterial } from "./Enemy";
+
+export enum EnemyId {
+  slime = 0,
+  fox = 1,
+  tv = 2,
+  underleg = 3,
+  hayasainu = 4,
+  zawatsuki = 5,
+  prism = 6,
+}
 
 export const EnemyOnFloor: EnemyId[][] = [
   [], //0階
@@ -10,6 +20,10 @@ export const EnemyOnFloor: EnemyId[][] = [
   [EnemyId.underleg, EnemyId.fox, EnemyId.hayasainu],
   [EnemyId.tv, EnemyId.fox, EnemyId.hayasainu],
   [EnemyId.hayasainu, EnemyId.zawatsuki],
+  [EnemyId.hayasainu, EnemyId.zawatsuki],
+  [EnemyId.hayasainu, EnemyId.zawatsuki],
+  [EnemyId.hayasainu, EnemyId.zawatsuki],
+  [EnemyId.prism],
 ];
 
 export const EnemyList: EnemyMaterial[] = [
@@ -58,5 +72,14 @@ export const EnemyList: EnemyMaterial[] = [
     ATK: 7,
     DEF: 5,
     EXP: 32,
+  },
+  {
+    id: EnemyId.prism,
+    name: "ぷりずむ",
+    level: 10,
+    HP: 54,
+    ATK: 9,
+    DEF: 1,
+    EXP: 89,
   },
 ];

@@ -1,8 +1,8 @@
 import { S } from "../State";
 import { DrawRange, TyleSize } from "../config";
 import { Point } from "../Types";
-import { EnemyId, Enemy } from "../enemy/Enemy";
-
+import { Enemy } from "../enemy/Enemy";
+import { EnemyId } from "../enemy/EnemyList";
 const slimeImg = new Image();
 slimeImg.src = "./src/image/character/slime.png";
 const foxImg = new Image();
@@ -15,6 +15,8 @@ const hayasainuImg = new Image();
 hayasainuImg.src = "./src/image/character/hayasainu.png";
 const zawatsukiImg = new Image();
 zawatsukiImg.src = "./src/image/character/zawatuki.png";
+const prismImg = new Image();
+prismImg.src = "./src/image/character/prism.png";
 
 export default (con: any, drawStartPoint: Point) => {
   con.textBaseline = "middle";
@@ -46,6 +48,8 @@ function drawEnemy(con: any, enemy: Enemy, drawStartPoint: Point) {
     drawEnemyImg.hayasainu(con, enemy.point, drawStartPoint);
   } else if (id === EnemyId.zawatsuki) {
     drawEnemyImg.zawatsuki(con, enemy.point, drawStartPoint);
+  } else if (id === EnemyId.prism) {
+    drawEnemyImg.prism(con, enemy.point, drawStartPoint);
   }
 }
 
@@ -142,6 +146,23 @@ export module drawEnemyImg {
     const fix = (TyleSize.x * (1 - ratio)) / 2;
     con.drawImage(
       zawatsukiImg,
+      0,
+      0,
+      64,
+      64,
+      (popPoint.x - drawStartPoint.x) * TyleSize.x + fix,
+      (popPoint.y - drawStartPoint.y) * TyleSize.y + fix,
+      size_x,
+      size_y
+    );
+  }
+  export function prism(con: any, popPoint: Point, drawStartPoint: Point) {
+    const ratio = 1;
+    const size_x = TyleSize.x * ratio;
+    const size_y = TyleSize.y * ratio;
+    const fix = (TyleSize.x * (1 - ratio)) / 2;
+    con.drawImage(
+      prismImg,
       0,
       0,
       64,
