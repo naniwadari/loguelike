@@ -10,10 +10,12 @@ describe("spoken", () => {
   test("should return collect message", () => {
     for (let i = 0; i < npc.serif.length; i++) {
       let result = npc.spoken();
-      expect(result.text).toBe(npc.serif[i].text);
+      let serif = npc.name + "「" + npc.serif[i].text + "」";
+      expect(result.text).toBe(serif);
     }
     //超過した場合
     let result = npc.spoken();
-    expect(result.text).toBe(npc.serif[npc.serif.length - 1].text);
+    let serif = npc.name + "「" + npc.serif[npc.serif.length - 1].text + "」";
+    expect(result.text).toBe(serif);
   });
 });

@@ -4,6 +4,9 @@ export enum EnemyId {
   slime = 0,
   fox = 1,
   tv = 2,
+  underleg = 3,
+  hayasainu = 4,
+  zawatsuki = 5,
 }
 
 export interface EnemyMaterial {

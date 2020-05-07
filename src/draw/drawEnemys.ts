@@ -9,6 +9,13 @@ const foxImg = new Image();
 foxImg.src = "./src/image/character/fox.png";
 const tvImg = new Image();
 tvImg.src = "./src/image/character/tv.png";
+const underlegImg = new Image();
+underlegImg.src = "./src/image/character/underleg.png";
+const hayasainuImg = new Image();
+hayasainuImg.src = "./src/image/character/hayasainu.png";
+const zawatsukiImg = new Image();
+zawatsukiImg.src = "./src/image/character/zawatuki.png";
+
 export default (con: any, drawStartPoint: Point) => {
   con.textBaseline = "middle";
   con.textAlign = "center";
@@ -33,6 +40,12 @@ function drawEnemy(con: any, enemy: Enemy, drawStartPoint: Point) {
     drawEnemyImg.fox(con, enemy.point, drawStartPoint);
   } else if (id === EnemyId.tv) {
     drawEnemyImg.tv(con, enemy.point, drawStartPoint);
+  } else if (id === EnemyId.underleg) {
+    drawEnemyImg.underleg(con, enemy.point, drawStartPoint);
+  } else if (id === EnemyId.hayasainu) {
+    drawEnemyImg.hayasainu(con, enemy.point, drawStartPoint);
+  } else if (id === EnemyId.zawatsuki) {
+    drawEnemyImg.zawatsuki(con, enemy.point, drawStartPoint);
   }
 }
 
@@ -78,6 +91,57 @@ export module drawEnemyImg {
     const fix = (TyleSize.x * (1 - ratio)) / 2;
     con.drawImage(
       tvImg,
+      0,
+      0,
+      64,
+      64,
+      (popPoint.x - drawStartPoint.x) * TyleSize.x + fix,
+      (popPoint.y - drawStartPoint.y) * TyleSize.y + fix,
+      size_x,
+      size_y
+    );
+  }
+  export function underleg(con: any, popPoint: Point, drawStartPoint: Point) {
+    const ratio = 1;
+    const size_x = TyleSize.x * ratio;
+    const size_y = TyleSize.y * ratio;
+    const fix = (TyleSize.x * (1 - ratio)) / 2;
+    con.drawImage(
+      underlegImg,
+      0,
+      0,
+      64,
+      64,
+      (popPoint.x - drawStartPoint.x) * TyleSize.x + fix,
+      (popPoint.y - drawStartPoint.y) * TyleSize.y + fix,
+      size_x,
+      size_y
+    );
+  }
+  export function hayasainu(con: any, popPoint: Point, drawStartPoint: Point) {
+    const ratio = 1;
+    const size_x = TyleSize.x * ratio;
+    const size_y = TyleSize.y * ratio;
+    const fix = (TyleSize.x * (1 - ratio)) / 2;
+    con.drawImage(
+      hayasainuImg,
+      0,
+      0,
+      64,
+      64,
+      (popPoint.x - drawStartPoint.x) * TyleSize.x + fix,
+      (popPoint.y - drawStartPoint.y) * TyleSize.y + fix,
+      size_x,
+      size_y
+    );
+  }
+  export function zawatsuki(con: any, popPoint: Point, drawStartPoint: Point) {
+    const ratio = 1;
+    const size_x = TyleSize.x * ratio;
+    const size_y = TyleSize.y * ratio;
+    const fix = (TyleSize.x * (1 - ratio)) / 2;
+    con.drawImage(
+      zawatsukiImg,
       0,
       0,
       64,
