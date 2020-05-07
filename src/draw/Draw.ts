@@ -11,6 +11,7 @@ import drawTitle from "./drawTitle";
 import drawEyecatch from "./drawEyecatch";
 import { drawBag } from "./drawBag";
 import drawFallItem from "./drawFallItem";
+import drawNpcs from "./drawNpcs";
 
 export const canvas = <HTMLCanvasElement>document.getElementById("game");
 export const con: any = canvas.getContext("2d");
@@ -40,6 +41,8 @@ export function draw(con: any, env: any) {
   drawBag(con, S);
   //フロアに落ちているアイテムの描画
   drawFallItem(con, drawStartPoint);
+  //npcの描画
+  drawNpcs(S, con, drawStartPoint);
   //プレイヤーの描画
   drawPlayer(con, playerDrawPoint);
   //斜め移動の矢印の描画

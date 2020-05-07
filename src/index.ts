@@ -17,6 +17,8 @@ import onMenu from "./key/moveKey/onMenu";
 import { Shield } from "./item/Shield";
 import { Potion } from "./item/Potion";
 import { cancelOnMenu } from "./key/cancelKey/onMenu";
+import { Npc } from "./npc/Npc";
+import { NpcId, NpcList } from "./config/npc";
 
 // 決定キーを押すとinitイベントが走る
 export function init() {
@@ -35,6 +37,11 @@ export function init() {
   //初期アイテムの追加
   let initPotion = new Potion(ItemId.greenHerb);
   S.bags.store(initPotion);
+  //NPCの追加
+  let npcPoint = { x: 5, y: 5 };
+  let initNpc = new Npc(NpcId.first, NpcList, npcPoint);
+  console.log(initNpc);
+  S.npcs.push(initNpc);
 }
 
 //画面描画

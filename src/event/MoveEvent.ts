@@ -10,6 +10,7 @@ import getOffFloor from "./getOffFloor";
 import { layerIn, layerOut, layer } from "../draw/LayerDraw";
 import { actionMsg, TEXT } from "../text/text";
 import { ItemConf } from "../config/item";
+import { Npc } from "@root/npc/Npc";
 
 export default () => {
   window.addEventListener("keydown", (e) => {
@@ -54,10 +55,11 @@ export default () => {
       // 現在の位置から移動していた場合
       if (movePlayer.x !== S.player.x || movePlayer.y !== S.player.y) {
         const movePoint: Point = { x: movePlayer.x, y: movePlayer.y };
+        const npcs = S.npcs;
+        const searchNpcResult = searchNpc(movePoint, npcs);
         /* 移動先にアイテムがあった場合 */
         const fallItems = S.fallItems;
         const searchItemResult = searchFallItem(movePoint, fallItems);
-        console.log(searchItemResult);
         if (searchItemResult) {
           if (S.bags.items.length === ItemConf.bagMax) {
             let cantPickMsg = { text: TEXT.bagFull, type: MessageType.normal };
@@ -92,7 +94,13 @@ export default () => {
           while (S.player.EXP >= S.player.requireEXP) {
             battleEvent.levelUp();
           }
+        } else if (searchNpcResult) {
+          /* 移動先にNPCがいた場合 */
+          console.log(searchNpcResult);
+          let npcMsg = speakNpc(S, searchNpcResult);
+          S.messages.add(npcMsg);
         } else {
+          /*何もイベントが起きなかった場合*/
           //移動予定のブロックを特定
           const targetBlock =
             S.floors[S.player.depth].blocks[movePoint.x][movePoint.y];
@@ -133,6 +141,21 @@ export default () => {
     await layerOut(layer, S.env);
   });
 };
+
+export function searchNpc(movePoint: IPoint, npcs: Npc[]) {
+  for (let i = 0; i < npcs.length; i++) {
+    let npc = npcs[i];
+    let point = npc.point;
+    if (point.x === movePoint.x && point.y === movePoint.y) {
+      return npc;
+    }
+  }
+}
+
+export function speakNpc(S: IState, npc: Npc) {
+  let msg = npc.spoken();
+  return msg;
+}
 
 export function searchFallItem(movePoint: IPoint, fallItems: IFallItem[]) {
   for (let i = 0; i < fallItems.length; i++) {

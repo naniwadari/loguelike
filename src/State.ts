@@ -8,6 +8,7 @@ export let S: IState = {
   enemys: [],
   player: new Player(0, 0),
   fallItems: [],
+  npcs: [],
   bags: new Bag(),
   bagCursor: 0,
   messages: new MessageList(),

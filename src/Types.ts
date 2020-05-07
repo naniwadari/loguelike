@@ -1,5 +1,5 @@
 import { Enemy } from "./enemy/Enemy";
-import { MapType, Direction } from "./config";
+import { MapType, Direction, MessageType } from "./config";
 import { ItemId, ItemType } from "./config/item";
 import { Floor } from "./floor/Floor";
 import Player from "./player/player";
@@ -8,10 +8,24 @@ import { Bag } from "./item/Bag";
 import { Weapon } from "./item/Weapon";
 import { Shield } from "./item/Shield";
 import { Potion } from "./item/Potion";
+import { NpcId, NpcType } from "./config/npc";
+import { Npc } from "./npc/Npc";
 
 export interface Point {
   x: number;
   y: number;
+}
+
+export interface IMessage {
+  text: string;
+  type: MessageType;
+}
+
+export interface INpc {
+  id: NpcId;
+  type: NpcType;
+  name: string;
+  serif: IMessage[];
 }
 
 export interface IArea {
@@ -72,6 +86,7 @@ export interface IState {
   enemys: Enemy[];
   player: Player;
   fallItems: IFallItem[];
+  npcs: Npc[];
   bags: Bag;
   bagCursor: number;
   messages: MessageList;

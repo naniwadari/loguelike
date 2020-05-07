@@ -22,6 +22,8 @@ export default () => {
     let playerPoint = floor.coordinateCanStand();
     S.player.x = playerPoint.x;
     S.player.y = playerPoint.y;
+    //NPCのリセット
+    S.npcs = [];
     //モンスターのリセット
     S.enemys = [];
     //モンスターのイニシャライズ
