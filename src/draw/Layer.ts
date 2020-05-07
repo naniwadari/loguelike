@@ -31,7 +31,7 @@ export module Layer {
     layer.fillStyle = "white";
     layer.font = "48px layersolas";
     layer.fillText(
-      "お試しダンジョン" + "　" + `${S.player.depth}F`,
+      "ふぁーすとだんじょん" + "　" + `${S.player.depth}F`,
       size.x / 2,
       size.y / 3
     );
