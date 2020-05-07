@@ -6,10 +6,27 @@ import CreateFloor from "../floor/CreateFloor";
 import { ISize } from "../Types";
 import popEnemy from "../enemy/popEnemy";
 import popItem from "../item/popItem";
+import { lastFloor } from "../floor/floorModel/lastFloor";
+import { Npc } from "../npc/Npc";
+import { NpcId, NpcList } from "../config/npc";
 
 export default () => {
   S.player.stairDown();
-  S.messages.add(new Message(TEXT.downstair, MessageType.normal));
+  if (S.player.depth === 10) {
+    S.floors = [];
+    S.enemys = [];
+    S.floors[S.player.depth] = lastFloor;
+    S.player.x = 7;
+    S.player.y = 12;
+    let npcPoint = { x: 7, y: 4 };
+    let lastNpc = new Npc(NpcId.last, NpcList, npcPoint);
+    S.npcs.push(lastNpc);
+  }
+  if (S.player.depth === 11) {
+    S.messages.add(new Message(TEXT.downstair_a, MessageType.danger));
+  } else {
+    S.messages.add(new Message(TEXT.downstair, MessageType.normal));
+  }
   if (!S.floors[S.player.depth]) {
     const floorSize: ISize = {
       width: FloorConf.width,

@@ -1,9 +1,13 @@
 import { TyleSize } from "../config";
 import { Point } from "../Types";
+import { S } from "../State";
 
 const playerImg = new Image();
 playerImg.src = "./src/image/character/player.png";
 export default (con: any, playerDrawPoint: Point) => {
+  if (S.player.depth >= 11) {
+    playerImg.src = "./src/image/character/bagplayer.png";
+  }
   con.textBaseline = "middle";
   con.textAlign = "center";
   con.fillStyle = "black";

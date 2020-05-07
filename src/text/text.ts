@@ -2,6 +2,7 @@ export enum TEXT {
   title = "ろーぐらいく",
   start = "Zキーで始める",
   downstair = "階段を降りました",
+  downstair_a = "階段を降りてしまいました",
   wall = "壁にぶつかった！",
   init = "ダンジョン最高〜〜〜!!",
   depth = "階",

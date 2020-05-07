@@ -24,17 +24,17 @@ export module Layer {
   }
 
   export function eyecatch(layer: CanvasRenderingContext2D, alpha: number) {
+    let text = "ふぁーすとだんじょん" + "　" + `${S.player.depth}F`;
+    if (S.player.depth >= 10) {
+      text = "縺九▲縺溘≠縺ｪ縺溘′繧上ｋ縺?≠縺ｪ縺溘′繧上ｋ縺" + " " + "ｦ縺ｩ?";
+    }
     layer.save();
     layer.globalAlpha = alpha;
     layer.textBaseline = "alphabetic";
     layer.textAlign = "center";
     layer.fillStyle = "white";
     layer.font = "48px layersolas";
-    layer.fillText(
-      "ふぁーすとだんじょん" + "　" + `${S.player.depth}F`,
-      size.x / 2,
-      size.y / 3
-    );
+    layer.fillText(text, size.x / 2, size.y / 3);
     layer.restore();
   }
 

@@ -13,6 +13,29 @@ const wallImg = new Image();
 wallImg.src = "./src/image/GBwall.png";
 
 export function drawTyles(con: any, drawStartPoint: Point) {
+  /* バグフロア */
+  if (S.player.depth >= 11) {
+    wallImg.src = "./src/image/mojibake.png";
+    for (let i = 0; i < DrawRange.x; i++) {
+      for (let j = 0; j < DrawRange.y; j++) {
+        const block =
+          S.floors[S.player.depth].blocks[drawStartPoint.x + i][
+            drawStartPoint.y + j
+          ];
+        const tyleDrawPoint = { x: i, y: j };
+        if (block.base === MapType.floor) {
+          DrawTyle.bagTyle(con, tyleDrawPoint);
+        } else if (block.base === MapType.wall) {
+          DrawTyle.bagTyle2(con, tyleDrawPoint);
+        } else if (block.base === MapType.downstair) {
+          //下地
+          DrawTyle.bagTyle3(con, tyleDrawPoint);
+          DrawTyle.bagTyle(con, tyleDrawPoint);
+        }
+      }
+    }
+    return;
+  }
   for (let i = 0; i < DrawRange.x; i++) {
     for (let j = 0; j < DrawRange.y; j++) {
       const block =
@@ -69,6 +92,46 @@ export module DrawTyle {
       1 * 16,
       16,
       16,
+      point.x * TyleSize.x,
+      point.y * TyleSize.y,
+      TyleSize.x,
+      TyleSize.y
+    );
+  }
+
+  export function bagTyle(con: CanvasRenderingContext2D, point: Point) {
+    con.drawImage(
+      wallImg,
+      0,
+      32,
+      32,
+      32,
+      point.x * TyleSize.x,
+      point.y * TyleSize.y,
+      TyleSize.x,
+      TyleSize.y
+    );
+  }
+  export function bagTyle2(con: CanvasRenderingContext2D, point: Point) {
+    con.drawImage(
+      wallImg,
+      32,
+      32,
+      32,
+      32,
+      point.x * TyleSize.x,
+      point.y * TyleSize.y,
+      TyleSize.x,
+      TyleSize.y
+    );
+  }
+  export function bagTyle3(con: CanvasRenderingContext2D, point: Point) {
+    con.drawImage(
+      wallImg,
+      0,
+      64,
+      32,
+      32,
       point.x * TyleSize.x,
       point.y * TyleSize.y,
       TyleSize.x,

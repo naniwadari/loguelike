@@ -11,7 +11,7 @@ export function drawBag(con: CanvasRenderingContext2D, S: IState) {
   let lineheight = TextConf.lineheight;
   let statusHeight = 30 * 6 + 8;
   let height = margin + (24 + lineheight) * ItemConf.bagMax + margin * 2;
-  let width = 230;
+  let width = 270;
   let rectStart = {
     x: DrawRange.x * TyleSize.x + margin,
     y: statusHeight + margin * 3,

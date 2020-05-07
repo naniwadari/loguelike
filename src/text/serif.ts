@@ -29,16 +29,27 @@ export module Serif {
     type: MessageType.normal,
   };
   export const last2 = {
-    text: "もうなにもないよ 1回目",
+    text: "よくがんばりました",
     type: MessageType.normal,
   };
   export const last3 = {
-    text: "もうなにもないよ 2回目",
+    text: "クリアしたのに後ろに階段があるって？",
     type: MessageType.normal,
   };
   export const last4 = {
-    text: "もうなにもないよ 3回目",
+    text: "この先には何もないよ",
     type: MessageType.normal,
   };
-  export const last5 = { text: "しつこい", type: MessageType.normal };
+  export const last5 = {
+    text: "だからいかないほうがいい",
+    type: MessageType.normal,
+  };
+  export const last6 = {
+    text: "いかないほうがいい",
+    type: MessageType.normal,
+  };
+  export const last7 = {
+    text: "縺?°縺ｪ縺?⊇縺?′縺?",
+    type: MessageType.danger,
+  };
 }

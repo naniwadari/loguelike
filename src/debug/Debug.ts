@@ -27,7 +27,7 @@ function mapRecreate() {
 
 function fillItem() {
   let weapon = new Weapon(ItemId.club);
-  let shield = new Shield(ItemId.leatherShield);
+  let shield = new Shield(ItemId.leather);
   let herb = new Potion(ItemId.greenHerb);
   S.bags.store(weapon);
   S.bags.store(shield);

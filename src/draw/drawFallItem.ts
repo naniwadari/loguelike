@@ -45,7 +45,17 @@ shieldImg.src = "./src/image/shield32*32.png";
 const potionImg = new Image();
 potionImg.src = "./src/image/potion32*32.png";
 
+if (S.player.depth >= 11) {
+  weaponImg.src = "./src/image/mojibake.png";
+  shieldImg.src = "./src/image/mojibake.png";
+  potionImg.src = "./src/image/mojibake.png";
+}
 export module drawItemImg {
+  if (S.player.depth >= 11) {
+    weaponImg.src = "./src/image/mojibake.png";
+    shieldImg.src = "./src/image/mojibake.png";
+    potionImg.src = "./src/image/mojibake.png";
+  }
   const tipSize = 32;
   const ratio = 0.8;
   const size_x = TyleSize.x * ratio;
@@ -53,6 +63,9 @@ export module drawItemImg {
   const fix = (TyleSize.x * (1 - ratio)) / 2;
 
   export function weapon(con: any, point: IPoint, drawStartPoint: IPoint) {
+    if (S.player.depth >= 11) {
+      weaponImg.src = "./src/image/mojibake.png";
+    }
     con.drawImage(
       weaponImg,
       tipSize * 1,
@@ -67,6 +80,9 @@ export module drawItemImg {
   }
 
   export function shield(con: any, point: IPoint, drawStartPoint: IPoint) {
+    if (S.player.depth >= 11) {
+      shieldImg.src = "./src/image/mojibake.png";
+    }
     con.drawImage(
       shieldImg,
       tipSize * 1,
@@ -81,6 +97,9 @@ export module drawItemImg {
   }
 
   export function potion(con: any, point: IPoint, drawStartPoint: IPoint) {
+    if (S.player.depth >= 11) {
+      potionImg.src = "./src/image/mojibake.png";
+    }
     con.drawImage(
       potionImg,
       tipSize * 14,

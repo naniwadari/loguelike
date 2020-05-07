@@ -19,6 +19,11 @@ const prismImg = new Image();
 prismImg.src = "./src/image/character/prism.png";
 
 export default (con: any, drawStartPoint: Point) => {
+  if (S.player.depth >= 11) {
+    hayasainuImg.src = "./src/image/mojibake.png";
+    zawatsukiImg.src = "./src/image/mojibake.png";
+    prismImg.src = "./src/image/mojibake.png";
+  }
   con.textBaseline = "middle";
   con.textAlign = "center";
   const enemys: Enemy[] = S.enemys;
