@@ -26,4 +26,5 @@ export let S: IState = {
     down: false,
   },
   seed: Date.now().toString(10),
+  another: false,
 };

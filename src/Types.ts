@@ -94,6 +94,7 @@ export interface IState {
   env: any;
   KeyPress: any;
   seed: string;
+  another: boolean;
 }
 
 export interface IFallItem {
