@@ -19,11 +19,17 @@ const prismImg = new Image();
 prismImg.src = "./src/image/character/prism.png";
 
 export default (con: any, drawStartPoint: Point) => {
-  if (S.player.depth >= 11) {
-    hayasainuImg.src = "./src/image/mojibake.png";
-    zawatsukiImg.src = "./src/image/mojibake.png";
-    prismImg.src = "./src/image/mojibake.png";
+  if (S.Frag.another) {
+    let another_tyle = "./src/image/mojibake.png";
+    slimeImg.src = another_tyle;
+    foxImg.src = another_tyle;
+    tvImg.src = another_tyle;
+    underlegImg.src = another_tyle;
+    hayasainuImg.src = another_tyle;
+    zawatsukiImg.src = another_tyle;
+    prismImg.src = another_tyle;
   }
+
   con.textBaseline = "middle";
   con.textAlign = "center";
   const enemys: Enemy[] = S.enemys;

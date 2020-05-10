@@ -12,10 +12,11 @@ tyleImg.src = "./src/image/GBtyle.png";
 const wallImg = new Image();
 wallImg.src = "./src/image/GBwall.png";
 
+const anotherImg = new Image();
+anotherImg.src = "./src/image/mojibake.png";
 export function drawTyles(con: any, drawStartPoint: Point) {
   /* バグフロア */
-  if (S.player.depth >= 11) {
-    wallImg.src = "./src/image/mojibake.png";
+  if (S.Frag.another) {
     for (let i = 0; i < DrawRange.x; i++) {
       for (let j = 0; j < DrawRange.y; j++) {
         const block =
@@ -101,7 +102,7 @@ export module DrawTyle {
 
   export function bagTyle(con: CanvasRenderingContext2D, point: Point) {
     con.drawImage(
-      wallImg,
+      anotherImg,
       0,
       32,
       32,
@@ -114,7 +115,7 @@ export module DrawTyle {
   }
   export function bagTyle2(con: CanvasRenderingContext2D, point: Point) {
     con.drawImage(
-      wallImg,
+      anotherImg,
       32,
       32,
       32,
@@ -127,7 +128,7 @@ export module DrawTyle {
   }
   export function bagTyle3(con: CanvasRenderingContext2D, point: Point) {
     con.drawImage(
-      wallImg,
+      anotherImg,
       0,
       64,
       32,

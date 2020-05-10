@@ -19,6 +19,7 @@ import { Potion } from "./item/Potion";
 import { cancelOnMenu } from "./key/cancelKey/onMenu";
 import { Npc } from "./npc/Npc";
 import { NpcId, NpcList } from "./config/npc";
+import { Serif } from "./text/serif";
 
 // 決定キーを押すとinitイベントが走る
 export function init() {
@@ -31,6 +32,7 @@ export function init() {
   S.player = new Player(7, 12);
   S.enemys = [];
   S.messages = new MessageList();
+  S.bags.items = [];
   //フロアの生成とメッセージの追加
   S.floors[0] = firstFloor;
   S.messages.add(new Message(TEXT.init, MessageType.special));
@@ -40,6 +42,9 @@ export function init() {
   //NPCの追加
   let npcPoint = { x: 6, y: 5 };
   let initNpc = new Npc(NpcId.first, NpcList, npcPoint);
+  if (S.Frag.another) {
+    initNpc.serif = [Serif.first1_a];
+  }
   console.log(initNpc);
   S.npcs.push(initNpc);
 }

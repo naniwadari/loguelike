@@ -17,6 +17,7 @@ export let S: IState = {
     gameover: false,
     menu: false,
     eyecatch: false,
+    another: false,
   },
   env: { diagonal: false },
   KeyPress: {
@@ -26,5 +27,4 @@ export let S: IState = {
     down: false,
   },
   seed: Date.now().toString(10),
-  another: false,
 };

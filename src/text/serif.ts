@@ -23,6 +23,10 @@ export module Serif {
     text: "・・・",
     type: MessageType.normal,
   };
+  export const first1_a = {
+    text: "きみがこわした",
+    type: MessageType.danger,
+  };
   /* クリアフロア */
   export const last1 = {
     text: "おめでとう、クリアです！",

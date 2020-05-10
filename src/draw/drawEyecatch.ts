@@ -1,12 +1,12 @@
 import { TEXT } from "../text/text";
-import { DrawRange, TyleSize } from "../config";
+import { DrawRange, TyleSize, SCREEN } from "../config";
 import { S } from "../State";
 
 export default (layer: CanvasRenderingContext2D, alpha: number) => {
   layer.save();
   let size = { x: TyleSize.x * DrawRange.x, y: TyleSize.y * DrawRange.y };
   //描画されていた範囲のリセット
-  layer.clearRect(0, 0, size.x, size.y);
+  layer.clearRect(0, 0, SCREEN.X, SCREEN.Y);
   layer.globalAlpha = alpha;
   layer.fillRect(0, 0, size.x, size.y);
   layer.textBaseline = "alphabetic";

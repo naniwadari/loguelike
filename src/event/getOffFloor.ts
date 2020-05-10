@@ -24,6 +24,7 @@ export default () => {
   }
   if (S.player.depth === 11) {
     S.messages.add(new Message(TEXT.downstair_a, MessageType.danger));
+    S.Frag.another = true;
   } else {
     S.messages.add(new Message(TEXT.downstair, MessageType.normal));
   }
