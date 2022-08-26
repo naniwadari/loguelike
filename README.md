@@ -3,6 +3,9 @@
 ろーぐらいくは いわゆる不思議のダンジョンシリーズのような、ランダム生成されたダンジョンを冒険するゲームです。
 HTML5 の canvas 要素を利用して描画を行っています。
 
+## URL
+https://loguelike.herokuapp.com/index.html
+
 ## インフラ
 
 - TypeScript
