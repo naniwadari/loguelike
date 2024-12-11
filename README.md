@@ -4,7 +4,7 @@
 HTML5 の canvas 要素を利用して描画を行っています。
 
 ## URL
-https://loguelike.herokuapp.com/index.html
+https://naniwadari.github.io/loguelike/
 
 ## インフラ
 
